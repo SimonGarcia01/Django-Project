@@ -1,0 +1,339 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if tournament %} {{ tournament.name }} - {% endif %}Agregar / Editar Participante</title>
+    <style>
+        /* FONT IMPORT */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        /* GLOBAL STYLES */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: #374151;
+            min-height: 100vh;
+            padding: 40px 20px;
+            background-image: url("{% static 'images/Foto_Icesi10.jpg' %}");
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+        }
+
+        /* MAIN CONTENT CONTAINER */
+        .main-content { /* Usaremos esta clase para el contenedor principal de tu formulario */
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        /* BREADCRUMBS BAR */
+        .breadcrumbs {
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+            color: #374151;
+            background-color: #f3f4f6;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.75rem;
+            border: 1px solid #e5e7eb;
+            display: inline-block;
+        }
+
+        .breadcrumbs a {
+            color: #1e3a8a;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .breadcrumbs a:hover { text-decoration: underline; }
+        .breadcrumbs .separator { margin: 0 0.5rem; color: #9ca3af; }
+        .breadcrumbs .current { font-weight: 600; color: #111827; }
+
+        h1 { /* Este estilo se aplicaría si usaras un h1 en la página */
+            color: #1e3a8a;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.75rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        /* GRID FOR CARDS (No se usa directamente en este HTML, pero se mantiene por si acaso) */
+        .grid {
+            display: grid;
+            gap: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        }
+
+        /* CARD STYLES (No se usa directamente en este HTML, pero se mantiene por si acaso) */
+        .card {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #e5e7eb;
+            border-left-width: 6px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-color-1 { border-left-color: #facc15; }
+        .card-color-2 { border-left-color: #f97316; }
+        .card-color-3 { border-left-color: #4f46e5; }
+        .card-color-4 { border-left-color: #10b981; }
+
+        .card h2 {
+            font-size: 1.4rem;
+            color: #1e3a8a;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .card-details { display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.95rem; color: #4b5563; margin-bottom: 1rem;}
+        .card-detail-item { display: flex; align-items: center; gap: 8px; }
+        .card-detail-item svg { width: 18px; height: 18px; color: #9ca3af; }
+
+        /* PROGRESS BAR (No se usa directamente en este HTML, pero se mantiene por si acaso) */
+        .progress-bar-container { margin-top: 1rem; }
+        .progress-bar { width: 100%; background-color: #e5e7eb; border-radius: 999px; height: 8px; overflow: hidden; }
+        .progress-bar-fill { background-color: #4f46e5; height: 100%; border-radius: 999px; transition: width 0.5s ease-in-out; }
+
+        /* STATUS BADGES (No se usa directamente en este HTML, pero se mantiene por si acaso) */
+        .status-badges { margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 8px; }
+        .badge { display: inline-block; padding: 4px 12px; font-size: 0.75rem; font-weight: 600; border-radius: 999px; }
+        .badge-yellow { background-color: #fef9c3; color: #a16207; }
+        .badge-blue { background-color: #dbeafe; color: #1e40af; }
+        .badge-green { background-color: #dcfce7; color: #15803d; }
+        .badge-red { background-color: #fee2e2; color: #b91c1c; }
+
+        /* FORM STYLES (Aplicado al formulario de agregar/editar participante) */
+        .enroll-form {
+            margin-top: auto;
+            padding-top: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .form-input { /* Para los inputs de tu formulario */
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+        .form-input:focus { outline: none; border-color: #4f46e5; box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1); }
+        .btn { /* Para los botones de tu formulario */
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            border: none;
+            font-size: 0.95rem;
+            text-align: center; /* Para que el texto del botón se centre */
+        }
+        .btn-primary { background-color: #4f46e5; color: white; }
+        .btn-primary:hover { background-color: #4338ca; }
+        .btn-disabled { background-color: #d1d5db; color: #6b7280; cursor: not-allowed; }
+
+        /* EMPTY STATE (No se usa directamente en este HTML, pero se mantiene por si acaso) */
+        .empty-message {
+            text-align: center; color: #4b5563; font-size: 1.1rem; padding: 60px 20px;
+            background: #f9fafb; border-radius: 16px; margin-top: 40px; border: 1px dashed #d1d5db;
+        }
+        .empty-message-icon {
+            font-size: 3rem;
+            margin: 0 auto 1.5rem;
+            display: block;
+        }
+
+        /* ==== ESTILOS ESPECÍFICOS PARA ESTE FORMULARIO ==== */
+        /* Estilos del header si decides mantenerlo */
+        .header {
+            background-color: #4f46e5; /* Color morado */
+            color: white;
+            padding: 1rem 20px;
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem; /* Espacio debajo del header */
+            border-radius: 0 0 10px 10px; /* Bordes redondeados en la parte inferior */
+        }
+
+        .header-icon {
+            fill: white; /* Asegura que el SVG sea blanco */
+            width: 20px;
+            height: 20px;
+            margin-right: 0.5rem;
+        }
+
+        .breadcrumb {
+            color: #dbeafe; /* Un azul más claro para el breadcrumb */
+        }
+
+        .breadcrumb .current {
+            font-weight: 600;
+            color: white;
+        }
+
+        main { /* Estilo para el contenedor del formulario */
+            max-width: 600px; /* Ancho máximo para el formulario */
+            margin: 2rem auto; /* Centrarlo y darle margen */
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border: 1px solid #e5e7eb;
+        }
+
+        main h2 { /* Estilo para el título del formulario */
+            color: #1e3a8a;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .form-row p { /* Estilo para cada campo del formulario generado por form.as_p */
+            margin-bottom: 1rem;
+        }
+
+        .form-row label { /* Estilo para las etiquetas de los campos */
+            display: block;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-row input[type="text"],
+        .form-row input[type="number"],
+        .form-row input[type="email"],
+        .form-row select,
+        .form-row textarea { /* Estilo para los inputs y selects del formulario */
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            background-color: white;
+        }
+
+        .form-row input[type="text"]:focus,
+        .form-row input[type="number"]:focus,
+        .form-row input[type="email"]:focus,
+        .form-row select:focus,
+        .form-row textarea:focus {
+            outline: none;
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .form-actions { /* Contenedor para los botones */
+            display: flex;
+            justify-content: flex-end; /* Alinear a la derecha */
+            gap: 1rem; /* Espacio entre botones */
+            margin-top: 2rem;
+        }
+
+        .form-actions button,
+        .form-actions a {
+            padding: 12px 25px; /* Más padding para botones */
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .form-actions button[type="submit"] {
+            background-color: #4f46e5; /* Morado para guardar */
+            color: white;
+        }
+
+        .form-actions button[type="submit"]:hover {
+            background-color: #4338ca;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .form-actions a { /* Estilo para el botón de cancelar */
+            background-color: #e5e7eb;
+            color: #374151;
+            border: 1px solid #d1d5db;
+        }
+
+        .form-actions a:hover {
+            background-color: #d1d5db;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="main-content">
+        <header class="header">
+            <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M3 12l9-9 9 9h-3v9h-12v-9h-3z"/>
+            </svg>
+           <!-- BREADCRUMB NAVIGATION -->
+        <nav class="breadcrumbs" aria-label="breadcrumb">
+            <a href="{% url 'homepageCADI:homepageCADI' %}">Inicio</a>
+            <span class="separator">/</span>
+            <a href="{% url 'tournaments:tournaments_menu' %}">Gestión Deportiva</a>
+            <span class="separator">/</span>
+            <span class="current">Agregar/Editar Participantes</span>
+        </nav>
+        </header>
+
+        <main>
+            <h2>{% if tournament %}{{ tournament.name }} - {% endif %}Agregar / Editar participante</h2>
+            <form method="POST" class="enroll-form"> {# Usamos la clase enroll-form para el formulario #}
+                {% csrf_token %}
+                {% for field in form %}
+                    <p class="form-row">
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {% if field.help_text %}
+                            <small style="color: #6b7280; font-size: 0.85rem;">{{ field.help_text }}</small>
+                        {% endif %}
+                        {% for error in field.errors %}
+                            <span style="color: #ef4444; font-size: 0.85rem;">{{ error }}</span>
+                        {% endfor %}
+                    </p>
+                {% endfor %}
+                <div class="form-actions"> {# Contenedor para los botones de acción #}
+                    <button type="submit" class="btn-primary">Guardar</button>
+                    <a href="{% url 'tournaments:participants_menu' %}">Cancelar</a> 
+                </div>
+            </form>
+        </main>
+    </div>
+   
+</body>
+</html>

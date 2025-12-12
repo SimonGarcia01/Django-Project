@@ -1,0 +1,282 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="86E9FC69-9375-9716-A919-7CDC093DB969" name="tournaments_tournamentgame">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id" id="8BFC80D3-2354-09E2-9749-169E8FE04F5D">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<use>0</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<domain>8255836D-63A4-B7EE-E3E1-7CFA5C5901AF</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<identityColumn>true</identityColumn>
+<defaultOntNull>true</defaultOntNull>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementOrder>false</autoIncrementOrder>
+</Column>
+<Column name="homeScore" id="06994381-FCE8-8876-97C8-5FD539A7BFD9">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<use>0</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<domain>6C79D9B6-1A68-C99E-2E43-579CB84F1393</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="guestScore" id="A4ECD155-C255-4079-0A2D-DCE3FFD47359">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<use>0</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<domain>6C79D9B6-1A68-C99E-2E43-579CB84F1393</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="played" id="C62180F1-D65B-58FD-510D-8A7B9FDF592E">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<use>0</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<domain>74AF39C0-1C84-68A8-84BB-58728525E990</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="guest_player_id" id="12DFF9EC-2158-3144-1E78-9CDCC3F55B1B">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<domain>6C79D9B6-1A68-C99E-2E43-579CB84F1393</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="05D651CB-9C85-9275-8B4D-46A53B23C1A3" referredColumn="5D1CC67F-625A-F964-6800-DCD2888A09C9"/>
+</associations>
+</Column>
+<Column name="guest_team_id" id="1EB0477A-3371-9081-0659-FBA51874139C">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<domain>6C79D9B6-1A68-C99E-2E43-579CB84F1393</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="0D8EBD68-81F3-879D-5543-B8123300F968" referredColumn="1D3C2DAA-D102-BDF1-6B62-1F438F6648BA"/>
+</associations>
+</Column>
+<Column name="home_player_id" id="5C81F5F2-5BD8-9668-778D-920F32574D15">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<domain>6C79D9B6-1A68-C99E-2E43-579CB84F1393</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="DF92AA66-7074-8F12-0B22-B5BAD9B9A51F" referredColumn="5D1CC67F-625A-F964-6800-DCD2888A09C9"/>
+</associations>
+</Column>
+<Column name="home_team_id" id="283C51E0-005B-59BF-FFC6-AA87AC89B5D0">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<domain>6C79D9B6-1A68-C99E-2E43-579CB84F1393</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="64CCA792-92A5-A41B-11D0-3772FA3E8421" referredColumn="1D3C2DAA-D102-BDF1-6B62-1F438F6648BA"/>
+</associations>
+</Column>
+<Column name="schedule_id" id="60B64764-D13B-231F-50EA-A3A7E852219E">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<use>0</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<domain>6C79D9B6-1A68-C99E-2E43-579CB84F1393</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="B75973B0-5F12-862E-0076-554347E6406F" referredColumn="4CA8F0B0-7B39-6986-CC64-774B8FCFCC64"/>
+</associations>
+</Column>
+<Column name="tournament_id" id="A3EE133B-3D08-9C40-3551-D590BD659637">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<use>0</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<domain>8255836D-63A4-B7EE-E3E1-7CFA5C5901AF</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="4320D775-D684-E225-0EE1-EF5CE76C2695" referredColumn="8E356021-8FBC-29CE-2FD2-A1CB85B08622"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="16C6BFA1-7C12-714F-3BDF-41A5EE14728B" name="tournaments_tournamentgame_pkey">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="8BFC80D3-2354-09E2-9749-169E8FE04F5D"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="3AD2F89E-54E4-49CD-1F43-7A0661A64810" name="tournaments_tournamentgame_guest_player_id_b7ee2a48">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="12DFF9EC-2158-3144-1E78-9CDCC3F55B1B"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="ACB1D448-A1CB-9227-0194-A24687F794C6" name="tournaments_tournamentgame_guest_team_id_9167b045">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="1EB0477A-3371-9081-0659-FBA51874139C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="BCAEF680-C2F8-C53E-0D68-88D99652E832" name="tournaments_tournamentgame_home_player_id_b3452124">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="5C81F5F2-5BD8-9668-778D-920F32574D15"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="C50FAA29-0E41-26B4-84D3-5C17F93D1903" name="tournaments_tournamentgame_home_team_id_6db452e6">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="283C51E0-005B-59BF-FFC6-AA87AC89B5D0"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="F68E8982-923B-63C8-38F7-F7F7F5CD1B8E" name="tournaments_tournamentgame_schedule_id_e51f5b94">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="60B64764-D13B-231F-50EA-A3A7E852219E"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="DFD3D1E3-DCE1-6432-8C73-8F57E05C48E7" name="tournaments_tournamentgame_tournament_id_d777f9b2">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="A3EE133B-3D08-9C40-3551-D590BD659637"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="C0EF0D78-00BE-A01D-9217-0D1F8BB86286" name="tournaments_tourname_guest_player_id_b7ee2a48_fk_tournamen">
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="12DFF9EC-2158-3144-1E78-9CDCC3F55B1B"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="B888D197-A943-4707-2365-782BF6435DEE" name="tournaments_tourname_guest_team_id_9167b045_fk_tournamen">
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="1EB0477A-3371-9081-0659-FBA51874139C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="4B9E825C-A76F-B747-8DD7-88D9120D5E16" name="tournaments_tourname_home_player_id_b3452124_fk_tournamen">
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="5C81F5F2-5BD8-9668-778D-920F32574D15"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="D84AB315-30D6-8BF1-16E1-DE2CFA5ECCDA" name="tournaments_tourname_home_team_id_6db452e6_fk_tournamen">
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="283C51E0-005B-59BF-FFC6-AA87AC89B5D0"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="7271EFBE-BF2A-84AA-D0AA-0C2D2133A6D6" name="tournaments_tourname_schedule_id_e51f5b94_fk_tournamen">
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="60B64764-D13B-231F-50EA-A3A7E852219E"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="A2EB3FF9-C56A-A607-BE27-ADEDA1A11DD9" name="tournaments_tourname_tournament_id_d777f9b2_fk_tournamen">
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="A3EE133B-3D08-9C40-3551-D590BD659637"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

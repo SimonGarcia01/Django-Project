@@ -1,0 +1,132 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="D3542F2B-6FBF-A2E8-4FD9-420553E494D9" name="social_projects_socialprojectenrollment">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id" id="988C8DC9-F4C0-0564-44C7-A60C23633221">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<use>0</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<domain>8255836D-63A4-B7EE-E3E1-7CFA5C5901AF</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<identityColumn>true</identityColumn>
+<defaultOntNull>true</defaultOntNull>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementOrder>false</autoIncrementOrder>
+</Column>
+<Column name="enrolled_at" id="3A2D5AC5-1B88-F847-4779-8DFD4D82FF79">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<use>0</use>
+<logicalDatatype>LOGDT046</logicalDatatype>
+<domain>FB0BAB10-FDE7-F62B-7A58-F16C32B3B23E</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="project_id" id="C7A89F01-CB0A-715B-BE08-60F6C18502E6">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<use>0</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<domain>8255836D-63A4-B7EE-E3E1-7CFA5C5901AF</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="D4A0CF1F-79F3-4E12-5D24-349E34507E36" referredColumn="417FF08E-46F3-AA9D-E359-5782BD2E27F9"/>
+</associations>
+</Column>
+<Column name="user_id" id="80F4E120-BF3F-508F-C73E-871A5A958E7E">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<use>0</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<domain>8255836D-63A4-B7EE-E3E1-7CFA5C5901AF</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="1818018B-BDFA-351F-565E-E824FDFA1A8B" referredColumn="6BC5FBA5-4042-4A67-7292-8E8AA236625B"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="E83CBEB2-7BCC-94BE-4F11-90CB5598F36A" name="social_projects_socialprojectenrollment_pkey">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="988C8DC9-F4C0-0564-44C7-A60C23633221"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="27014822-0678-3A3E-1BFE-0A159A5A9B47" name="social_projects_socialpr_user_id_project_id_07cd27ee_uniq">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<indexState>Unique Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="80F4E120-BF3F-508F-C73E-871A5A958E7E"/>
+<colUsage columnID="C7A89F01-CB0A-715B-BE08-60F6C18502E6"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="361FFE40-1290-0430-C0E8-28674FB6EE56" name="social_projects_socialprojectenrollment_project_id_607ef32c">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="C7A89F01-CB0A-715B-BE08-60F6C18502E6"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="8526763A-3A38-1EA6-AEBC-591B384559FF" name="social_projects_socialprojectenrollment_user_id_50dac806">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="80F4E120-BF3F-508F-C73E-871A5A958E7E"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="660BBC79-0D78-23BF-FA7B-734212271575" name="social_projects_soci_project_id_607ef32c_fk_social_pr">
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="C7A89F01-CB0A-715B-BE08-60F6C18502E6"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="3F378C22-69AE-5C29-877E-C4709102C876" name="social_projects_soci_user_id_50dac806_fk_login_cus">
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="80F4E120-BF3F-508F-C73E-871A5A958E7E"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

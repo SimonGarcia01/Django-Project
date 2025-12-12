@@ -1,0 +1,59 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="4A1A48C5-26BF-A75F-7B61-6320A0061482" name="PRIVILAGES">
+<createdBy>kracr</createdBy>
+<createdTime>2025-08-30 20:09:39 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<engineerTo>
+<item key="648A4291-7871-969E-25F9-D1A8E91FC7CC" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="privilageId" id="6D7A1139-D8F2-651D-D4AC-F1695CE4087C">
+<createdBy>kracr</createdBy>
+<createdTime>2025-08-30 20:09:48 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<engineerTo>
+<item key="648A4291-7871-969E-25F9-D1A8E91FC7CC" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>2</dataTypePrecision>
+<ownDataTypeParameters>,2,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="name" id="B2A4F822-3319-FE7B-34E6-19F9B6908362">
+<createdBy>kracr</createdBy>
+<createdTime>2025-08-30 20:10:07 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<engineerTo>
+<item key="648A4291-7871-969E-25F9-D1A8E91FC7CC" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20</dataTypeSize>
+<ownDataTypeParameters>20,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="E2182479-5E7F-5E78-5501-533637412E0D" name="PRIVILAGES PK">
+<createdBy>kracr</createdBy>
+<createdTime>2025-08-30 20:10:03 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<engineerTo>
+<item key="648A4291-7871-969E-25F9-D1A8E91FC7CC" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>6D7A1139-D8F2-651D-D4AC-F1695CE4087C</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

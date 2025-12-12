@@ -1,0 +1,183 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Selecciona tus intereses</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: url("{% static 'images/Foto_Icesi10.jpg' %}") no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    .interests-container {
+      background: rgba(255, 255, 255, 0.93);
+      border-radius: 24px;
+      padding: 60px 50px;
+      max-width: 1300px;
+      margin: 80px auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .interests-container h2 {
+      font-size: 2.6rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .cards-wrapper {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 35px;
+      margin-bottom: 35px;
+    }
+
+    .card {
+      position: relative;
+      width: 230px;
+      height: 310px;
+      background-color: #fff;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .card img {
+      width: 100%;
+      height: 75%;
+      object-fit: cover;
+      transition: filter 0.25s ease;
+    }
+
+    .card p {
+      background-color: #004C97;
+      color: white;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1.1rem;
+      padding: 10px 0;
+      margin: 0;
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
+    .card input[type="checkbox"] {
+      display: none;
+    }
+
+    /* Cuando se selecciona la tarjeta */
+    .card input[type="checkbox"]:checked + img {
+      filter: brightness(90%); /* Imagen ligeramente más oscura */
+    }
+
+    .card input[type="checkbox"]:checked ~ p {
+      background-color: #cce5ff; /* Azul muy claro */
+      color: #004C97; /* Texto azul oscuro para contraste */
+    }
+
+    .preferences {
+      text-align: center;
+      font-size: 1rem;
+      color: #333;
+      margin-bottom: 25px;
+    }
+
+    .preferences input {
+      margin-right: 8px;
+    }
+
+    .save-btn {
+      background-color: #004C97;
+      color: white;
+      font-weight: 600;
+      border: none;
+      border-radius: 50px;
+      padding: 14px 40px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background 0.25s ease;
+    }
+
+    .save-btn:hover {
+      background-color: #003870;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="interests-container">
+    <h2>Selecciona tus intereses</h2>
+
+    <form method="post">
+      {% csrf_token %}
+      <div class="cards-wrapper">
+        <label class="card">
+          {{ form.is_group_activity }}
+          <img src="{% static 'images/Grupal.jpeg' %}" alt="Grupal">
+          <p>Grupal</p>
+        </label>
+
+        <label class="card">
+          {{ form.is_individual_activity }}
+          <img src="{% static 'images/Individual.jpeg' %}" alt="Individual">
+          <p>Individual</p>
+        </label>
+
+        <label class="card">
+          {{ form.is_sport }}
+          <img src="{% static 'images/Deportiva.jpeg' %}" alt="Deportivo">
+          <p>Deportivo</p>
+        </label>
+
+        <label class="card">
+          {{ form.is_art }}
+          <img src="{% static 'images/Artistica.jpeg' %}" alt="Artístico">
+          <p>Artístico</p>
+        </label>
+
+        <label class="card">
+          {{ form.is_psychology }}
+          <img src="{% static 'images/Psicologica.jpeg' %}" alt="Psicológico">
+          <p>Psicológico</p>
+        </label>
+      </div>
+
+      <div class="preferences">
+        <label>
+          {{ form.receive_alerts }} Deseo recibir alertas personalizadas
+        </label>
+      </div>
+
+      <button type="submit" class="save-btn">Guardar preferencias</button>
+    </form>
+  </div>
+
+</body>
+</html>

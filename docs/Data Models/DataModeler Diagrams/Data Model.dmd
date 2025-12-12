@@ -1,0 +1,13 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="Data Model" id="990A6DEC-B69A-3F01-0E91-658EEAE05194" version="3.5">
+<createdBy>kracr</createdBy>
+<createdTime>2025-08-30 19:58:11 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<capitalNames>false</capitalNames>
+<designId>990A6DEC-B69A-3F01-0E91-658EEAE05194</designId>
+<usedDesignStorageDescriptors>
+<designDescr class="oracle.dbtools.crest.model.design.Design$DesignStorageDesc" id="2ACAAB4B-DFF2-7A81-2B94-500E57A5F4E5">
+<designStoragePath>C:\postgres-workshop</designStoragePath>
+</designDescr>
+</usedDesignStorageDescriptors>
+</OSDM_Design>

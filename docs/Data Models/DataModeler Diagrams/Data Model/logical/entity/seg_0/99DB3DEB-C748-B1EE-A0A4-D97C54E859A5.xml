@@ -1,0 +1,59 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="99DB3DEB-C748-B1EE-A0A4-D97C54E859A5" name="ROLE">
+<createdBy>kracr</createdBy>
+<createdTime>2025-08-30 20:08:01 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<engineerTo>
+<item key="648A4291-7871-969E-25F9-D1A8E91FC7CC" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="roleId" id="E76BB37F-5A73-DB75-022B-0C6592BE1AF1">
+<createdBy>kracr</createdBy>
+<createdTime>2025-08-30 20:08:12 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<engineerTo>
+<item key="648A4291-7871-969E-25F9-D1A8E91FC7CC" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>2</dataTypePrecision>
+<ownDataTypeParameters>,2,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="name" id="5F0FD1AA-1468-6981-8BD9-B0ED448FD047">
+<createdBy>kracr</createdBy>
+<createdTime>2025-08-30 20:08:57 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<engineerTo>
+<item key="648A4291-7871-969E-25F9-D1A8E91FC7CC" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30</dataTypeSize>
+<ownDataTypeParameters>30,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="AE2135A3-37CC-57EA-ABD5-565DCC539876" name="ROLE PK">
+<createdBy>kracr</createdBy>
+<createdTime>2025-08-30 20:08:56 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<engineerTo>
+<item key="648A4291-7871-969E-25F9-D1A8E91FC7CC" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>E76BB37F-5A73-DB75-022B-0C6592BE1AF1</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

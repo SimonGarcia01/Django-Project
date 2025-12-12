@@ -1,0 +1,103 @@
+/* ==== Estilo general ==== */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f3f4f6;
+    margin: 0;
+    padding: 0;
+    color: #4b5563;
+  }
+  
+  /* ==== Header ==== */
+  header {
+    background: linear-gradient(90deg, #4c1d95, #6d28d9); /* Morado degradado */
+    color: white;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  
+  header h1 {
+    font-size: 1.125rem;
+    font-weight: 700;
+  }
+  
+  header svg {
+    width: 24px;
+    height: 24px;
+    fill: white;
+  }
+  
+  header .user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  header .user-info span {
+    font-weight: 600;
+  }
+  
+  header a {
+    color: #e9d5ff;
+    font-size: 0.875rem;
+    text-decoration: underline;
+  }
+  
+  header a:hover {
+    color: #c084fc;
+  }
+  
+  /* ==== Tarjetas principales ==== */
+  .card {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(76, 29, 149, 0.15);
+  }
+  
+  .card h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #4c1d95;
+  }
+  
+  /* ==== Botones ==== */
+  .btn-primary {
+    background-color: #6d28d9;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: background 0.2s;
+  }
+  
+  .btn-primary:hover {
+    background-color: #5b21b6;
+  }
+  
+  /* ==== Resaltados ==== */
+  .highlight {
+    color: #9333ea;
+    font-weight: 600;
+  }
+  
+  .stat-positive {
+    color: #16a34a;
+    font-weight: 500;
+  }
+  
+  .stat-warning {
+    color: #eab308;
+    font-weight: 500;
+  }
+  
+  /* ==== Secciones con fondo suave ==== */
+  .section-light {
+    background-color: #f5f3ff; 
+    border-radius: 0.75rem;
+    padding: 1rem;
+  }
+  

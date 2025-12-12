@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="64CCA792-92A5-A41B-11D0-3772FA3E8421" containerWithKeyObject="86E9FC69-9375-9716-A919-7CDC093DB969" localFKIndex="D84AB315-30D6-8BF1-16E1-DE2CFA5ECCDA" name="tournaments_tourname_home_team_id_6db452e6_fk_tournamen">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<referredTableLongName>tournaments_team</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>84B1D4AE-82D7-6B0A-0149-A6E45A2B715F</referredTableID>
+<keyObject>B0D7AC8E-2EFB-2342-82C5-90D85394A5F2</keyObject>
+<referredKeyID>B0D7AC8E-2EFB-2342-82C5-90D85394A5F2</referredKeyID>
+<mandatory>false</mandatory>
+<refColNames>teamId</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

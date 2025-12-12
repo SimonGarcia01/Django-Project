@@ -1,0 +1,118 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso Denegado</title>
+    <!-- FONT IMPORTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* GLOBAL VARIABLES & BASE STYLES */
+        :root {
+            --primary-color: #2563eb;
+            --primary-hover: #1e40af;
+            --text-dark: #111827;
+            --text-light: #4b5563;
+            --error-color: #ef4444; /* A brighter red for alerts */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background-color: var(--text-dark);
+            background-image: linear-gradient(160deg, rgba(17, 24, 39, 0.7) 0%, rgba(30, 64, 175, 0.5) 100%), url("{% static 'images/Foto_Icesi10.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        /* PERMISSION DENIED CARD */
+        .denied-card {
+            width: 100%;
+            max-width: 500px;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ICON */
+        .icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px;
+            color: var(--error-color);
+        }
+
+        /* TYPOGRAPHY */
+        .title {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: #b91c1c; /* Dark red for the title */
+            margin-bottom: 10px;
+        }
+
+        .message {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        /* "GO BACK" BUTTON */
+        .btn-back {
+            display: inline-block;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            background-color: var(--primary-color);
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-back:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.3);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="denied-card">
+        <div class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+            </svg>
+        </div>
+        <h1 class="title">Acceso Denegado</h1>
+        <p class="message">{{ message|default:"No tienes los permisos necesarios para ver esta página." }}</p>
+        <a href="{{ back_url|default:'javascript:history.back()' }}" class="btn-back">Regresar</a>
+    </div>
+</body>
+</html>

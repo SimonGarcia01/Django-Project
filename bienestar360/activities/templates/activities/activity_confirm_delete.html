@@ -1,0 +1,122 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmar eliminación</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #374151;
+            min-height: 100vh;
+            padding: 40px 20px;
+            background-image: url("{% static 'images/Foto_Icesi10.jpg' %}");
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+        }
+        .main-content {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        }
+        h1 {
+            color: #1e3a8a;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+        }
+        .warning {
+            background-color: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .warning p {
+            color: #dc2626;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        .activity-info {
+            background-color: #f3f4f6;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .activity-info h2 {
+            color: #1e3a8a;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        .activity-info p {
+            margin-bottom: 5px;
+            color: #374151;
+        }
+        .buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.25s ease;
+        }
+        .btn-danger {
+            background: #dc2626;
+            color: white;
+        }
+        .btn-danger:hover {
+            background: #b91c1c;
+        }
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background: #4b5563;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-content">
+        <h1>Confirmar eliminación</h1>
+
+        <div class="warning">
+            <p>⚠️ Esta acción no se puede deshacer.</p>
+            <p>¿Estás seguro de que quieres eliminar esta actividad?</p>
+        </div>
+
+        <div class="activity-info">
+            <h2>{{ activity.name }}</h2>
+            <p><strong>Tipo:</strong> {{ activity.get_type_display }}</p>
+            <p><strong>Categoría:</strong> {{ activity.get_category_display }}</p>
+            <p><strong>Ubicación:</strong> {{ activity.location }}</p>
+            <p><strong>Descripción:</strong> {{ activity.description }}</p>
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="buttons">
+                <button type="submit" class="btn-danger">Eliminar actividad</button>
+                <a href="{% url 'public_activities' %}" class="btn-secondary" style="text-decoration: none; display: inline-block;">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

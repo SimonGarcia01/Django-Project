@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="FDB90C05-F2C4-933F-4759-4385E8820184" containerWithKeyObject="C14C76B3-D0F3-D070-8A56-7E2B59CE11EA" localFKIndex="0DC39138-E75D-5F4E-F253-0E28FB3B2E38" name="auth_group_permissions_group_id_b120cbf9_fk_auth_group_id">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<referredTableLongName>auth_group</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>A3114A91-7828-B925-C6A9-D5204837E61D</referredTableID>
+<keyObject>B04D1DEA-611D-D384-AC13-ECF1E9792D58</keyObject>
+<referredKeyID>B04D1DEA-611D-D384-AC13-ECF1E9792D58</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>id</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

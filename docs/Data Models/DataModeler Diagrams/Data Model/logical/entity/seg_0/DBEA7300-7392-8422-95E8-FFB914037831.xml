@@ -1,0 +1,93 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="DBEA7300-7392-8422-95E8-FFB914037831" name="PARTICIPATION">
+<createdBy>kracr</createdBy>
+<createdTime>2025-08-30 20:52:36 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<engineerTo>
+<item key="648A4291-7871-969E-25F9-D1A8E91FC7CC" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="Attribute_1" id="CCC8910C-AAF2-27FA-118E-185FCA4867B5">
+<createdBy>kracr</createdBy>
+<createdTime>2025-08-30 20:53:50 UTC</createdTime>
+<generatorID>5F946055-1C19-4B4D-D808-B3D08B79BCA7</generatorID>
+<ownerDesignName>Data Model</ownerDesignName>
+<engineerTo>
+<item key="648A4291-7871-969E-25F9-D1A8E91FC7CC" value="true"/>
+</engineerTo>
+<referedAttribute>5EDA32B6-85B2-75FC-E522-644917DBEC97</referedAttribute>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="teamId" id="BC041982-C71A-8938-3132-1512CA4438F4">
+<createdBy>kracr</createdBy>
+<createdTime>2025-08-30 20:53:50 UTC</createdTime>
+<generatorID>5F946055-1C19-4B4D-D808-B3D08B79BCA7</generatorID>
+<ownerDesignName>Data Model</ownerDesignName>
+<engineerTo>
+<item key="648A4291-7871-969E-25F9-D1A8E91FC7CC" value="true"/>
+</engineerTo>
+<referedAttribute>5A085439-507F-BBC8-95E6-0F42CE5DD738</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>5</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="universityId" id="5DBE0904-AA9D-C776-B19F-BC270E65A43E">
+<createdBy>kracr</createdBy>
+<createdTime>2025-08-30 20:53:50 UTC</createdTime>
+<generatorID>5F946055-1C19-4B4D-D808-B3D08B79BCA7</generatorID>
+<ownerDesignName>Data Model</ownerDesignName>
+<engineerTo>
+<item key="648A4291-7871-969E-25F9-D1A8E91FC7CC" value="true"/>
+</engineerTo>
+<referedAttribute>F6D2C845-65E0-2428-9251-CA4E997292DC</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>3</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="tournamentId" id="B581AFED-2BF9-1540-B7AE-686706FF2672">
+<createdBy>kracr</createdBy>
+<createdTime>2025-08-30 20:54:52 UTC</createdTime>
+<generatorID>D7BA0E32-77D4-1EA3-A661-047EDC93A656</generatorID>
+<ownerDesignName>Data Model</ownerDesignName>
+<engineerTo>
+<item key="648A4291-7871-969E-25F9-D1A8E91FC7CC" value="true"/>
+</engineerTo>
+<referedAttribute>84D98988-B48D-B643-82BA-937DFFEF7D8C</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>5</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="BAA44856-2AAB-4481-E796-D8B4C683228F" name="PARTICIPATION PK">
+<createdBy>kracr</createdBy>
+<createdTime>2025-08-30 20:53:21 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<engineerTo>
+<item key="648A4291-7871-969E-25F9-D1A8E91FC7CC" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>CCC8910C-AAF2-27FA-118E-185FCA4867B5</attributeRef>
+<attributeRef>BC041982-C71A-8938-3132-1512CA4438F4</attributeRef>
+<attributeRef>5DBE0904-AA9D-C776-B19F-BC270E65A43E</attributeRef>
+<attributeRef>B581AFED-2BF9-1540-B7AE-686706FF2672</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

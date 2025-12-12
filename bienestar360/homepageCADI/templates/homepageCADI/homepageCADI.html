@@ -1,0 +1,405 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Control - Administración del Sistema</title>
+    
+    <!-- FONT IMPORTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* GLOBAL VARIABLES */
+        :root {
+            --primary-color: #2563eb;
+            --primary-hover: #1e40af;
+            --primary-glow: rgba(37, 99, 235, 0.5);
+            --secondary-color: #f3f4f6;
+            --text-dark: #111827;
+            --text-light: #4b5563;
+            --border-color: #e5e7eb;
+            --card-bg: rgba(255, 255, 255, 0.98);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--text-dark);
+            background-image: linear-gradient(160deg, rgba(17, 24, 39, 0.7) 0%, rgba(30, 64, 175, 0.5) 100%), url("{% static 'images/Foto_Icesi10.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: rgba(17, 24, 39, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            color: white;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 600;
+        }
+
+        .nav-icon {
+            width: 24px;
+            height: 24px;
+            color: var(--primary-color);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .nav-right a {
+            color: #a7c5ff;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .nav-right a:hover {
+            text-decoration: underline;
+        }
+
+        /* HEADER */
+        .header {
+            text-align: center;
+            padding: 3rem 1rem 4rem 1rem;
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        .header h1 {
+            font-size: 3.8rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #ffffff 60%, #a7c5ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            max-width: 700px;
+            margin: 0 auto;
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 1.1rem;
+        }
+
+        /* CARD STYLES */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        /* STATS SECTION */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        .stat-card {
+            text-align: center;
+        }
+
+        .stat-card h4 {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .stat-card .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 0.25rem 0;
+        }
+
+        .stat-card .stat-subtitle {
+            font-size: 0.875rem;
+            color: #9ca3af;
+            margin-top: 0.5rem;
+        }
+
+        /* SECTION STYLES */
+        .section {
+            margin-bottom: 3rem;
+            animation: fadeIn 0.7s ease-out forwards;
+        }
+
+        .section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.75rem;
+            color: #ffffff;
+        }
+
+        .section-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+
+        .section-link:hover {
+            text-decoration: underline;
+        }
+
+        /* QUICK ACTIONS & MODULES GRID */
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .action-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+            color: var(--text-dark);
+        }
+
+        .action-icon {
+            flex-shrink: 0;
+            width: 48px;
+            height: 48px;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #eef2ff;
+            color: var(--primary-color);
+        }
+
+        .action-icon svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .action-item h4 {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .action-item p {
+            font-size: 0.875rem;
+            color: var(--text-light);
+            margin: 0;
+        }
+
+        /* ACTIVITY LIST */
+        .activity-list {
+            list-style: none;
+        }
+
+        .activity-list li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .activity-list li:last-child {
+            border-bottom: none;
+        }
+
+        .activity-time {
+            color: #9ca3af;
+            font-size: 0.8rem;
+            margin-left: 0.5rem;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+            
+            .navbar {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            </svg>
+            <span>Panel de Administración</span>
+        </div>
+        <div class="nav-right">
+            <span>Admin Usuario</span>
+            <a href="{% url 'login:login' %}">Cerrar sesión</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header class="header">
+            <h1>Panel de Control</h1>
+            <p>Centro de gestión integral para la administración del sistema de bienestar universitario.</p>
+        </header>
+
+        
+        <!-- Quick Actions Section -->
+        <section class="section">
+            <div class="section-header">
+                <h3 class="section-title">Acciones Rápidas</h3>
+            </div>
+            <div class="actions-grid">
+                <!-- Proyecto Social - URL Actualizada -->
+                <a href="{% url 'social_projects:social_project_enrollments' %}" class="card action-item">
+                    <div class="action-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.653-.125-1.273-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.653.125-1.273.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4>Usuarios en Proyecto Social</h4>
+                        <p>Ver y gestionar estudiantes inscritos</p>
+                    </div>
+                </a>
+
+                <!-- Gestión de Torneos -->
+                <a href="{% url 'tournaments:tournaments_menu' %}" class="card action-item">
+                    <div class="action-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 11l3-3m0 0l3 3m-3-3v8m0-13a9 9 0 110 18 9 9 0 010-18z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4>Gestión de Torneos</h4>
+                        <p>Añadir y gestionar torneos y partidos</p>
+                    </div>
+                </a>
+
+                <!-- Segmentación de Participación -->
+                <a href="{% url 'participation_segmentation' %}" class="card action-item">
+                    <div class="action-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4>Segmentación de participación</h4>
+                        <p>Analiza la participación de usuarios en actividades</p>
+                    </div>
+                </a>
+
+                <!-- Generar Reportes -->
+                <a href="{% url 'reportsAndStats:general_reports' %}" class="card action-item">
+                    <div class="action-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4>Generar Reportes</h4>
+                        <p>Análisis y estadísticas de participación</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Gestión de Módulos Section -->
+        <section class="section">
+            <h3 class="section-title">Gestión de Módulos</h3>
+            <div class="actions-grid">
+                <!-- Centro Artístico -->
+                <div class="card">
+                    <h4>Centro Artístico</h4>
+                    <p style="font-size: 0.9rem; margin: 0.5rem 0; color: var(--text-light);">
+                        Gestión de programas artísticos, deportivos y eventos de bienestar.
+                    </p>
+                    <a href="{% url 'create_activity' %}" class="section-link">Crear actividad →</a>
+                    <br>
+                    <a href="{% url 'public_activities' %}" class="section-link">Administrar →</a>
+                </div>
+
+
+                <!-- PSU - Proyecto Social -->
+                <div class="card">
+                    <h4>PSU - Proyecto Social</h4>
+                    <p style="color: var(--primary-color); font-weight: 600; margin: 0.25rem 0;">Proyecto Social Universitario</p>
+                    <p style="font-size: 0.9rem; margin: 0.5rem 0; color: var(--text-light);">
+                        Gestión del proyecto social universitario.
+                    </p>
+                    <a href="{% url 'social_projects:social_project_create' %}" class="section-link">Crear evento →</a> 
+                    <br>
+                    <a href="{% url 'social_projects:social_project_enrollments' %}" class="section-link">Administrar →</a>
+                </div>
+
+            </div>
+        </section>
+    </div>
+</body>
+</html>

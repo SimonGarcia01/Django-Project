@@ -1,0 +1,266 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Calendario de Actividades</title>
+    <style>
+        /* FONT IMPORT */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        /* GLOBAL STYLES */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: #374151;
+            min-height: 100vh;
+            padding: 40px 20px;
+
+            background-image: url("{% static 'images/Foto_Icesi10.jpg' %}");
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+        }
+
+        /* MAIN CONTENT CONTAINER */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        /* MODERN BREADCRUMBS BAR */
+        .breadcrumbs {
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+            color: #374151;
+            background-color: #f3f4f6;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.75rem;
+            border: 1px solid #e5e7eb;
+            display: inline-block;
+        }
+
+        .breadcrumbs a {
+            color: #1e3a8a;
+            text-decoration: none;
+            font-weight: 500;
+            transition: text-decoration 0.2s ease;
+        }
+
+        .breadcrumbs a:hover {
+            text-decoration: underline;
+        }
+
+        .breadcrumbs .separator {
+            margin: 0 0.5rem;
+            color: #9ca3af;
+        }
+
+        .breadcrumbs .current {
+            font-weight: 600;
+            color: #111827;
+        }
+
+        h1 {
+            color: #1e3a8a;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.75rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        /* CALENDAR STYLES */
+        .day-section {
+            margin-bottom: 40px;
+        }
+
+        .day-section h2 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: #111827;
+            padding-bottom: 1rem;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .grid {
+            display: grid;
+            gap: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        }
+
+        /* CARD STYLES */
+        .card {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #e5e7eb;
+            border-left-width: 6px;
+            border-left-style: solid;
+            position: relative; /* Necesario para posicionar el botón de eliminar */
+        }
+
+        .card-color-1 {
+            border-left-color: #facc15;
+        }
+
+        .card-color-2 {
+            border-left-color: #f97316;
+        }
+
+        .card-color-3 {
+            border-left-color: #4f46e5;
+        }
+
+        .card-color-4 {
+            border-left-color: #10b981;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h3 {
+            margin-top: 0;
+            font-size: 1.4rem;
+            color: #1e3a8a;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .card p {
+            margin: 8px 0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #4b5563;
+        }
+
+        .card strong {
+            color: #111827;
+            font-weight: 600;
+            margin-right: 5px;
+        }
+
+        .time-block {
+            background-color: #eef2ff;
+            color: #4338ca;
+            padding: 4px 10px;
+            border-radius: 999px;
+            display: inline-block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .empty-message {
+            text-align: center;
+            color: #4b5563;
+            font-size: 1.1rem;
+            padding: 60px 20px;
+            background: #f9fafb;
+            border-radius: 16px;
+            margin-top: 40px;
+            border: 1px solid #e5e7eb;
+        }
+
+        /* Estilos para el botón de eliminar */
+        .delete-button {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: #ef4444; /* Rojo */
+            color: white;
+            border: none;
+            border-radius: 50%; /* Hacerlo redondo */
+            width: 30px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            line-height: 1; /* Para centrar el "x" */
+        }
+
+        .delete-button:hover {
+            background-color: #dc2626; /* Rojo más oscuro al pasar el ratón */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-content">
+        <!-- BREADCRUMBS SECTION -->
+        <nav class="breadcrumbs" aria-label="breadcrumb">
+            <a href="{% url 'homepageUser:homepageUser' %}">Inicio</a>
+            <span class="separator">/</span>
+            <a href="{% url 'my_calendar' %}">Calendario</a>
+            <span class="separator">/</span>
+            <span class="current">Disponibles</span>
+        </nav>
+
+        <h1>Mi Calendario de Actividades</h1>
+
+        {% if calendar %}
+        {% for day, activities in calendar.items %}
+        <div class="day-section">
+            <h2>{{ day }}</h2>
+            <div class="grid">
+                {% for activity in activities %}
+                {% cycle '1' '2' '3' '4' as color_index silent %}
+                <div class="card card-color-{{ color_index }}">
+                    <h3>{{ activity.name }}</h3>
+                    <p><span class="time-block">{{ activity.start_time|time:"g:i A" }} - {{ activity.end_time|time:"g:i
+                            A" }}</span></p>
+                    <p><strong>Ubicación:</strong> {{ activity.location }}</p>
+                    <p><strong>Categoría:</strong> {{ activity.category }}</p>
+                    <p><strong>Tipo:</strong> {{ activity.type }}</p>
+
+                    <!-- Botón de eliminar -->
+                    <form action="{% url 'unenroll_from_activity' activity.enrollment_id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="delete-button" title="Eliminar del calendario">
+                            &times;
+                        </button>
+                    </form>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="empty-message">
+            <p>No tienes actividades registradas en tu calendario.</p>
+        </div>
+        {% endif %}
+    </div>
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</body>
+
+</html>

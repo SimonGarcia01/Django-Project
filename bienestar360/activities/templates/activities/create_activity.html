@@ -1,0 +1,444 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publicar nueva actividad</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ====== FONT IMPORT & BASE STYLES ====== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #374151;
+            min-height: 100vh;
+            padding: 40px 20px;
+            background-image: url("{% static 'images/Foto_Icesi10.jpg' %}");
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+        }
+
+        /* ====== LAYOUT & MAIN CONTAINER ====== */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        }
+
+        /* ====== BREADCRUMBS ====== */
+        .breadcrumbs {
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+            color: #374151;
+            background-color: #f3f4f6;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.75rem;
+            border: 1px solid #e5e7eb;
+            display: inline-block;
+        }
+        .breadcrumbs a {
+            color: #1e3a8a;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .breadcrumbs a:hover { text-decoration: underline; }
+        .breadcrumbs .separator { margin: 0 0.5rem; color: #9ca3af; }
+        .breadcrumbs .current { font-weight: 600; color: #111827; }
+
+        /* ====== HEADER & TYPOGRAPHY ====== */
+        h1 {
+            color: #1e3a8a;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border: 1px solid #e5e7eb;
+            margin-bottom: 20px;
+        }
+        .card h2 {
+            font-size: 1.3rem;
+            color: #1e3a8a;
+            margin-bottom: 20px;
+            font-weight: 600;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 6px;
+            color: #374151;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            transition: border-color 0.2s ease;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #1e3a8a;
+            box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
+        }
+        .schedule-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .schedule-row label {
+            font-weight: normal;
+            min-width: 80px;
+        }
+        .schedule-row select, .schedule-row input {
+            flex: 1;
+        }
+        .day-field {
+            display: block;
+        }
+        .day-field.hidden {
+            display: none;
+        }
+        button {
+            background: #1e3a8a;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background 0.25s ease;
+            margin-top: 20px;
+        }
+        button:hover {
+            background: #1e40af;
+        }
+        #add-schedule {
+            background: #10b981;
+            margin-top: 10px;
+        }
+        #add-schedule:hover {
+            background: #059669;
+        }
+        small {
+            color: #6b7280;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-content">
+        <!-- Breadcrumb -->
+        <nav class="breadcrumbs">
+            <a href="{% url 'homepageCADI:homepageCADI' %}">Inicio</a>
+            <span class="separator">&gt;</span>
+            <a href="{% url 'public_activities' %}">Actividades</a>
+            <span class="separator">&gt;</span>
+            <span class="current">Publicar nueva actividad</span>
+        </nav>
+
+        <h1>Publicar nueva actividad</h1>
+
+    <form method="post" action="{% url 'create_activity' %}">
+        {% csrf_token %}
+        <div class="container">
+            <div>
+                <div class="card">
+                    <h2>Información básica</h2>
+                    <div class="form-group">
+                        {{ form.name.label_tag }} {{ form.name }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.category.label_tag }} {{ form.category }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.type.label_tag }} {{ form.type }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.location.label_tag }} {{ form.location }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.is_published.label_tag }} {{ form.is_published }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.requires_registration.label_tag }} {{ form.requires_registration }}
+                    </div>
+                    <div class="form-group" id="capacity-field" style="display: none;">
+                        {{ form.max_capacity.label_tag }} {{ form.max_capacity }}
+                        <small>{{ form.max_capacity.help_text }}</small>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>Programación</h2>
+                    {{ formset.management_form }}
+                    <div id="schedule-container">
+                        {% for f in formset %}
+                            <div class="schedule-row">
+                                <span class="day-field">
+                                    {{ f.day.label_tag }} {{ f.day }}
+                                </span>
+                                {{ f.start_time.label_tag }} {{ f.start_time }}
+                                {{ f.end_time.label_tag }} {{ f.end_time }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <button type="button" id="add-schedule">Agregar horario</button>
+                </div>
+            </div>
+
+            <div>
+                <div class="card">
+                    <h2>Detalles</h2>
+                    <div class="form-group">
+                        {{ form.description.label_tag }} {{ form.description }}
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>Previsualización</h2>
+                    <p><strong>Nombre:</strong> <span id="preview-name">---</span></p>
+                    <p><strong>Categoría:</strong> <span id="preview-category">---</span></p>
+                    <p><strong>Tipo:</strong> <span id="preview-type">---</span></p>
+                    <p><strong>Ubicación:</strong> <span id="preview-location">---</span></p>
+                    <p><strong>Días:</strong> <span id="preview-days">---</span></p>
+                    <p><strong>Inscripción:</strong> <span id="preview-registration">---</span></p>
+                    <p><strong>Cupo máximo:</strong> <span id="preview-capacity">---</span></p>
+                </div>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 30px;">
+            <button type="submit">Publicar actividad</button>
+        </div>
+    </form>
+    </div>
+
+    <!-- Hidden template for cloning new schedule rows - using Django's empty form -->
+    <div id="schedule-row-template" style="display: none;">
+        {% with formset.empty_form as empty_form %}
+        <div class="schedule-row">
+            <span class="day-field">
+                {{ empty_form.day.label_tag }} {{ empty_form.day }}
+            </span>
+            {{ empty_form.start_time.label_tag }} {{ empty_form.start_time }}
+            {{ empty_form.end_time.label_tag }} {{ empty_form.end_time }}
+        </div>
+        {% endwith %}
+    </div>
+
+    <script>
+        const nameInput = document.getElementById("id_name");
+        const categoryInput = document.getElementById("id_category");
+        const typeInput = document.getElementById("id_type");
+        const locationInput = document.getElementById("id_location");
+        const registrationInput = document.getElementById("id_requires_registration");
+        const capacityField = document.getElementById("capacity-field");
+        const capacityInput = document.getElementById("id_max_capacity");
+
+        if (nameInput) {
+            nameInput.addEventListener("input", () => {
+                document.getElementById("preview-name").innerText = nameInput.value || "---";
+            });
+        }
+
+        if (categoryInput) {
+            categoryInput.addEventListener("input", () => {
+                document.getElementById("preview-category").innerText = categoryInput.value || "---";
+            });
+        }
+
+        if (typeInput) {
+            typeInput.addEventListener("change", () => {
+                const previewType = document.getElementById("preview-type");
+                if (previewType) {
+                    previewType.innerText = typeInput.value || "---";
+                }
+                toggleDayFields(); // Actualizar visibilidad de campos día
+            });
+            // Inicializar preview de tipo
+            const previewType = document.getElementById("preview-type");
+            if (previewType && typeInput.value) {
+                previewType.innerText = typeInput.value;
+            }
+        }
+
+        if (locationInput) {
+            locationInput.addEventListener("input", () => {
+                document.getElementById("preview-location").innerText = locationInput.value || "---";
+            });
+        }
+
+        // Actualizar preview de días basado en los selects de día del formset
+        function updatePreviewDays() {
+            const daySelects = document.querySelectorAll('select[name*="day"]');
+            const selectedDays = Array.from(daySelects)
+                .map(select => select.options[select.selectedIndex]?.text || '')
+                .filter(text => text && text !== '---------')
+                .join(', ');
+            const previewDays = document.getElementById("preview-days");
+            if (previewDays) {
+                previewDays.innerText = selectedDays || "---";
+            }
+        }
+
+        // Observar cambios en los selects de día
+        document.addEventListener('change', function(e) {
+            if (e.target && e.target.name && e.target.name.includes('day')) {
+                updatePreviewDays();
+            }
+        });
+        
+        updatePreviewDays(); // Inicializar
+
+        function toggleCapacity() {
+            if (registrationInput.checked) {
+                capacityField.style.display = "block";
+            } else {
+                capacityField.style.display = "none";
+                if (capacityInput) capacityInput.value = "";
+                document.getElementById("preview-capacity").innerText = "---";
+            }
+            document.getElementById("preview-registration").innerText = registrationInput.checked ? "Sí" : "No";
+        }
+
+        if (registrationInput) {
+            registrationInput.addEventListener("change", toggleCapacity);
+            toggleCapacity(); // inicializa
+        }
+
+        if (capacityInput) {
+            capacityInput.addEventListener("input", () => {
+                document.getElementById("preview-capacity").innerText = capacityInput.value || "---";
+            });
+        }
+
+        // Función para mostrar/ocultar campos de día según el tipo de actividad
+        function toggleDayFields() {
+            const isEventos = typeInput && typeInput.value === "Eventos";
+            const dayFields = document.querySelectorAll(".day-field");
+            const daySelects = document.querySelectorAll('select[name*="day"]');
+            
+            dayFields.forEach(field => {
+                if (isEventos) {
+                    field.classList.add("hidden");
+                    // Hacer el campo opcional visualmente
+                    field.style.display = "none";
+                } else {
+                    field.classList.remove("hidden");
+                    field.style.display = "block";
+                }
+            });
+            
+            // También hacer que los selects de día no sean requeridos cuando es Eventos
+            daySelects.forEach(select => {
+                if (isEventos) {
+                    select.removeAttribute("required");
+                    // Establecer un valor por defecto si está vacío
+                    if (!select.value) {
+                        select.value = "";
+                    }
+                } else {
+                    // Para actividades normales, el día puede ser requerido
+                    // (dependiendo de la validación del formulario)
+                }
+            });
+        }
+
+        // Ejecutar al cargar la página para establecer el estado inicial
+        toggleDayFields();
+
+        // Formset dinámico
+        const addBtn = document.getElementById("add-schedule");
+        const scheduleContainer = document.getElementById("schedule-container");
+        const totalFormsInput = document.getElementById("id_schedules-TOTAL_FORMS");
+        const templateDiv = document.getElementById("schedule-row-template");
+
+        if (addBtn && scheduleContainer && totalFormsInput && templateDiv) {
+            addBtn.addEventListener("click", () => {
+                const formIdx = parseInt(totalFormsInput.value);
+                
+                // Clone the template row
+                const templateRow = templateDiv.querySelector('.schedule-row');
+                if (templateRow) {
+                    const newRow = templateRow.cloneNode(true);
+                    
+                    // Replace __prefix__ with actual form index in all attributes
+                    function updateElementAttributes(element, oldPrefix, newIndex) {
+                        // Update name attribute
+                        if (element.name && element.name.includes(oldPrefix)) {
+                            element.name = element.name.replace(new RegExp(oldPrefix, 'g'), newIndex);
+                        }
+                        
+                        // Update id attribute
+                        if (element.id && element.id.includes(oldPrefix)) {
+                            element.id = element.id.replace(new RegExp(oldPrefix, 'g'), newIndex);
+                        }
+                        
+                        // Update 'for' attribute (for labels)
+                        const forAttr = element.getAttribute('for');
+                        if (forAttr && forAttr.includes(oldPrefix)) {
+                            element.setAttribute('for', forAttr.replace(new RegExp(oldPrefix, 'g'), newIndex));
+                        }
+                        
+                        // Update htmlFor property (alternative way to set 'for')
+                        if (element.htmlFor && element.htmlFor.includes(oldPrefix)) {
+                            element.htmlFor = element.htmlFor.replace(new RegExp(oldPrefix, 'g'), newIndex);
+                        }
+                    }
+                    
+                    // Process the row element itself
+                    updateElementAttributes(newRow, '__prefix__', formIdx);
+                    
+                    // Process all input, select, and label elements
+                    const allElements = newRow.querySelectorAll('input, select, label');
+                    allElements.forEach(el => {
+                        updateElementAttributes(el, '__prefix__', formIdx);
+                    });
+                    
+                    // Aplicar visibilidad según el tipo de actividad antes de agregar
+                    toggleDayFields();
+                    
+                    // Add to container
+                    scheduleContainer.appendChild(newRow);
+                    
+                    // Aplicar visibilidad nuevamente después de agregar (por si acaso)
+                    toggleDayFields();
+                    
+                    // Update total forms count
+                    totalFormsInput.value = formIdx + 1;
+                    
+                    // Actualizar preview de días
+                    updatePreviewDays();
+                }
+            });
+        }
+    </script>
+</body>
+</html>

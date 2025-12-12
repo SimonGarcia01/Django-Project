@@ -1,0 +1,260 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Participantes</title>
+    <style>
+        /* FONT IMPORT */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        /* GLOBAL STYLES */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: #374151;
+            min-height: 100vh;
+            padding: 40px 20px;
+            background-image: url("{% static 'images/Foto_Icesi10.jpg' %}");
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+        }
+
+        /* MAIN CONTENT & LAYOUT */
+        .main-content {
+            max-width: 900px; /* Adjusted width for a list-based view */
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .breadcrumbs {
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+            color: #374151;
+            background-color: #f3f4f6;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.75rem;
+            border: 1px solid #e5e7eb;
+            display: inline-block;
+        }
+
+        .breadcrumbs a {
+            color: #1e3a8a;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .breadcrumbs a:hover { text-decoration: underline; }
+        .breadcrumbs .separator { margin: 0 0.5rem; color: #9ca3af; }
+        .breadcrumbs .current { font-weight: 600; color: #111827; }
+
+        h1 {
+            color: #1e3a8a;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.75rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        /* TOURNAMENT SECTION STYLES */
+        .tournament-section {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+            border: 1px solid #e5e7eb;
+            margin-bottom: 30px;
+        }
+
+        .tournament-header h2 {
+            font-size: 1.75rem;
+            color: #1e3a8a;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .tournament-header p {
+            font-size: 1rem;
+            color: #4b5563;
+            margin-bottom: 20px;
+        }
+
+        /* SUB-SECTION HEADERS (e.g., "Participantes Individuales") */
+        .sub-header {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #111827;
+            margin-top: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f3f4f6;
+        }
+
+        /* PARTICIPANT LIST STYLES */
+        .participant-list {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .participant-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 1rem;
+        }
+
+        .participant-item:last-child {
+            border-bottom: none;
+        }
+        
+        .participant-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* TEAM CONTAINER STYLES */
+        .team-section {
+            background-color: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .team-section h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1e3a8a;
+        }
+
+        /* BUTTON STYLES */
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.25s ease;
+            border: none;
+            text-align: center;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-green { background-color: #10b981; color: white; }
+        .btn-green:hover { background-color: #059669; }
+
+        .btn-blue { background-color: #3b82f6; color: white; }
+        .btn-blue:hover { background-color: #2563eb; }
+        
+        .btn-red { background-color: #ef4444; color: white; }
+        .btn-red:hover { background-color: #dc2626; }
+        
+        .add-button-container { margin-top: 20px; }
+
+        /* EMPTY/FALLBACK MESSAGE STYLES */
+        .empty-message {
+            text-align: center;
+            color: #6b7280;
+            font-size: 1rem;
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 12px;
+            margin-top: 15px;
+            border: 1px dashed #d1d5db;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-content">
+        <!-- BREADCRUMB NAVIGATION -->
+        <nav class="breadcrumbs" aria-label="breadcrumb">
+            <a href="{% url 'homepageCADI:homepageCADI' %}">Inicio</a>
+            <span class="separator">/</span>
+            <a href="{% url 'tournaments:tournaments_menu' %}">Gestión Deportiva</a>
+            <span class="separator">/</span>
+            <span class="current">Gestión de Participantes</span>
+        </nav>
+
+        <h1>Gestión de Participantes</h1>
+
+        {% for t in tournaments %}
+        <div class="tournament-section">
+            <div class="tournament-header">
+                <h2>{{ t.name }} - {{ t.sport }}</h2>
+                <p>Participantes registrados: {{ t.current_participants }}/{{ t.max_participants }}</p>
+                <a href="{% url 'tournaments:add_participant' t.id %}" class="btn btn-green">+ Agregar Participante Individual</a>
+            </div>
+
+            <!-- INDIVIDUAL PARTICIPANTS -->
+            <h3 class="sub-header">Participantes Individuales</h3>
+            <ul class="participant-list">
+                {% for p in t.participants.all %}
+                {% if not p.team %}
+                <li class="participant-item">
+                    <span>{{ p.name }}</span>
+                    <div class="participant-actions">
+                        <a href="{% url 'tournaments:edit_participant' p.participantId %}" class="btn btn-blue">Editar</a>
+                        <a href="{% url 'tournaments:delete_participant' p.participantId %}" class="btn btn-red">Eliminar</a>
+                    </div>
+                </li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+            
+            <!-- Handle empty state for individual participants -->
+            {% if not t.participants.all|length or t.participants.all|length == t.teams.all|length %}
+                 <div class="empty-message">No hay participantes individuales registrados.</div>
+            {% endif %}
+
+            <!-- TEAMS AND THEIR PARTICIPANTS -->
+            <h3 class="sub-header">Equipos y sus Participantes</h3>
+            {% for team in t.teams.all %}
+            <div class="team-section">
+                <h3>{{ team.name }}</h3>
+                <ul class="participant-list">
+                    {% for p in team.participants.all %}
+                    <li class="participant-item">
+                        <span>{{ p.name }}</span>
+                        <div class="participant-actions">
+                            <a href="{% url 'tournaments:edit_participant' p.participantId %}" class="btn btn-blue">Editar</a>
+                            <a href="{% url 'tournaments:delete_participant' p.participantId %}" class="btn btn-red">Eliminar</a>
+                        </div>
+                    </li>
+                    {% empty %}
+                    <li class="empty-message" style="list-style-type: none;">No hay participantes en este equipo.</li>
+                    {% endfor %}
+                </ul>
+                <div class="add-button-container">
+                    <a href="{% url 'tournaments:add_participant_to_team' team.teamId %}" class="btn btn-green">+ Agregar a este equipo</a>
+                </div>
+            </div>
+            {% empty %}
+            <div class="empty-message">No hay equipos en este torneo.</div>
+            {% endfor %}
+        </div>
+        {% empty %}
+        <div class="empty-message" style="padding: 60px 20px; font-size: 1.1rem;">
+            <p>No hay torneos disponibles.</p>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html> 

@@ -1,0 +1,121 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="D770D2BD-FA0F-48FF-A6E8-DC617C3ACAE7" name="login_customuser_groups">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id" id="05A7A1F3-1AF9-A9CD-A0EB-3EF66CD17C43">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<use>0</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<domain>8255836D-63A4-B7EE-E3E1-7CFA5C5901AF</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<identityColumn>true</identityColumn>
+<defaultOntNull>true</defaultOntNull>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementOrder>false</autoIncrementOrder>
+</Column>
+<Column name="customuser_id" id="310E7101-CD75-3181-49FA-7B23ABE385F6">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<use>0</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<domain>8255836D-63A4-B7EE-E3E1-7CFA5C5901AF</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="F4645A33-C594-9BFA-50F1-43013941BE5D" referredColumn="6BC5FBA5-4042-4A67-7292-8E8AA236625B"/>
+</associations>
+</Column>
+<Column name="group_id" id="B13718F4-663C-E0EC-D7C4-A9BDACC5BD15">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<use>0</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<domain>6C79D9B6-1A68-C99E-2E43-579CB84F1393</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="346BE54E-086E-7564-B75E-7E6159730D75" referredColumn="5320D002-5284-6152-47C7-F43A910BF4E4"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="9BF31329-8EE9-B418-E4E7-B1754E688B1E" name="login_customuser_groups_pkey">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="05A7A1F3-1AF9-A9CD-A0EB-3EF66CD17C43"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="CF261154-C8A1-4FBC-726E-3B4BCA83A0DB" name="login_customuser_groups_customuser_id_group_id_280bd5c2_uniq">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<indexState>Unique Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="310E7101-CD75-3181-49FA-7B23ABE385F6"/>
+<colUsage columnID="B13718F4-663C-E0EC-D7C4-A9BDACC5BD15"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="98A7D790-B254-E8BF-C5D9-2939FA4AA829" name="login_customuser_groups_customuser_id_50381d88">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="310E7101-CD75-3181-49FA-7B23ABE385F6"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="E4CDCBFA-2CD7-CDC4-162E-E9EFBAAE6F26" name="login_customuser_groups_group_id_639d055d">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="B13718F4-663C-E0EC-D7C4-A9BDACC5BD15"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="8BC2FD07-B931-6869-74BF-FAC27E70EDE1" name="login_customuser_gro_customuser_id_50381d88_fk_login_cus">
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="310E7101-CD75-3181-49FA-7B23ABE385F6"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="94E1970C-2208-7234-9E3E-482F337C2874" name="login_customuser_groups_group_id_639d055d_fk_auth_group_id">
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="B13718F4-663C-E0EC-D7C4-A9BDACC5BD15"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

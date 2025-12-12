@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte Formal de Participación - Bienestar Universitario</title>
+
+    {% load static %}
+    <!-- FONT IMPORTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <!-- jsPDF for PDF export -->
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+
+    <style>
+        /* GLOBAL VARIABLES */
+        :root {
+            --primary-color: #2563eb;
+            --primary-hover: #1e40af;
+            --primary-glow: rgba(37, 99, 235, 0.5);
+            --secondary-color: #f3f4f6;
+            --text-dark: #111827;
+            --text-light: #4b5563;
+            --border-color: #e5e7eb;
+            --card-bg: rgba(255, 255, 255, 0.98);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-dark);
+            min-height: 100vh;
+            padding: 40px 20px;
+            background-color: var(--text-dark);
+            background-image: linear-gradient(160deg, rgba(17, 24, 39, 0.7) 0%, rgba(30, 64, 175, 0.5) 100%), url("{% static 'images/Foto_Icesi10.jpg' %}");
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+        }
+
+        .main-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            background-color: var(--card-bg);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+        }
+
+        .breadcrumbs {
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            background-color: var(--secondary-color);
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.75rem;
+            border: 1px solid var(--border-color);
+            display: inline-block;
+        }
+        .breadcrumbs a {
+            color: var(--primary-hover);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .breadcrumbs a:hover { text-decoration: underline; }
+        .breadcrumbs .separator { margin: 0 0.5rem; color: var(--text-light); }
+        .breadcrumbs .current { font-weight: 600; color: var(--text-dark); }
+
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.75rem;
+            font-weight: 700;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        /* Filter Form */
+        .filter-section {
+            background: var(--secondary-color);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .filter-group label {
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+        }
+
+        .filter-group input[type="checkbox"] {
+            margin-right: 0.5rem;
+        }
+
+        .filter-group select,
+        .filter-group input[type="date"],
+        .filter-group input[type="number"] {
+            padding: 0.75rem;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .filter-group select:focus,
+        .filter-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px var(--primary-glow);
+        }
+
+        .checkbox-group {
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem;
+            background: white;
+        }
+
+        .checkbox-item {
+            padding: 0.5rem 0;
+        }
+
+        .frequency-slider-group {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .frequency-slider-group input[type="number"] {
+            width: 80px;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            font-weight: 600;
+            box-shadow: var(--shadow-md);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .button:hover {
+            background-color: var(--primary-hover);
+            box-shadow: 0 0 15px var(--primary-glow);
+            transform: translateY(-2px);
+        }
+        .button-secondary {
+            background-color: #10b981;
+        }
+        .button-secondary:hover {
+            background-color: #059669;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-card h3 {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* Charts */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+        }
+
+        .chart-card h3 {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+
+        /* Schedule Breakdown */
+        .schedule-breakdown {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+            margin-bottom: 2rem;
+        }
+
+        .schedule-breakdown h3 {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .activity-schedule {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .activity-schedule:last-child {
+            border-bottom: none;
+        }
+
+        .activity-schedule h4 {
+            color: var(--text-dark);
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .schedule-list {
+            list-style: none;
+            padding-left: 1rem;
+        }
+
+        .schedule-list li {
+            padding: 0.25rem 0;
+            color: var(--text-light);
+        }
+
+        .schedule-list li strong {
+            color: var(--primary-color);
+        }
+
+        /* Table */
+        .data-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-md);
+            border-radius: 0.75rem;
+            overflow: hidden;
+            background: white;
+        }
+
+        .data-table th, .data-table td {
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .data-table th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        .data-table tbody tr:nth-child(even) {
+            background-color: #f9fafb;
+        }
+
+        .data-table tbody tr:hover {
+            background-color: #eef2ff;
+            transition: background-color 0.2s ease;
+        }
+
+        /* Download buttons container */
+        .download-container {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: var(--secondary-color);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .download-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .download-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .download-section h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .download-buttons {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .download-btn-excel {
+            background-color: #16a34a;
+            color: white;
+        }
+
+        .download-btn-excel:hover {
+            background-color: #15803d;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .download-btn-csv {
+            background-color: #2563eb;
+            color: white;
+        }
+
+        .download-btn-csv:hover {
+            background-color: #1e40af;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .download-btn-image {
+            background-color: #dc2626;
+            color: white;
+        }
+
+        .download-btn-image:hover {
+            background-color: #b91c1c;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .download-btn-pdf {
+            background-color: #ea580c;
+            color: white;
+        }
+
+        .download-btn-pdf:hover {
+            background-color: #c2410c;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .button-icon {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* Message styles */
+        .message {
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            display: none;
+        }
+
+        .message.success {
+            background-color: #d1fae5;
+            color: #065f46;
+            border: 1px solid #6ee7b7;
+        }
+
+        .message.error {
+            background-color: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+        }
+
+        .message.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-content">
+        <!-- Breadcrumb navigation -->
+        <nav class="breadcrumbs" aria-label="breadcrumb">
+            <a href="{% url 'homepageCADI:homepageCADI' %}">Inicio</a>
+            <span class="separator">/</span>
+            <a href="{% url 'reportsAndStats:general_reports' %}">Reportes y Estadísticas</a>
+            <span class="separator">/</span>
+            <span class="current">Reporte Formal de Participación</span>
+        </nav>
+
+        <h1>📊 Reporte Formal de Participación</h1>
+
+        <!-- Messages -->
+        <div id="message" class="message"></div>
+
+        <!-- Filter Form -->
+        <div class="filter-section">
+            <form method="get" id="filter-form">
+                <div class="filter-grid">
+                    <!-- Activity Types -->
+                    <div class="filter-group">
+                        <label>Tipo de Actividad:</label>
+                        <div class="checkbox-group">
+                            {% for activity_type in available_activity_types %}
+                            <div class="checkbox-item">
+                                <label>
+                                    <input type="checkbox" name="activity_type" value="{{ activity_type }}"
+                                           {% if activity_type in selected_activity_types %}checked{% endif %}>
+                                    {{ activity_type }}
+                                </label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Faculties -->
+                    <div class="filter-group">
+                        <label>Facultad/Programa:</label>
+                        <div class="checkbox-group">
+                            {% for faculty in available_faculties %}
+                            <div class="checkbox-item">
+                                <label>
+                                    <input type="checkbox" name="faculty" value="{{ faculty }}"
+                                           {% if faculty in selected_faculties %}checked{% endif %}>
+                                    {{ faculty }}
+                                </label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Genders -->
+                    <div class="filter-group">
+                        <label>Género:</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <label>
+                                    <input type="checkbox" name="gender" value="M"
+                                           {% if 'M' in selected_genders %}checked{% endif %}>
+                                    Masculino
+                                </label>
+                            </div>
+                            <div class="checkbox-item">
+                                <label>
+                                    <input type="checkbox" name="gender" value="F"
+                                           {% if 'F' in selected_genders %}checked{% endif %}>
+                                    Femenino
+                                </label>
+                            </div>
+                            <div class="checkbox-item">
+                                <label>
+                                    <input type="checkbox" name="gender" value="O"
+                                           {% if 'O' in selected_genders %}checked{% endif %}>
+                                    Otro
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Frequency Range -->
+                    <div class="filter-group">
+                        <label>Frecuencia de Participación (opcional):</label>
+                        <div class="frequency-slider-group">
+                            <input type="number" name="frequency_min" value="{{ frequency_min }}" min="0" placeholder="Mín (ej: 1)">
+                            <span>a</span>
+                            <input type="number" name="frequency_max" value="{{ frequency_max }}" min="0" placeholder="Máx (ej: 50)">
+                        </div>
+                        <small style="color: var(--text-light); font-size: 0.85rem;">
+                            Dejar vacío para incluir todos. Número de inscripciones por estudiante.
+                        </small>
+                    </div>
+
+                    <!-- Date Range -->
+                    <div class="filter-group">
+                        <label>Fecha Inicio:</label>
+                        <input type="date" name="date_start" value="{{ date_start }}">
+                    </div>
+
+                    <div class="filter-group">
+                        <label>Fecha Fin:</label>
+                        <input type="date" name="date_end" value="{{ date_end }}">
+                    </div>
+                </div>
+
+                <div class="button-container">
+                    <button type="submit" class="button">🔍 Generar Reporte</button>
+                    <a href="{% url 'reportsAndStats:participation_formal_report' %}" class="button button-secondary">🔄 Limpiar Filtros</a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Statistics Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Frecuencia Promedio (Inscripciones)</h3>
+                <div class="stat-value">{{ avg_frequency }}</div>
+                <div class="stat-label">Inscripciones por estudiante</div>
+            </div>
+
+            {% if avg_participation_frequency > 0 %}
+            <div class="stat-card">
+                <h3>Frecuencia Promedio (Participaciones)</h3>
+                <div class="stat-value">{{ avg_participation_frequency }}</div>
+                <div class="stat-label">Participaciones por estudiante</div>
+            </div>
+            {% endif %}
+
+            <div class="stat-card">
+                <h3>Total Inscripciones</h3>
+                <div class="stat-value">{{ total_enrollments }}</div>
+                <div class="stat-label">Inscripciones en actividades</div>
+            </div>
+
+            <div class="stat-card">
+                <h3>Total Participaciones</h3>
+                <div class="stat-value">{{ total_participations }}</div>
+                <div class="stat-label">Registros de asistencia</div>
+            </div>
+
+            <div class="stat-card">
+                <h3>Total Estudiantes</h3>
+                <div class="stat-value">{{ total_users }}</div>
+                <div class="stat-label">Estudiantes únicos</div>
+            </div>
+
+            <div class="stat-card">
+                <h3>Total Actividades</h3>
+                <div class="stat-value">{{ total_activities }}</div>
+                <div class="stat-label">Actividades únicas</div>
+            </div>
+
+            {% if most_popular_activity %}
+            <div class="stat-card">
+                <h3>Actividad Más Popular</h3>
+                <div class="stat-value" style="font-size: 1.2rem;">{{ most_popular_activity.activity__name|truncatewords:5 }}</div>
+                <div class="stat-label">{{ most_popular_activity.enrollment_count }} inscripciones{% if most_popular_activity.participation_count > 0 %}, {{ most_popular_activity.participation_count }} participaciones{% endif %}</div>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Export Buttons -->
+        <div class="download-container">
+            <div class="download-section">
+                <h3>📊 Descargar Datos</h3>
+                <div class="download-buttons">
+                    <a href="{% url 'reportsAndStats:participation_report_export' %}?{{ request.GET.urlencode }}" class="download-btn download-btn-csv">
+                        <svg class="button-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px;">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                        CSV (.csv)
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts -->
+        <h2>📈 Visualizaciones</h2>
+        <div class="charts-grid">
+            <div class="chart-card">
+                <h3>Inscripciones y Participaciones por Tipo de Actividad</h3>
+                <div class="chart-container">
+                    <canvas id="chartByType"></canvas>
+                </div>
+                <div class="download-section">
+                    <h3>📈 Descargar Gráfico</h3>
+                    <div class="download-buttons">
+                        <button class="download-btn download-btn-image" onclick="downloadChart('chartByType', 'png')">
+                            <svg class="button-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                            PNG
+                        </button>
+                        <button class="download-btn download-btn-image" onclick="downloadChart('chartByType', 'jpeg')">
+                            <svg class="button-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                            JPEG
+                        </button>
+                        <button class="download-btn download-btn-pdf" onclick="downloadChart('chartByType', 'pdf')">
+                            <svg class="button-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                            </svg>
+                            PDF
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <h3>Inscripciones por Facultad</h3>
+                <div class="chart-container">
+                    <canvas id="chartByFaculty"></canvas>
+                </div>
+                <div class="download-section">
+                    <h3>📈 Descargar Gráfico</h3>
+                    <div class="download-buttons">
+                        <button class="download-btn download-btn-image" onclick="downloadChart('chartByFaculty', 'png')">
+                            <svg class="button-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                            PNG
+                        </button>
+                        <button class="download-btn download-btn-image" onclick="downloadChart('chartByFaculty', 'jpeg')">
+                            <svg class="button-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                            JPEG
+                        </button>
+                        <button class="download-btn download-btn-pdf" onclick="downloadChart('chartByFaculty', 'pdf')">
+                            <svg class="button-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                            </svg>
+                            PDF
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <h3>Inscripciones por Género</h3>
+                <div class="chart-container">
+                    <canvas id="chartByGender"></canvas>
+                </div>
+                <div class="download-section">
+                    <h3>📈 Descargar Gráfico</h3>
+                    <div class="download-buttons">
+                        <button class="download-btn download-btn-image" onclick="downloadChart('chartByGender', 'png')">
+                            <svg class="button-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                            PNG
+                        </button>
+                        <button class="download-btn download-btn-image" onclick="downloadChart('chartByGender', 'jpeg')">
+                            <svg class="button-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                            JPEG
+                        </button>
+                        <button class="download-btn download-btn-pdf" onclick="downloadChart('chartByGender', 'pdf')">
+                            <svg class="button-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                            </svg>
+                            PDF
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <h3>Distribución de Frecuencia</h3>
+                <div class="chart-container">
+                    <canvas id="chartFrequency"></canvas>
+                </div>
+                <div class="download-section">
+                    <h3>📈 Descargar Gráfico</h3>
+                    <div class="download-buttons">
+                        <button class="download-btn download-btn-image" onclick="downloadChart('chartFrequency', 'png')">
+                            <svg class="button-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                            PNG
+                        </button>
+                        <button class="download-btn download-btn-image" onclick="downloadChart('chartFrequency', 'jpeg')">
+                            <svg class="button-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                            JPEG
+                        </button>
+                        <button class="download-btn download-btn-pdf" onclick="downloadChart('chartFrequency', 'pdf')">
+                            <svg class="button-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                            </svg>
+                            PDF
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <h3>Top 10 Actividades</h3>
+                <div class="chart-container">
+                    <canvas id="chartTopActivities"></canvas>
+                </div>
+                <div class="download-section">
+                    <h3>📈 Descargar Gráfico</h3>
+                    <div class="download-buttons">
+                        <button class="download-btn download-btn-image" onclick="downloadChart('chartTopActivities', 'png')">
+                            <svg class="button-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                            PNG
+                        </button>
+                        <button class="download-btn download-btn-image" onclick="downloadChart('chartTopActivities', 'jpeg')">
+                            <svg class="button-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                            JPEG
+                        </button>
+                        <button class="download-btn download-btn-pdf" onclick="downloadChart('chartTopActivities', 'pdf')">
+                            <svg class="button-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                            </svg>
+                            PDF
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Participation by Schedule/Group -->
+        {% if schedule_breakdown %}
+        <h2>📅 Participación por Horario/Grupo</h2>
+        <div class="schedule-breakdown">
+            {% for activity_name, activity_data in schedule_breakdown.items %}
+            <div class="activity-schedule">
+                <h4>{{ activity_name }} ({{ activity_data.activity_type }})</h4>
+                <p><strong>Total Inscripciones:</strong> {{ activity_data.total_enrollments }} | 
+                   <strong>Total Participaciones:</strong> {{ activity_data.total_participations }} | 
+                   <strong>Estudiantes Únicos:</strong> {{ activity_data.total_users }}</p>
+                <ul class="schedule-list">
+                    {% for schedule in activity_data.schedules %}
+                    <li>
+                        <strong>{{ schedule.schedule }}:</strong> 
+                        {{ schedule.enrollment_count }} inscripciones,
+                        {{ schedule.participation_count }} participaciones 
+                        ({{ schedule.unique_users }} estudiantes)
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+    </div>
+
+    <script>
+        // Parse chart data from JSON
+        const chartData = {{ chart_data_json|safe }};
+
+        // Chart colors
+        const colors = {
+            primary: '#2563eb',
+            secondary: '#10b981',
+            accent: '#f59e0b',
+            danger: '#ef4444',
+            purple: '#8b5cf6',
+            pink: '#ec4899',
+        };
+
+        const colorPalette = [
+            colors.primary,
+            colors.secondary,
+            colors.accent,
+            colors.danger,
+            colors.purple,
+            colors.pink,
+            '#06b6d4',
+            '#84cc16',
+            '#f97316',
+            '#6366f1',
+        ];
+
+        // Store chart instances for download
+        const chartInstances = {};
+
+        // Update chart creation to store instances
+        if (chartData.by_type && chartData.by_type.length > 0) {
+            const ctxByType = document.getElementById('chartByType').getContext('2d');
+            chartInstances['chartByType'] = new Chart(ctxByType, {
+                type: 'bar',
+                data: {
+                    labels: chartData.by_type.map(item => item.type),
+                    datasets: [
+                        {
+                            label: 'Inscripciones',
+                            data: chartData.by_type.map(item => item.count),
+                            backgroundColor: colorPalette[0],
+                        },
+                        {
+                            label: 'Participaciones',
+                            data: chartData.by_type.map(item => item.participation_count || 0),
+                            backgroundColor: colorPalette[1],
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        if (chartData.by_faculty && chartData.by_faculty.length > 0) {
+            const ctxByFaculty = document.getElementById('chartByFaculty').getContext('2d');
+            chartInstances['chartByFaculty'] = new Chart(ctxByFaculty, {
+                type: 'doughnut',
+                data: {
+                    labels: chartData.by_faculty.map(item => item.faculty),
+                    datasets: [{
+                        label: 'Inscripciones',
+                        data: chartData.by_faculty.map(item => item.count),
+                        backgroundColor: colorPalette.slice(0, chartData.by_faculty.length),
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right'
+                        }
+                    }
+                }
+            });
+        }
+
+        if (chartData.by_gender && chartData.by_gender.length > 0) {
+            const ctxByGender = document.getElementById('chartByGender').getContext('2d');
+            chartInstances['chartByGender'] = new Chart(ctxByGender, {
+                type: 'pie',
+                data: {
+                    labels: chartData.by_gender.map(item => item.gender),
+                    datasets: [{
+                        label: 'Inscripciones',
+                        data: chartData.by_gender.map(item => item.count),
+                        backgroundColor: colorPalette.slice(0, chartData.by_gender.length),
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right'
+                        }
+                    }
+                }
+            });
+        }
+
+        if (chartData.frequency_distribution && Object.keys(chartData.frequency_distribution).length > 0) {
+            const ctxFrequency = document.getElementById('chartFrequency').getContext('2d');
+            const freqLabels = Object.keys(chartData.frequency_distribution).sort((a, b) => {
+                const order = ['0', '1-5', '6-10', '11-20', '21-50', '50+'];
+                return order.indexOf(a) - order.indexOf(b);
+            });
+            chartInstances['chartFrequency'] = new Chart(ctxFrequency, {
+                type: 'bar',
+                data: {
+                    labels: freqLabels,
+                    datasets: [{
+                        label: 'Número de Estudiantes',
+                        data: freqLabels.map(key => chartData.frequency_distribution[key]),
+                        backgroundColor: colors.primary,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        if (chartData.top_activities && chartData.top_activities.length > 0) {
+            const ctxTopActivities = document.getElementById('chartTopActivities').getContext('2d');
+            chartInstances['chartTopActivities'] = new Chart(ctxTopActivities, {
+                type: 'bar',
+                data: {
+                    labels: chartData.top_activities.map(item => item.name.length > 30 ? item.name.substring(0, 30) + '...' : item.name),
+                    datasets: [
+                        {
+                            label: 'Inscripciones',
+                            data: chartData.top_activities.map(item => item.count),
+                            backgroundColor: colorPalette[0],
+                        },
+                        {
+                            label: 'Participaciones',
+                            data: chartData.top_activities.map(item => item.participation_count || 0),
+                            backgroundColor: colorPalette[1],
+                        }
+                    ]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // Download chart function
+        function downloadChart(chartId, format) {
+            try {
+                // Validar que el formato sea válido
+                const validFormats = ['png', 'jpeg', 'pdf'];
+                if (!validFormats.includes(format)) {
+                    showMessage('No fue posible generar el archivo, por favor intente nuevamente', 'error');
+                    return;
+                }
+
+                const chart = chartInstances[chartId];
+                if (!chart) {
+                    showMessage('No fue posible generar el archivo, por favor intente nuevamente', 'error');
+                    return;
+                }
+
+                // Verificar que el gráfico tenga datos
+                const chartData = chart.data;
+                if (!chartData || !chartData.labels || chartData.labels.length === 0) {
+                    showMessage('No hay datos para generar el gráfico', 'error');
+                    return;
+                }
+
+                if (format === 'png' || format === 'jpeg') {
+                    // Use Chart.js built-in method for better quality
+                    const imageUrl = chart.toBase64Image(format === 'jpeg' ? 'image/jpeg' : 'image/png', 1.0);
+                    
+                    if (!imageUrl || imageUrl.length === 0) {
+                        showMessage('No fue posible generar el archivo, por favor intente nuevamente', 'error');
+                        return;
+                    }
+                    
+                    const link = document.createElement('a');
+                    link.download = `grafico_${chartId}_${new Date().getTime()}.${format}`;
+                    link.href = imageUrl;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    showMessage('Descarga completada exitosamente', 'success');
+                } else if (format === 'pdf') {
+                    // Verificar que jsPDF esté disponible
+                    if (typeof window.jspdf === 'undefined') {
+                        showMessage('No fue posible generar el archivo, por favor intente nuevamente', 'error');
+                        return;
+                    }
+                    
+                    // Use Chart.js to get the image, then convert to PDF
+                    const imageUrl = chart.toBase64Image('image/png', 1.0);
+                    
+                    if (!imageUrl || imageUrl.length === 0) {
+                        showMessage('No fue posible generar el archivo, por favor intente nuevamente', 'error');
+                        return;
+                    }
+                    
+                    const { jsPDF } = window.jspdf;
+                    const pdf = new jsPDF('landscape', 'mm', 'a4');
+                    
+                    // Create an image element to get dimensions
+                    const img = new Image();
+                    img.onload = function() {
+                        try {
+                            const imgWidth = 297; // A4 width in landscape
+                            const imgHeight = (img.height * imgWidth) / img.width;
+                            pdf.addImage(imageUrl, 'PNG', 0, 0, imgWidth, imgHeight);
+                            pdf.save(`grafico_${chartId}_${new Date().getTime()}.pdf`);
+                            showMessage('Descarga completada exitosamente', 'success');
+                        } catch (pdfError) {
+                            console.error('Error generating PDF:', pdfError);
+                            showMessage('No fue posible generar el archivo, por favor intente nuevamente', 'error');
+                        }
+                    };
+                    img.onerror = function() {
+                        showMessage('No fue posible generar el archivo, por favor intente nuevamente', 'error');
+                    };
+                    img.src = imageUrl;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showMessage('No fue posible generar el archivo, por favor intente nuevamente', 'error');
+            }
+        }
+
+        // Show message function
+        function showMessage(text, type) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = text;
+            messageDiv.className = `message ${type} show`;
+            setTimeout(() => {
+                messageDiv.classList.remove('show');
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

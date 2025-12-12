@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportes y Estadísticas - Bienestar Universitario</title>
+
+    {% load static %}
+    <!-- FONT IMPORTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* GLOBAL VARIABLES */
+        :root {
+            --primary-color: #2563eb;
+            --primary-hover: #1e40af;
+            --primary-glow: rgba(37, 99, 235, 0.5);
+            --secondary-color: #f3f4f6;
+            --text-dark: #111827;
+            --text-light: #4b5563;
+            --border-color: #e5e7eb;
+            --card-bg: rgba(255, 255, 255, 0.98);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--text-dark);
+            background-image: linear-gradient(160deg, rgba(17, 24, 39, 0.7) 0%, rgba(30, 64, 175, 0.5) 100%), url("{% static 'images/Foto_Icesi10.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            animation: fadeIn 0.7s ease-out forwards;
+        }
+
+        /* NAVBAR - Reusing from the sample, ensure these Django variables are available */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .nav-left { display: flex; align-items: center; gap: 0.75rem; font-weight: 600; }
+        .home-icon { width: 24px; height: 24px; fill: var(--primary-color); }
+        .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .user-avatar {
+            width: 40px; height: 40px; border-radius: 50%;
+            background-image: linear-gradient(45deg, #2563eb, #1e40af);
+            color: white; display: flex; align-items: center; justify-content: center;
+            font-weight: 700;
+        }
+
+        /* BREADCRUMBS */
+        .breadcrumbs {
+            font-size: 0.9rem;
+            margin: 1rem 2rem 0;
+            color: white;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+            background-color: rgba(255,255,255,0.15);
+            padding: 0.6rem 1rem;
+            border-radius: 0.5rem;
+            backdrop-filter: blur(5px);
+            display: inline-block;
+        }
+        .breadcrumbs a {
+            color: #a7c5ff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .breadcrumbs a:hover {
+            text-decoration: underline;
+        }
+        .breadcrumbs span.separator {
+            margin: 0 0.5rem;
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* HEADER */
+        .header {
+            text-align: center;
+            padding: 3rem 1rem 4rem 1rem;
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        .header h1 {
+            font-size: 3.8rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #ffffff 60%, #a7c5ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        .header p {
+            max-width: 600px;
+            margin: 0 auto;
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 1.1rem;
+        }
+
+        /* MAIN CONTENT GRID FOR SECTIONS */
+        .reports-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            align-items: start;
+            margin-bottom: 2rem;
+        }
+        @media (max-width: 1024px) {
+            .reports-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* CARD STYLES (adapted for sections) */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex; /* For inner stats cards */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            min-height: 100px; /* Ensure cards have some height */
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        .section-card { /* Main sections */
+            background-color: var(--card-bg);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .card-icon { /* Placeholder for section icons */
+            width: 24px;
+            height: 24px;
+            color: var(--primary-color);
+        }
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        /* Specific styles for statistics cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Smaller cards */
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .stat-card {
+            background: #f9fbff; /* Lighter background for inner cards */
+            border-radius: 0.75rem; /* Slightly smaller radius */
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            border: 1px solid #f0f2f5;
+            transition: all 0.2s ease;
+        }
+        .stat-card:hover {
+            background-color: #eef2ff;
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .stat-card strong {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 0.25rem;
+            font-weight: 500;
+        }
+        .stat-card span { /* For the actual value */
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: block;
+        }
+
+        /* List styles (Faculties, Top Activities, Top Users) */
+        .list-section ul {
+            list-style: none;
+            padding-left: 0;
+            margin-top: 1rem;
+        }
+        .list-section li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #f3f4f6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .list-section li:last-child {
+            border-bottom: none;
+        }
+        .list-section li strong {
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+        .list-section li span { /* For the count/value */
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+        .list-section li.no-data {
+            color: var(--text-light);
+            font-style: italic;
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+
+        /* BUTTONS */
+        .button {
+            display: inline-flex; /* Use flex to align icon and text */
+            align-items: center;
+            gap: 0.5rem; /* Space between icon and text */
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem; /* More rounded */
+            text-decoration: none;
+            transition: all 0.2s ease;
+            font-weight: 600;
+            box-shadow: var(--shadow-md);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-right: 1rem; /* Space between buttons */
+            margin-top: 1rem;
+        }
+        .button:hover {
+            background-color: var(--primary-hover);
+            box-shadow: 0 0 15px var(--primary-glow);
+            transform: translateY(-2px);
+        }
+        .button-secondary { /* For "Volver al panel" button */
+            background-color: rgba(255, 255, 255, 0.15);
+            color: white;
+            box-shadow: none;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+        }
+        .button-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+        .button-icon {
+            width: 18px;
+            height: 18px;
+            fill: currentColor; /* Inherit color from button text */
+        }
+
+        /* FOOTER */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: rgba(255,255,255,0.8);
+            font-size: 0.875rem;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-left">
+            <svg class="home-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+            <span>Panel Administrativo</span> {# Changed title for admin context #}
+        </div>
+        <div class="nav-right">
+            <div>
+                {# Assuming 'usuario' is passed to this template as well #}
+                <div style="font-weight: 600;">{% if request.user.is_authenticated %}{{ request.user.first_name }} {{ request.user.last_name }}{% else %}Administrador{% endif %}</div>
+                <div style="font-size: 0.8rem; opacity: 0.8; text-align: right;">{% if request.user.is_authenticated %}{{ request.user.username }}{% else %}admin{% endif %}</div>
+                 <a href="{% url 'login:login' %}" style="font-size: 0.8rem; color: var(--primary-color); text-decoration: none;">Cerrar sesión</a>
+            </div>
+            <div class="user-avatar">{% if request.user.is_authenticated %}{{ request.user.username|slice:":2"|upper }}{% else %}AD{% endif %}</div>
+        </div>
+    </nav>
+
+    <div class="breadcrumbs">
+        <a href="{% url 'homepageCADI:homepageCADI' %}">Inicio</a>
+        <span class="separator">/</span>
+        <span>Reportes y Estadísticas</span>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <h1>Panel de Reportes y Estadísticas</h1>
+            <p>Visualiza el rendimiento y la actividad de la plataforma.</p>
+        </header>
+
+        <div class="reports-grid">
+            <div class="section-card">
+                <div class="card-header">
+                    <svg class="card-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H2v-2a3 3 0 015.356-1.857M9 20v-2m3 2v-2m-3 2H9m12 0h-3M9 4H5a2 2 0 00-2 2v12a2 2 0 002 2h4M19 4h-4a2 2 0 00-2 2v12a2 2 0 002 2h4M17 4v2m-6 0h.01M17 12h.01"></path></svg>
+                    <div class="card-title">Usuarios</div>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card"><strong>Total:</strong> <span>{{ total_users|default:"0" }}</span></div>
+                    <div class="stat-card"><strong>Activos:</strong> <span>{{ active_users|default:"0" }}</span></div>
+                    <div class="stat-card"><strong>Inactivos:</strong> <span>{{ inactive_users|default:"0" }}</span></div>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="card-header">
+                    <svg class="card-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                    <div class="card-title">Actividades</div>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card"><strong>Total:</strong> <span>{{ total_activities|default:"0" }}</span></div>
+                    <div class="stat-card"><strong>Publicadas:</strong> <span>{{ published_activities|default:"0" }}</span></div>
+                    <div class="stat-card"><strong>Requieren inscripción:</strong> <span>{{ activities_requiring_registration|default:"0" }}</span></div>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="card-header">
+                    <svg class="card-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                    <div class="card-title">Participación</div>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card"><strong>Total inscripciones:</strong> <span>{{ total_enrollments|default:"0" }}</span></div>
+                    <div class="stat-card"><strong>Promedio por actividad:</strong> <span>{{ avg_enrollments_per_activity|default:"0" }}</span></div>
+                    <div class="stat-card"><strong>Tasa de participación:</strong> <span>{{ completion_rate|default:"0%" }}</span></div>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="card-header">
+                    <svg class="card-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.196-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.382-1.81.588-1.81h4.914a1 1 0 00.95-.69l1.519-4.674z"></path></svg>
+                    <div class="card-title">Reseñas</div>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card"><strong>Total reseñas:</strong> <span>{{ total_reviews|default:"0" }}</span></div>
+                    <div class="stat-card"><strong>Promedio rating:</strong> <span>{{ avg_rating|default:"0" }}</span></div>
+                    <div class="stat-card"><strong>Sin leer:</strong> <span>{{ unread_reviews|default:"0" }}</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="reports-grid"> {# Use grid for list sections as well #}
+            <!-- ========================== FACULTADES SECTION ========================== -->
+            <div class="section-card list-section">
+                <div class="card-header">
+                    <svg class="card-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                    </svg>
+                    <div class="card-title">Facultades</div>
+                </div>
+
+                <!-- Chart will be injected here -->
+                <ul>
+                    {% if faculty_distribution %}
+                        {% for name, count in faculty_distribution.items %}
+                            <li><strong>{{ name }}:</strong> <span>{{ count }} usuarios</span></li>
+                        {% endfor %}
+                    {% else %}
+                        <li class="no-data">No hay facultades registradas.</li>
+                    {% endif %}
+                </ul>
+            </div>
+
+            <!-- ========================== TOP ACTIVITIES SECTION ========================== -->
+            <div class="section-card list-section">
+                <div class="card-header">
+                    <svg class="card-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M3 7h18M3 12h18M3 17h18"></path>
+                    </svg>
+                    <div class="card-title">Top 5 Actividades con más Participantes</div>
+                </div>
+                <ul>
+                    {% if top_activities %}
+                        {% for activity in top_activities %}
+                            <li><strong>{{ activity.name }}</strong> - {{ activity.num_participants }} inscritos</li>
+                        {% endfor %}
+                    {% else %}
+                        <li class="no-data">No hay actividades registradas.</li>
+                    {% endif %}
+                </ul>
+            </div>
+
+            <!-- ========================== TOP USERS SECTION ========================== -->
+            <div class="section-card list-section">
+                <div class="card-header">
+                    <svg class="card-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M5.121 17.804A9 9 0 1119 12.001v1a9 9 0 01-13.879 4.803z"></path>
+                    </svg>
+                    <div class="card-title">Top 5 Usuarios con más Inscripciones</div>
+                </div>
+                <ul>
+                    {% if top_users %}
+                        {% for user in top_users %}
+                            <li><strong>{{ user.username }}</strong> - {{ user.num_enrollments }} inscripciones</li>
+                        {% endfor %}
+                    {% else %}
+                        <li class="no-data">No hay usuarios registrados.</li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem;">
+            <a href="{% url 'reportsAndStats:filtered_reports' %}" class="button">
+                <svg class="button-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                Filtrar Reportes
+            </a>
+            <a href="{% url 'reportsAndStats:participation_formal_report' %}" class="button" style="background-color: #10b981; margin-left: 0.5rem;">
+                <svg class="button-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                Reporte Formal de Participación
+            </a>
+            <a href="{% url 'homepageCADI:homepageCADI' %}" class="button button-secondary" style="margin-left: 0.5rem;">
+                <svg class="button-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                Volver al panel
+            </a>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Sistema de Gestión de Bienestar Universitario</p>
+        <p>© 2025 Universidad Icesi. Todos los derechos reservados.</p>
+    </div>
+
+    <!-- ========================== FACULTY CHART SCRIPT ========================== -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const facultyData = JSON.parse('{{ faculty_json|escapejs }}');
+
+            if (facultyData && Object.keys(facultyData).length > 0) {
+                const ctx = document.createElement("canvas");
+                // Find the existing list-section ul for faculties and insert the canvas before it
+                const facultySection = document.querySelector(".section-card.list-section:first-of-type ul");
+                if (facultySection) {
+                    facultySection.parentNode.insertBefore(ctx, facultySection);
+
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: Object.keys(facultyData),
+                            datasets: [{
+                                label: 'Usuarios por Facultad',
+                                data: Object.values(facultyData),
+                                backgroundColor: 'rgba(37, 99, 235, 0.6)',
+                                borderColor: 'rgba(37, 99, 235, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: { display: false },
+                                title: {
+                                    display: true,
+                                    text: 'Distribución de Usuarios por Facultad',
+                                    font: { size: 18 }
+                                }
+                            },
+                            scales: {
+                                y: { beginAtZero: true }
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>

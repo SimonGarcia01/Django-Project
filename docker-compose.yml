@@ -1,0 +1,60 @@
+services:
+  db:
+    image: postgres:17
+    container_name: proyect-db
+    restart: always
+    environment:
+      POSTGRES_DB: bienestar
+      POSTGRES_USER: bienestaruser
+      POSTGRES_PASSWORD: bienestarpass
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - pg-network
+    ports:
+      - "10000:5432"
+
+  web:
+    build: .
+    container_name: proyect-web
+    command: >
+      bash -c "python wait_for_db.py &&
+           python manage.py makemigrations &&
+           python manage.py migrate --noinput &&
+           python manage.py shell -c \"from django.contrib.auth import get_user_model; User = get_user_model(); \
+      if not User.objects.filter(username='admin').exists(): User.objects.create_superuser('admin', 'admin@example.com', 'admin123')\" &&
+           python manage.py runserver 0.0.0.0:8000"
+    environment:
+      EMAIL_HOST_USER: "bienestar360icesi@gmail.com"
+      EMAIL_HOST_PASSWORD: "mnzf ortt wvmy anri"
+      DEFAULT_FROM_EMAIL: "Bienestar360 <bienestar360icesi@gmail.com>"
+    volumes:
+      - .:/code
+    working_dir: /code/bienestar360
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    networks:
+      - pg-network
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: proyect-pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin  
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    networks:
+      - pg-network
+
+volumes:
+  postgres_data:
+
+networks:
+  pg-network:
+    driver: bridge

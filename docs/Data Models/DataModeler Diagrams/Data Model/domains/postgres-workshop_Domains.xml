@@ -1,0 +1,123 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<DomainFile class="oracle.dbtools.crest.model.design.DomainFileWrapper" fileName="postgres-workshop_Domains">
+<domains>
+<Domain class="oracle.dbtools.crest.model.design.Domain" name="NUMERIC_1_0_0" id="1E282F64-78EF-018E-F3F8-006D0694E625">
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 21:54:25 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<avTSortOrder>0</avTSortOrder>
+<dataTypePrecision>1</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<dataTypeSize>0</dataTypeSize>
+<fileName>postgres-workshop_Domains</fileName>
+<logicalDatatype>LOGDT019</logicalDatatype>
+</Domain>
+<Domain class="oracle.dbtools.crest.model.design.Domain" name="VARCHAR_0_0_2000" id="298F4F77-FE45-9EF7-E32E-CF06B07DF984">
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 21:54:25 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<avTSortOrder>0</avTSortOrder>
+<dataTypePrecision>0</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<dataTypeSize>2000</dataTypeSize>
+<fileName>postgres-workshop_Domains</fileName>
+<logicalDatatype>LOGDT024</logicalDatatype>
+</Domain>
+<Domain class="oracle.dbtools.crest.model.design.Domain" name="VARCHAR_0_0_255" id="45752B89-06B4-FBDF-FD16-FEF2C3591E19">
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 21:54:25 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<avTSortOrder>0</avTSortOrder>
+<dataTypePrecision>0</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<dataTypeSize>255</dataTypeSize>
+<fileName>postgres-workshop_Domains</fileName>
+<logicalDatatype>LOGDT024</logicalDatatype>
+</Domain>
+<Domain class="oracle.dbtools.crest.model.design.Domain" name="NUMERIC_8_2_0" id="523A9D17-7C99-BD9E-CC03-C785BEA8C13A">
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 21:54:25 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<avTSortOrder>0</avTSortOrder>
+<dataTypePrecision>8</dataTypePrecision>
+<dataTypeScale>2</dataTypeScale>
+<dataTypeSize>0</dataTypeSize>
+<fileName>postgres-workshop_Domains</fileName>
+<logicalDatatype>LOGDT019</logicalDatatype>
+</Domain>
+<Domain class="oracle.dbtools.crest.model.design.Domain" name="CHAR_0_0_2" id="7BB10A84-7051-B49E-8947-64A27E6C380A">
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 21:54:25 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<avTSortOrder>0</avTSortOrder>
+<dataTypePrecision>0</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<dataTypeSize>2</dataTypeSize>
+<fileName>postgres-workshop_Domains</fileName>
+<logicalDatatype>LOGDT025</logicalDatatype>
+</Domain>
+<Domain class="oracle.dbtools.crest.model.design.Domain" name="NUMERIC_19_0_0" id="8255836D-63A4-B7EE-E3E1-7CFA5C5901AF">
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 21:54:25 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<avTSortOrder>0</avTSortOrder>
+<dataTypePrecision>19</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<dataTypeSize>0</dataTypeSize>
+<fileName>postgres-workshop_Domains</fileName>
+<logicalDatatype>LOGDT019</logicalDatatype>
+</Domain>
+<Domain class="oracle.dbtools.crest.model.design.Domain" name="VARCHAR_0_0_40" id="83D88222-8E71-1567-4856-73181FA23DDE">
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 21:54:25 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<avTSortOrder>0</avTSortOrder>
+<dataTypePrecision>0</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<dataTypeSize>40</dataTypeSize>
+<fileName>postgres-workshop_Domains</fileName>
+<logicalDatatype>LOGDT024</logicalDatatype>
+</Domain>
+<Domain class="oracle.dbtools.crest.model.design.Domain" name="VARCHAR_0_0_20" id="8D78CCF5-98BD-B3A3-F6CF-0103A7F92F08">
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 21:54:25 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<avTSortOrder>0</avTSortOrder>
+<dataTypePrecision>0</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<dataTypeSize>20</dataTypeSize>
+<fileName>postgres-workshop_Domains</fileName>
+<logicalDatatype>LOGDT024</logicalDatatype>
+</Domain>
+<Domain class="oracle.dbtools.crest.model.design.Domain" name="Date_0_0_0" id="C2D25F41-1912-A38B-5E35-8553073ACEE4">
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 21:54:25 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<avTSortOrder>0</avTSortOrder>
+<fileName>postgres-workshop_Domains</fileName>
+<logicalDatatype>LOGDT007</logicalDatatype>
+</Domain>
+<Domain class="oracle.dbtools.crest.model.design.Domain" name="VARCHAR_0_0_50" id="CF29CF8C-F391-E08F-EA0C-4911907B1169">
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 21:54:25 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<avTSortOrder>0</avTSortOrder>
+<dataTypePrecision>0</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<dataTypeSize>50</dataTypeSize>
+<fileName>postgres-workshop_Domains</fileName>
+<logicalDatatype>LOGDT024</logicalDatatype>
+</Domain>
+<Domain class="oracle.dbtools.crest.model.design.Domain" name="NUMERIC_9_2_0" id="F9C05D37-3BA0-FFA8-5972-E50FC3BC4B24">
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 21:54:25 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<avTSortOrder>0</avTSortOrder>
+<dataTypePrecision>9</dataTypePrecision>
+<dataTypeScale>2</dataTypeScale>
+<dataTypeSize>0</dataTypeSize>
+<fileName>postgres-workshop_Domains</fileName>
+<logicalDatatype>LOGDT019</logicalDatatype>
+</Domain>
+</domains>
+</DomainFile>

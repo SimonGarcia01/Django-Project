@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual env
+venv/
+env/
+
+# SQLite (if you’re switching to Postgres)
+*.sqlite3
+
+# Git
+.git
+.gitignore
+
+# Docker
+.dockerignore
+
+# Docs
+docs/
+.github/
+
+# Other
+*.log

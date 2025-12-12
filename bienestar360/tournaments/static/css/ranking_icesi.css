@@ -1,0 +1,281 @@
+:root {
+    --icesi-blue: #003366;
+    --icesi-gold: #FFC000;
+    --icesi-light-blue: #0056B3;
+    --text-dark: #2c3e50;
+    --text-light: #ecf0f1;
+    --bg-light: #f8f9fa;
+    --bg-medium: #e9ecef;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:wght@700&display=swap');
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--text-dark);
+    margin: 0;
+    padding: 0;
+    
+    background: url('../images/fondo_exotico.jpg') repeat center center; /* Cambiado a tu patrón ICESI */
+    background-size: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.6); /* Transparencia reducida a 0.6 (antes 0.8) */
+    z-index: -1;
+}
+
+.container {
+    max-width: 950px;
+    width: 90%;
+    margin: 30px auto;
+    background: #ffffff;
+    padding: 40px 50px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    border-left: 8px solid var(--icesi-gold);
+    animation: fadeInSlide 1s ease-out;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-top: 80px solid var(--icesi-blue);
+    border-left: 80px solid transparent;
+    z-index: 0;
+}
+
+@keyframes fadeInSlide {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+h2 {
+    font-family: 'Playfair Display', serif;
+    text-align: center;
+    color: var(--icesi-blue);
+    margin-bottom: 35px;
+    font-size: 3em;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background-color: var(--icesi-gold);
+    border-radius: 2px;
+}
+
+h2 .fa-trophy {
+    color: var(--icesi-gold);
+    margin-right: 15px;
+    font-size: 0.9em;
+}
+
+.highlight-icesi-gold {
+    color: var(--icesi-gold);
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+    margin-top: 40px;
+    background: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+th, td {
+    text-align: left;
+    padding: 18px 25px;
+    color: var(--text-dark);
+    background-color: #ffffff;
+}
+
+th {
+    background-color: var(--icesi-blue);
+    color: var(--text-light);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.95em;
+    letter-spacing: 1px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+th:first-child { border-top-left-radius: 10px; }
+th:last-child { border-top-right-radius: 10px; }
+
+tbody tr {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+tbody tr:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    cursor: pointer;
+}
+
+td:first-child {
+    font-weight: 700;
+    color: var(--icesi-gold);
+    text-align: center;
+    width: 90px;
+    font-size: 1.1em;
+    background-color: var(--icesi-blue);
+    color: var(--text-light);
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 8px;
+}
+
+.btn {
+    display: block;
+    width: fit-content;
+    margin: 50px auto 0 auto;
+    text-decoration: none;
+    background: linear-gradient(45deg, var(--icesi-blue), var(--icesi-light-blue));
+    color: white;
+    padding: 15px 35px;
+    border-radius: 30px;
+    font-size: 1.1em;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 15px rgba(0, 51, 102, 0.3);
+    border: 1px solid var(--icesi-gold);
+}
+.btn:hover {
+    background: linear-gradient(45deg, var(--icesi-light-blue), var(--icesi-blue));
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(0, 51, 102, 0.4);
+    color: var(--icesi-gold);
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 30px;
+        width: 95%;
+    }
+    h2 {
+        font-size: 2.2em;
+    }
+    th, td {
+        padding: 15px 18px;
+        font-size: 0.85em;
+    }
+    .btn {
+        padding: 12px 25px;
+        font-size: 1em;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 20px;
+        border-left: 5px solid var(--icesi-gold);
+    }
+    h2 {
+        font-size: 1.8em;
+        padding-bottom: 10px;
+        margin-bottom: 25px;
+    }
+    h2::after {
+        width: 60px;
+        height: 3px;
+    }
+    table {
+        border-spacing: 0 5px;
+    }
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+    thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+    tbody tr {
+        margin-bottom: 10px;
+    }
+    td {
+        border: none;
+        position: relative;
+        padding-left: 55%;
+        text-align: right;
+        font-size: 0.9em;
+        background-color: #ffffff !important;
+        border-radius: 0 !important;
+    }
+     td:first-child {
+        background-color: var(--icesi-blue) !important;
+        color: var(--text-light) !important;
+        text-align: center;
+        border-top-left-radius: 8px !important;
+        border-top-right-radius: 8px !important;
+        border-bottom-left-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+        width: auto;
+        padding: 10px 0;
+        order: -1;
+     }
+     td:first-child::before {
+         content: 'Posición: ';
+         display: none;
+     }
+
+    td::before {
+        position: absolute;
+        top: 50%;
+        left: 15px;
+        width: 40%;
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align: left;
+        font-weight: 600;
+        color: var(--icesi-blue);
+        transform: translateY(-50%);
+    }
+    td:nth-of-type(2)::before { content: "{% if tournament.modality == "I" %}Participante{% else %}Equipo{% endif %}:"; }
+    td:nth-of-type(3)::before { content: "Puntaje:"; }
+    td:nth-of-type(4)::before { content: "Diferencia de goles:"; }
+
+    .btn {
+        width: 100%;
+        text-align: center;
+    }
+}

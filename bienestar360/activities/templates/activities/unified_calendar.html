@@ -1,0 +1,258 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario Unificado</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #374151;
+            min-height: 100vh;
+            padding: 40px 20px;
+            background-image: url("{% static 'images/Foto_Icesi10.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .breadcrumbs {
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+            background-color: #f3f4f6;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.75rem;
+            border: 1px solid #e5e7eb;
+            display: inline-block;
+        }
+        .breadcrumbs a { color: #1e3a8a; text-decoration: none; font-weight: 500; }
+        .breadcrumbs a:hover { text-decoration: underline; }
+
+        .month-navigation {
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;
+        }
+
+        .month-navigation h2 {
+            color: #1e3a8a; font-size: 2.3rem; font-weight: 700; text-align: center;
+        }
+
+        .nav-btn {
+            background-color: #eef2ff;
+            color: #4338ca;
+            border-radius: 50%;
+            width: 44px; height: 44px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem;
+            text-decoration: none;
+            transition: 0.2s ease;
+        }
+        .nav-btn:hover { background-color: #4338ca; color: #fff; }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+        }
+
+        .calendar-header {
+            text-align: center;
+            font-weight: 600;
+            color: #111827;
+            padding: 12px 0;
+            font-size: 0.9rem;
+        }
+
+        .calendar-day {
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            min-height: 140px;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .calendar-day:hover {
+            border-color: #a5b4fc;
+            box-shadow: 0 0 0 3px rgba(79,70,229,0.15);
+        }
+
+        .date-label {
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 8px;
+        }
+        .other-month { background-color: #f9fafb; }
+        .other-month .date-label { color: #9ca3af; }
+
+        /* 🎨 ESTILO DE LAS ACTIVIDADES */
+        .calendar-item {
+            background: linear-gradient(135deg, #6366f1, #4338ca);
+            border-radius: 10px;
+            padding: 10px 12px;
+            margin-bottom: 8px;
+            color: #fff;
+            font-size: 0.85rem;
+            box-shadow: 0 4px 10px rgba(67, 56, 202, 0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .calendar-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 14px rgba(67, 56, 202, 0.4);
+        }
+
+        .calendar-item strong { font-weight: 600; display: block; margin-bottom: 4px; }
+        .calendar-item small { opacity: 0.9; }
+
+        /* 🪄 Botón de registrar participación */
+        .register-btn {
+            background: #22c55e;
+            border: none;
+            color: #fff;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 6px;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+            padding: 0;
+            line-height: 1;
+        }
+        .register-btn:hover {
+            background: #16a34a;
+            transform: scale(1.1);
+        }
+        .participation-status {
+            margin-top: 4px;
+            font-size: 0.7rem;
+            display: block;
+        }
+
+        .no-activities {
+            text-align: center;
+            color: #9ca3af;
+            font-size: 0.8rem;
+            margin-top: auto;
+        }
+
+        .actions { margin-top: 40px; text-align: center; }
+
+        .btn-secondary {
+            background-color: #e5e7eb;
+            color: #1f2937;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            padding: 10px 22px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.2s ease;
+        }
+        .btn-secondary:hover { background-color: #d1d5db; transform: translateY(-2px); }
+
+        form { margin-top: 4px; }
+    </style>
+</head>
+
+<body>
+    <div class="main-content">
+        <!-- Migas de pan -->
+        <nav class="breadcrumbs" aria-label="breadcrumb">
+            <a href="{% url 'homepageUser:homepageUser' %}">Inicio</a>
+            <span class="separator">/</span>
+            <span class="current">Calendario Unificado</span>
+        </nav>
+
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="calendar-container">
+            <div class="month-navigation">
+                <a href="?year={{ prev_year }}&month={{ prev_month }}" class="nav-btn">←</a>
+                <h2>📅 {{ month_name }} {{ year }}</h2>
+                <a href="?year={{ next_year }}&month={{ next_month }}" class="nav-btn">→</a>
+            </div>
+
+            <div class="calendar-grid">
+                <div class="calendar-header">Lun</div>
+                <div class="calendar-header">Mar</div>
+                <div class="calendar-header">Mié</div>
+                <div class="calendar-header">Jue</div>
+                <div class="calendar-header">Vie</div>
+                <div class="calendar-header">Sáb</div>
+                <div class="calendar-header">Dom</div>
+
+                {% for day in calendar_days %}
+                <div class="calendar-day {% if not day.current_month %}other-month{% endif %}">
+                    <span class="date-label">{{ day.day }}</span>
+
+                    <div class="day-items">
+                        {% for item in day.items %}
+                            <div class="calendar-item" style="background-color: {{ item.color }};">
+                                <strong>{{ item.type }}:</strong> {{ item.title }}
+                                <small>{{ item.time }} - {{ item.location }}</small>
+
+                                {% comment %} Botón de registro de participación - solo para el día actual {% endcomment %}
+                                {% if item.can_register and item.fecha == today_str %}
+                                    <form method="POST" action="{% url 'register_participation' %}" style="display: inline;">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="item_type" value="{{ item.item_type }}">
+                                        <input type="hidden" name="item_id" value="{{ item.id }}">
+                                        <input type="hidden" name="fecha" value="{{ item.fecha }}">
+                                        <input type="hidden" name="hora" value="{{ item.time }}">
+                                        <button type="submit" class="register-btn" title="Registrar asistencia">
+                                            ✔
+                                        </button>
+                                    </form>
+                                {% elif item.has_participated and item.fecha == today_str %}
+                                    <span class="participation-status" style="color: #22c55e; font-size: 0.75rem; display: block; margin-top: 4px;">
+                                        ✓ Ya registraste asistencia
+                                    </span>
+                                {% elif item.requires_enrollment and not item.is_enrolled and item.fecha == today_str %}
+                                    <span class="participation-status" style="color: #ef4444; font-size: 0.75rem; display: block; margin-top: 4px;">
+                                        ⚠ Requiere inscripción
+                                    </span>
+                                {% endif %}
+                            </div>
+                        {% empty %}
+                            <div class="no-activities">Sin actividades</div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="actions">
+                <a href="{% url 'homepageUser:homepageUser' %}" class="btn-secondary">⬅ Volver</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

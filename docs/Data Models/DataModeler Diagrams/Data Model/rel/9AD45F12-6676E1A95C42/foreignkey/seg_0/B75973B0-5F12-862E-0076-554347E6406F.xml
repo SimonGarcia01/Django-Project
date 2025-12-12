@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="B75973B0-5F12-862E-0076-554347E6406F" containerWithKeyObject="86E9FC69-9375-9716-A919-7CDC093DB969" localFKIndex="7271EFBE-BF2A-84AA-D0AA-0C2D2133A6D6" name="tournaments_tourname_schedule_id_e51f5b94_fk_tournamen">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<referredTableLongName>tournaments_schedule</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>8C6658BB-28B0-721A-EF72-728F5AB6E9AA</referredTableID>
+<keyObject>3F66F367-A0FF-2D86-1593-30CC34A01A20</keyObject>
+<referredKeyID>3F66F367-A0FF-2D86-1593-30CC34A01A20</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>scheduleID</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

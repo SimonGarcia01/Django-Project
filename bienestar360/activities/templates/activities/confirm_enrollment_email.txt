@@ -1,0 +1,14 @@
+Hola {{ user.get_full_name|default:user.username }},
+
+Has solicitado inscribirte en la actividad: "{{ activity.name }}".
+
+Por favor confirma si asistirás haciendo clic en el siguiente enlace:
+
+{{ confirm_url }}
+
+Si no solicitaste esta inscripción, puedes ignorar este correo.
+
+¡Gracias!
+Equipo Bienestar360
+
+IMPORTANTE: Esta verificación es válida por 7 días.

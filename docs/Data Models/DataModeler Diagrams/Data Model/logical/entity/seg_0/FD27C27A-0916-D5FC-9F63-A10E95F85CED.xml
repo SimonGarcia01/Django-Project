@@ -1,0 +1,106 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="FD27C27A-0916-D5FC-9F63-A10E95F85CED" name="TOURNAMENT_GAMES">
+<createdBy>kracr</createdBy>
+<createdTime>2025-08-30 21:01:57 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<engineerTo>
+<item key="648A4291-7871-969E-25F9-D1A8E91FC7CC" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="tournamentId" id="11DAE45A-81A4-7E09-1A14-A7EE5AC1F7D0">
+<createdBy>kracr</createdBy>
+<createdTime>2025-08-30 21:02:19 UTC</createdTime>
+<generatorID>1D84DDD8-6E91-4153-C85C-18B8CDD4C9AC</generatorID>
+<ownerDesignName>Data Model</ownerDesignName>
+<engineerTo>
+<item key="648A4291-7871-969E-25F9-D1A8E91FC7CC" value="true"/>
+</engineerTo>
+<referedAttribute>84D98988-B48D-B643-82BA-937DFFEF7D8C</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>5</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="scheduleID" id="B4B2A06C-FF75-5000-E068-8BE427DD9880">
+<createdBy>kracr</createdBy>
+<createdTime>2025-08-30 21:03:34 UTC</createdTime>
+<generatorID>975D220C-1E83-CE05-3B04-9D2D3718B703</generatorID>
+<ownerDesignName>Data Model</ownerDesignName>
+<engineerTo>
+<item key="648A4291-7871-969E-25F9-D1A8E91FC7CC" value="true"/>
+</engineerTo>
+<referedAttribute>EB992AB1-30AB-4434-B86A-5184F708F585</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>4</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="activityId" id="EAC5CDE8-215C-B6D0-9EA0-1405CAFCB4F7">
+<createdBy>kracr</createdBy>
+<createdTime>2025-08-30 21:03:34 UTC</createdTime>
+<generatorID>975D220C-1E83-CE05-3B04-9D2D3718B703</generatorID>
+<ownerDesignName>Data Model</ownerDesignName>
+<engineerTo>
+<item key="648A4291-7871-969E-25F9-D1A8E91FC7CC" value="true"/>
+</engineerTo>
+<referedAttribute>0586E499-FEC2-2D92-00AC-71146ABCD0DC</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>5</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="homeScore" id="342273BC-6442-43D2-E236-E16C463E0DDA">
+<createdBy>kracr</createdBy>
+<createdTime>2025-08-30 21:04:10 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<engineerTo>
+<item key="648A4291-7871-969E-25F9-D1A8E91FC7CC" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>2</dataTypePrecision>
+<ownDataTypeParameters>,2,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="guestScore" id="C1F8C40D-DB79-AA62-1E9B-4D462AEAC125">
+<createdBy>kracr</createdBy>
+<createdTime>2025-08-30 21:05:14 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<engineerTo>
+<item key="648A4291-7871-969E-25F9-D1A8E91FC7CC" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>2</dataTypePrecision>
+<ownDataTypeParameters>,2,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="3E37C6DB-62CD-2074-4439-39C6497696EA" name="TOURNAMENT_GAMES PK">
+<createdBy>kracr</createdBy>
+<createdTime>2025-08-30 21:02:19 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<engineerTo>
+<item key="648A4291-7871-969E-25F9-D1A8E91FC7CC" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>11DAE45A-81A4-7E09-1A14-A7EE5AC1F7D0</attributeRef>
+<attributeRef>B4B2A06C-FF75-5000-E068-8BE427DD9880</attributeRef>
+<attributeRef>EAC5CDE8-215C-B6D0-9EA0-1405CAFCB4F7</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

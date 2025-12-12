@@ -1,0 +1,176 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ activity.name }} - Detalle de la Actividad</title>
+
+    <!-- FONT IMPORT -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #374151;
+            min-height: 100vh;
+            padding: 40px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image: url("{% static 'images/Foto_Icesi10.jpg' %}");
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+        }
+
+        .activity-card {
+            max-width: 700px;
+            width: 100%;
+            margin: 20px;
+            background-color: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        h1 {
+            text-align: center;
+            color: #1e3a8a;
+            margin-bottom: 25px;
+            font-size: 2.3rem;
+            font-weight: 700;
+        }
+
+        .activity-info p {
+            margin-bottom: 12px;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .activity-info p strong { color: #111827; }
+
+        .status {
+            margin: 20px 0;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .status.full { background-color: #fee2e2; color: #991b1b; }
+        .status.enrolled { background-color: #dcfce7; color: #166534; }
+        .status.available { background-color: #e0f2fe; color: #075985; }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .button {
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .btn-enroll { background-color: #2563eb; color: white; }
+        .btn-enroll:hover { background-color: #1e40af; }
+
+        .btn-cancel { background-color: #e5e7eb; color: #374151; }
+        .btn-cancel:hover { background-color: #d1d5db; }
+
+        .schedules {
+            margin-top: 30px;
+            border-top: 1px solid #e5e7eb;
+            padding-top: 20px;
+        }
+
+        .schedules h3 {
+            color: #111827;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .schedules ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .schedules li {
+            margin-bottom: 8px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            background-color: #f9fafb;
+        }
+    </style>
+</head>
+<body>
+    <div class="activity-card">
+        <h1>{{ activity.name }}</h1>
+
+        <div class="activity-info">
+            <p><strong>Descripción:</strong> {{ activity.description }}</p>
+            <p><strong>Ubicación:</strong> {{ activity.location }}</p>
+            <p><strong>Tipo:</strong> {{ activity.get_type_display }}</p>
+            <p><strong>Categoría:</strong> {{ activity.get_category_display }}</p>
+            <p><strong>Cupos máximos:</strong> {{ activity.max_capacity }}</p>
+        </div>
+
+        {% if is_enrolled %}
+            <div class="status enrolled">
+                Ya estás inscrito en esta actividad
+                {% if user_enrolled_schedules %}
+                    <br><small style="display: block; margin-top: 5px; font-size: 0.9rem;">
+                        Horarios: {% for sched in user_enrolled_schedules %}{{ sched.get_day_display }} {{ sched.start_time|time:"H:i" }}-{{ sched.end_time|time:"H:i" }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                    </small>
+                {% endif %}
+            </div>
+        {% elif is_full %}
+            <div class="status full">Esta actividad está llena D:</div>
+        {% else %}
+            <div class="status available">Cupos disponibles :D</div>
+        {% endif %}
+
+        <div class="buttons">
+            {% if not is_full %}
+                {% if is_enrolled %}
+                    <a href="{% url 'enroll_in_activity' activity.id %}" class="button btn-enroll">Gestionar horarios</a>
+                {% else %}
+                    <a href="{% url 'enroll_in_activity' activity.id %}" class="button btn-enroll">Inscribirse</a>
+                {% endif %}
+            {% endif %}
+            <a href="{% url 'activityView' %}" class="button btn-cancel">Volver</a>
+        </div>
+
+        <div class="schedules">
+            <h3>Horarios</h3>
+            {% if schedules %}
+                <ul>
+                    {% for s in schedules %}
+                        <li>{{ s.get_day_display }}: {{ s.start_time|time:"H:i" }} - {{ s.end_time|time:"H:i" }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No hay horarios registrados para esta actividad.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

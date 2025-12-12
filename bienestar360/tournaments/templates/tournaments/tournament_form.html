@@ -1,0 +1,186 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crear Torneo</title>
+  <style>
+    /* FONT IMPORT & BASE STYLES */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    :root {
+        --primary-color: #2563eb;
+        --primary-hover: #1e40af;
+        --text-dark: #111827;
+        --text-light: #4b5563;
+        --border-color: #d1d5db;
+        --error-color: #dc2626;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+        font-family: 'Inter', sans-serif;
+        color: var(--text-dark);
+        min-height: 100vh;
+        padding: 40px 20px;
+        background-image: url("{% static 'images/Foto_Icesi10.jpg' %}");
+        background-size: cover;
+        background-position: center center;
+        background-attachment: fixed;
+    }
+
+    /* MAIN CONTAINER */
+    .main-content {
+        max-width: 800px; /* Optimal width for a form */
+        margin: 0 auto;
+        background-color: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(8px);
+        border-radius: 20px;
+        padding: 50px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* HEADER & BREADCRUMBS */
+    .breadcrumbs {
+        margin-bottom: 25px;
+        font-size: 0.9rem;
+        display: inline-block;
+        background-color: #f3f4f6;
+        padding: 0.75rem 1.25rem;
+        border-radius: 0.75rem;
+        border: 1px solid #e5e7eb;
+    }
+    .breadcrumbs a { color: #1e3a8a; text-decoration: none; font-weight: 500; }
+    .breadcrumbs a:hover { text-decoration: underline; }
+    .breadcrumbs .separator { margin: 0 0.5rem; color: #9ca3af; }
+    .breadcrumbs .current { font-weight: 600; color: var(--text-dark); }
+
+    /* PAGE TITLE */
+    h1 {
+        color: #1e3a8a;
+        margin-bottom: 40px;
+        font-size: 2.75rem;
+        font-weight: 800;
+        text-align: center;
+    }
+
+    /* FORM STYLES */
+    .form-group {
+        margin-bottom: 22px;
+    }
+    .form-group label {
+        display: block;
+        font-weight: 600;
+        color: var(--text-dark);
+        margin-bottom: 8px;
+    }
+    /* Styling all input types, select, and textarea */
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        padding: 12px 16px;
+        font-size: 1rem;
+        font-family: 'Inter', sans-serif;
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+        background-color: #fff;
+        transition: all 0.2s ease;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
+    .form-group textarea {
+        min-height: 120px;
+        resize: vertical;
+    }
+
+    /* ERROR MESSAGES */
+    .form-errors {
+        background-color: #fee2e2;
+        border: 1px solid #fca5a5;
+        color: #991b1b;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+    .form-errors p, .error-message {
+        color: var(--error-color);
+        font-size: 0.875rem;
+        margin-top: 6px;
+    }
+
+    /* FORM ACTIONS (BUTTONS) */
+    .form-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: flex-end;
+        margin-top: 40px;
+        border-top: 1px solid #e5e7eb;
+        padding-top: 25px;
+    }
+    .btn {
+        display: inline-flex; align-items: center; gap: 8px;
+        padding: 12px 22px; border-radius: 8px; font-weight: 600;
+        cursor: pointer; transition: all 0.3s ease; border: none;
+        text-decoration: none; font-size: 0.95rem;
+    }
+    .btn-primary { 
+        background-image: linear-gradient(45deg, #2563eb, #3b82f6);
+        color: white; 
+    }
+    .btn-primary:hover { 
+        background-image: linear-gradient(45deg, #1e40af, #2563eb);
+        transform: translateY(-2px);
+    }
+    .btn-secondary { background-color: #f3f4f6; color: #1f2937; border: 1px solid #d1d5db; }
+    .btn-secondary:hover { background-color: #e5e7eb; }
+  </style>
+</head>
+<body>
+
+  <div class="main-content">
+    <nav class="breadcrumbs">
+      <a href="{% url 'homepageCADI:homepageCADI' %}">Inicio</a>
+      <span class="separator">/</span>
+      <a href="{% url 'tournaments:tournaments_menu' %}">Gestión Deportiva</a>
+      <span class="separator">/</span>
+      <span class="current">Crear Torneo</span>
+    </nav>
+
+    <h1>Crear Nuevo Torneo</h1>
+
+    <form method="post">
+      {% csrf_token %}
+
+      {% if form.non_field_errors %}
+        <div class="form-errors">
+          {% for error in form.non_field_errors %}
+            <p>{{ error }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% for field in form %}
+        <div class="form-group">
+          {{ field.label_tag }}
+          {{ field }}
+          {% for error in field.errors %}
+            <p class="error-message">{{ error }}</p>
+          {% endfor %}
+        </div>
+      {% endfor %}
+      
+      <div class="form-actions">
+        <a href="{% url 'tournaments:tournaments_menu' %}" class="btn btn-secondary">Cancelar</a>
+        <button type="submit" class="btn btn-primary">Guardar Torneo</button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

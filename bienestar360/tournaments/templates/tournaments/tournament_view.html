@@ -1,0 +1,308 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de Torneos</title>
+  <style>
+    /* FONT IMPORT & BASE STYLES */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    :root {
+        --primary-color: #2563eb;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+        font-family: 'Inter', sans-serif;
+        color: #374151;
+        min-height: 100vh;
+        padding: 40px 20px;
+        background-image: url("{% static 'images/Foto_Icesi10.jpg' %}");
+        background-size: cover;
+        background-position: center center;
+        background-attachment: fixed;
+    }
+
+    /* MAIN CONTAINER */
+    .main-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        background-color: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(12px);
+        border-radius: 24px;
+        padding: 50px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    /* BREADCRUMBS */
+    .breadcrumbs {
+        margin-bottom: 25px;
+        font-size: 0.9rem;
+        color: #4b5563;
+        display: inline-block;
+        background-color: #f3f4f6;
+        padding: 0.75rem 1.25rem;
+        border-radius: 0.75rem;
+        border: 1px solid #e5e7eb;
+    }
+    .breadcrumbs a { color: #1e3a8a; text-decoration: none; font-weight: 500; }
+    .breadcrumbs a:hover { text-decoration: underline; }
+
+    /* PAGE TITLE */
+    h1 {
+        color: #1e3a8a;
+        margin-bottom: 40px;
+        font-size: 3rem;
+        font-weight: 800;
+    }
+
+    /* NAVIGATION GRID */
+    .navigation-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 40px;
+    }
+    .nav-card {
+        display: flex; align-items: center; gap: 12px;
+        padding: 16px; border-radius: 12px;
+        background-color: rgba(255, 255, 255, 0.7);
+        border: 1px solid rgba(229, 231, 235, 0.8);
+        text-decoration: none; color: #4b5563; font-weight: 600;
+        transition: all 0.2s ease;
+    }
+    .nav-card:hover { 
+        transform: translateY(-3px); 
+        background-color: white;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    .nav-card.active { 
+        color: #1e3a8a;
+        background-color: white;
+        border-color: #a5b4fc;
+    }
+    .nav-icon { width: 24px; height: 24px; }
+
+    /* ACTION BAR */
+    .action-bar { display: flex; gap: 1rem; margin-bottom: 40px; flex-wrap: wrap; }
+    .btn {
+        display: inline-flex; align-items: center; gap: 8px;
+        padding: 12px 22px; border-radius: 8px; font-weight: 600;
+        cursor: pointer; transition: all 0.3s ease; border: none;
+        text-decoration: none; font-size: 0.95rem;
+    }
+    .btn-primary { 
+        background-image: linear-gradient(45deg, #2563eb, #3b82f6);
+        color: white; 
+    }
+    .btn-primary:hover { 
+        background-image: linear-gradient(45deg, #1e40af, #2563eb);
+        transform: translateY(-2px);
+    }
+    .btn-secondary { background-color: #f3f4f6; color: #1f2937; border: 1px solid #d1d5db; }
+    .btn-secondary:hover { background-color: #e5e7eb; }
+
+    /* GRID & CARDS */
+    .tournaments-grid {
+        display: grid; gap: 30px; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    }
+    .card {
+        background: #ffffff; 
+        border-radius: 16px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.07); 
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 1px solid #e5e7eb; 
+        display: flex; flex-direction: column;
+        overflow: hidden;
+    }
+    .card:hover { transform: translateY(-7px); box-shadow: 0 12px 35px rgba(0,0,0,0.12); }
+    
+    .card-image-header {
+        height: 120px;
+        position: relative;
+        display: flex;
+        align-items: flex-end;
+        padding: 20px;
+        border-radius: 16px 16px 0 0;
+    }
+    .card-color-1 .card-image-header { background-image: linear-gradient(45deg, #facc15, #fbbf24); }
+    .card-color-2 .card-image-header { background-image: linear-gradient(45deg, #f97316, #fb923c); }
+    .card-color-3 .card-image-header { background-image: linear-gradient(45deg, #4f46e5, #6366f1); }
+    .card-color-4 .card-image-header { background-image: linear-gradient(45deg, #10b981, #34d399); }
+    
+    .card-title { font-size: 1.6rem; font-weight: 700; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+    
+    .card-body { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; }
+    .card-badge { font-size: 0.8rem; font-weight: 600; padding: 5px 12px; border-radius: 99px; background-color: #e0e7ff; color: #3730a3; white-space: nowrap; margin-bottom: 20px; }
+    
+    .card-details { display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px; font-size: 0.95rem; color: #4b5563; }
+    .detail-item { display: flex; align-items: center; gap: 10px; }
+    .detail-icon-wrapper {
+        width: 32px; height: 32px; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        background-color: #eef2ff;
+    }
+    .detail-icon { width: 16px; height: 16px; color: var(--primary-color); }
+
+    .progress-container { background-color: #e5e7eb; border-radius: 99px; height: 8px; overflow: hidden; margin: 15px 0; }
+    .progress-bar { 
+        height: 100%; 
+        border-radius: 99px; 
+        transition: width 1s ease-out;
+        background-color: var(--primary-color);
+    }
+    
+    .participants-info { display: flex; justify-content: space-between; font-size: 0.85rem; color: #6b7280; }
+    
+    .card-status { font-weight: 600; text-transform: uppercase; margin: 20px auto 25px; padding: 6px 14px; border-radius: 99px; font-size: 0.8rem; }
+    .status-P { background-color: #e0e7ff; color: #3730a3; } /* Por empezar */
+    .status-I { background-color: #dcfce7; color: #166534; } /* En progreso */
+    .status-F { background-color: #f3f4f6; color: #4b5563; } /* Finalizado */
+
+    .card-actions { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
+
+    /* EMPTY STATE */
+    .empty-state { grid-column: 1 / -1; text-align: center; color: #4b5563; font-size: 1.1rem; padding: 60px 20px; background: #f9fafb; border-radius: 16px; margin-top: 40px; border: 1px solid #e5e7eb; }
+    .empty-state-icon { font-size: 4rem; margin-bottom: 1rem; }
+  </style>
+</head>
+<body>
+
+  <div class="main-content">
+    <nav class="breadcrumbs">
+      <a href="{% url 'homepageCADI:homepageCADI' %}">Inicio</a>
+      <span class="separator">/</span>
+      <span class="current">Gestión Deportiva</span>
+    </nav>
+
+    <h1>Gestión de Torneos</h1>
+
+    <!-- Navigation Grid -->
+    <div class="navigation-grid">
+      <a href="{% url 'tournaments:tournaments_menu' %}" class="nav-card {% if request.resolver_match.url_name == 'tournaments_menu' or request.resolver_match.url_name == 'list_tournaments' %}active{% endif %}">
+        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+        <span>Gestión de torneos</span>
+      </a>
+      <a href="{% url 'tournaments:participants_menu' %}" class="nav-card">
+        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.653-.125-1.273-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.653.125-1.273-.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+        <span>Participantes</span>
+      </a>
+      <a href="{% url 'tournaments:results_menu' %}" class="nav-card">
+        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+        <span>Resultados</span>
+      </a>
+      <a href="{% url 'tournaments:inscriptions_menu' %}" class="nav-card">
+        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
+        <span>Inscripciones</span>
+      </a>
+    </div>
+
+    <!-- Action Bar -->
+    <div class="action-bar">
+      <a href="{% url 'tournaments:create_tournament' %}" class="btn btn-primary">
+        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        Crear Torneo
+      </a>
+      <a href="{% url 'tournaments:calendar_general' %}" class="btn btn-secondary">
+        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+        Ver calendario general
+      </a>
+    </div>
+
+    <!-- Lista de torneos -->
+    <div class="tournaments-grid">
+      {% for t in tournaments %}
+        {% cycle '1' '2' '3' '4' as color_index silent %}
+        <div class="card card-color-{{ color_index }}">
+          <div class="card-image-header">
+              <h3 class="card-title">{{ t.name }}</h3>
+          </div>
+          
+          <div class="card-body">
+            <div class="card-badge">
+              {% if t.modality == "E" %}Equipos{% else %}Individual{% endif %}
+            </div>
+
+            <div class="card-details">
+              <div class="detail-item">
+                <div class="detail-icon-wrapper"><svg class="detail-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg></div>
+                <span>{{ t.sport }}</span>
+              </div>
+              <div class="detail-item">
+                <div class="detail-icon-wrapper"><svg class="detail-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M15 21a6 6 0 00-9-5.197M15 21a6 6 0 01-9-5.197"></path></svg></div>
+                <span>{{ t.get_gender_display }}</span>
+              </div>
+              <div class="detail-item">
+                <div class="detail-icon-wrapper"><svg class="detail-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg></div>
+                <span>{{ t.start_date|date:"d M Y" }}</span>
+              </div>
+            </div>
+            
+            <div class="participants-info">
+              <span>Participantes</span>
+              <span style="font-weight: 600;">{{ t.current_participants }}/{{ t.max_participants }}</span>
+            </div>
+            <div class="progress-container">
+              {% if t.max_participants > 0 %}
+                <div class="progress-bar" style="width: {% widthratio t.current_participants t.max_participants 100 %}%;"></div>
+              {% else %}
+                <div class="progress-bar" style="width: 0%;"></div>
+              {% endif %}
+            </div>
+            
+            <div class="card-status status-{{ t.status }}">
+                {{ t.get_status_display }}
+            </div>
+            
+            <div class="card-actions">
+              <a href="{% if t.id %}{% url 'tournaments:create_tournament_game' t.id %}{% else %}#{% endif %}" class="btn btn-primary">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                Crear partido
+              </a>
+              <a href="{% if t.id %}{% url 'tournaments:ranking_view' t.id %}{% else %}#{% endif %}" class="btn btn-secondary">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                Ver ranking
+              </a>
+            </div>
+          </div>
+        </div>
+      {% empty %}
+        <div class="empty-state">
+          <div class="empty-state-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" style="width: 80px; height: 80px; color: #9ca3af;">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+            </svg>
+          </div>
+          <h3>No hay torneos disponibles</h3>
+          <p>Aún no se han creado torneos. ¡Crea el primero para comenzar!</p>
+          <a href="{% url 'tournaments:create_tournament' %}" class="btn btn-primary" style="margin-top: 20px;">
+            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            Crear Primer Torneo
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <script>
+    // Simple animation for progress bars on load
+    document.addEventListener('DOMContentLoaded', function() {
+      const progressBars = document.querySelectorAll('.progress-bar');
+      progressBars.forEach((bar, index) => {
+        // Obtener el ancho del atributo style
+        const originalWidth = bar.style.width;
+        if (originalWidth && originalWidth !== '0%') {
+          // Animar desde 0 hasta el ancho original
+          bar.style.width = '0%';
+          bar.style.transition = 'width 0.6s ease-out';
+          setTimeout(() => {
+            bar.style.width = originalWidth;
+          }, 50 + (index * 50)); // Pequeño delay para cada barra
+        }
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,190 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Actualizar actividad</title>
+    <style>
+        /* ====== FONT IMPORT ====== */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        /* ====== BASE STYLES ====== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #374151;
+            min-height: 100vh;
+            padding: 40px 20px;
+            /* AESTHETIC CHANGE: Use the background image from the target file */
+            background-image: url("{% static 'images/Foto_Icesi10.jpg' %}");
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* AESTHETIC CHANGE: Renamed to main-content and adapted styles */
+        .main-content {
+            max-width: 600px; /* Adjusted width for a form */
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            width: 100%;
+        }
+
+        .update-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        /* AESTHETIC CHANGE: Matched h1 style from target */
+        .update-header h1 {
+            color: #1e3a8a;
+            font-size: 2.75rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .update-header .subtitle {
+            color: #4b5563; /* Softer color for subtitle */
+            font-size: 1.1rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #374151; /* Standard text color */
+            font-weight: 600; /* Bolder labels */
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        /* AESTHETIC CHANGE: Matched input styles from target's .filter-input */
+        .form-group input:not([type="checkbox"]):not([type="radio"]),
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+            background: #fff;
+            color: #374151;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* AESTHETIC CHANGE: Matched focus styles from target */
+        .form-group input:focus:not([type="checkbox"]):not([type="radio"]),
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+        }
+
+        .errorlist {
+            color: #dc2626; /* A slightly more modern red */
+            list-style-type: none;
+            padding: 0;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        /* AESTHETIC CHANGE: Matched button styles from target */
+        .button {
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+            padding: 0.85rem 1.5rem; /* Slightly larger for a primary action */
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 1rem;
+            text-decoration: none;
+        }
+
+        .button-submit {
+            background-color: #2563eb;
+            color: white;
+        }
+        .button-submit:hover {
+            background-color: #1e40af;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .button-cancel {
+            margin-top: 15px;
+            background-color: #f3f4f6;
+            color: #1f2937;
+            border: 1px solid #d1d5db;
+        }
+        .button-cancel:hover {
+            background-color: #e5e7eb;
+        }
+    </style>
+</head>
+<body>
+    <!-- Adapted the container class to 'main-content' -->
+    <div class="main-content">
+        <div class="update-header">
+            <h1>Actualizar actividad</h1>
+            <p class="subtitle">{{ activity.name|safe }}</p>
+        </div>
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+            
+            {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                
+                {% if field.errors %}
+                    <ul class="errorlist">
+                    {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+                
+                {{ field }}
+                
+                {% if field.help_text %}
+                    <small style="font-size: 0.85rem; color: #6b7280; margin-top: 5px; display: block;">
+                        {{ field.help_text }}
+                    </small>
+                {% endif %}
+            </div>
+            {% endfor %}
+            
+            <!-- Adapted button to use the new styles -->
+            <button type="submit" class="button button-submit">Guardar cambios</button>
+        </form>
+
+        <!-- Adapted link to look like a secondary button -->
+        <a href="{% url 'public_activities' %}" class="button button-cancel">Cancelar y volver</a>
+    </div>
+</body>
+</html>

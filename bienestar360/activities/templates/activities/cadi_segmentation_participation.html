@@ -1,0 +1,603 @@
+{% load static %}
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+        font-family: 'Inter', sans-serif;
+        color: #374151;
+        min-height: 100vh;
+        padding: 40px 20px;
+        /* La imagen de fondo probablemente se inyecta desde Django, mantenemos la referencia */
+        background-image: url("{% static 'images/Foto_Icesi10.jpg' %}");
+        background-size: cover;
+        background-position: center center;
+        background-attachment: fixed;
+    }
+    .main-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        background-color: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(8px);
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    }
+    .breadcrumbs {
+        margin-bottom: 30px;
+        font-size: 0.9rem;
+        color: #374151;
+        background-color: #f3f4f6;
+        padding: 0.75rem 1.25rem;
+        border-radius: 0.75rem;
+        border: 1px solid #e5e7eb;
+        display: inline-block;
+    }
+    .breadcrumbs a {
+        color: #1e3a8a;
+        text-decoration: none;
+        font-weight: 500;
+    }
+    .breadcrumbs a:hover { text-decoration: underline; }
+    .breadcrumbs .separator { margin: 0 0.5rem; color: #9ca3af; }
+    .breadcrumbs .current { font-weight: 600; color: #111827; }
+    h1 { color: #1e3a8a; text-align: center; margin-bottom: 40px; font-size: 2.75rem; font-weight: 700; }
+
+    /* Estilos para el nuevo contenido */
+    h2 {
+        color: #1e3a8a; /* Usamos un color similar al h1 para coherencia */
+        font-size: 1.8rem; /* Tamaño de fuente un poco más pequeño que h1 */
+        font-weight: 700;
+        margin-bottom: 25px; /* Espacio debajo del título */
+        text-align: center; /* Centramos el título del reporte */
+    }
+
+    .filters-form { /* Cambiado de .filters para evitar conflicto y ser más específico */
+        padding: 1.5rem 2rem;
+        background: #f9fafb;
+        border: 1px solid #e5e7eb;
+        margin: 0 auto 2.5rem;
+        border-radius: 12px;
+        display: flex; /* Para alinear label, select y button */
+        gap: 1rem;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center; /* Centrar los elementos del formulario */
+    }
+
+    .filters-form label {
+        font-weight: 600;
+        color: #374151;
+        white-space: nowrap; /* Evita que el label se rompa en varias líneas */
+    }
+
+    .filters-form select {
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        border: 1px solid #d1d5db;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background-color: white; /* Fondo blanco para el select */
+        min-width: 180px; /* Ancho mínimo para el select */
+        cursor: pointer;
+    }
+    .filters-form select:focus {
+        outline: none;
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+    }
+
+    .filters-form button[type="submit"] {
+        display: inline-block;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: none;
+        background-color: #2563eb;
+        color: white;
+    }
+    .filters-form button[type="submit"]:hover {
+        background-color: #1e40af;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    }
+
+    hr {
+        border: none;
+        border-top: 1px solid #e5e7eb;
+        margin: 2.5rem 0; /* Espacio antes y después de la línea */
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 2rem;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        border-radius: 12px; /* Bordes redondeados para la tabla */
+        overflow: hidden; /* Asegura que los bordes redondeados se apliquen bien */
+        border: 1px solid #e5e7eb; /* Borde general para la tabla */
+    }
+
+    th, td {
+        padding: 1rem 1.25rem;
+        text-align: left;
+        border-bottom: 1px solid #e5e7eb; 
+        color: #374151;
+    }
+
+    thead {
+        background-color: #f3f4f6; 
+    }
+
+    th {
+        font-weight: 600;
+        color: #1f2937;
+        font-size: 0.95rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    tbody tr:last-child td {
+        border-bottom: none; 
+    }
+
+    tbody tr:hover {
+        background-color: #f9fafb;
+    }
+
+    td {
+        font-size: 0.9rem;
+    }
+
+    td:last-child {
+        text-align: center; 
+        font-weight: 500;
+    }
+
+    .empty-message {
+        text-align: center;
+        color: #4b5563;
+        font-size: 1.1rem;
+        padding: 60px 20px;
+        background: #f9fafb;
+        border-radius: 16px;
+        margin-top: 40px;
+        border: 1px solid #e5e7eb;
+    }
+
+    /* Student list styles */
+    details {
+        margin-top: 5px;
+    }
+
+    details summary {
+        user-select: none;
+    }
+
+    details summary:hover {
+        text-decoration: underline;
+    }
+
+    details ul {
+        background-color: #f9fafb;
+        border-radius: 8px;
+        padding: 10px;
+        margin-top: 10px;
+        max-height: 300px;
+        overflow-y: auto;
+    }
+
+    details li {
+        padding: 8px;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    details li:last-child {
+        border-bottom: none;
+    }
+
+    .messages {
+        margin-bottom: 1.5rem;
+    }
+
+    .alert {
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 0.5rem;
+    }
+
+    .alert-success {
+        background-color: #d1fae5;
+        color: #065f46;
+        border: 1px solid #6ee7b7;
+    }
+
+    .alert-error {
+        background-color: #fee2e2;
+        color: #991b1b;
+        border: 1px solid #fca5a5;
+    }
+
+    .alert-warning {
+        background-color: #fef3c7;
+        color: #92400e;
+        border: 1px solid #fcd34d;
+    }
+
+    /* Media queries para responsividad */
+    @media (max-width: 768px) {
+        .main-content {
+            padding: 20px;
+            border-radius: 12px;
+        }
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        .filters-form {
+            flex-direction: column;
+            gap: 0.75rem;
+            padding: 1rem 1.5rem;
+        }
+        .filters-form label,
+        .filters-form select,
+        .filters-form button[type="submit"] {
+            width: 100%; 
+            min-width: unset;
+        }
+        th, td {
+            padding: 0.8rem 1rem;
+            font-size: 0.85rem;
+        }
+
+         /* --- BUTTONS --- */
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .button {
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .btn-submit {
+            background-color: #2563eb;
+            color: white;
+        }
+
+        .btn-submit:hover {
+            background-color: #1e40af;
+        }
+
+        .btn-cancel {
+            background-color: #e5e7eb;
+            color: #374151;
+        }
+
+        .btn-cancel:hover {
+            background-color: #d1d5db;
+        }
+        
+        
+
+
+                
+    }
+
+    /* Download buttons container */
+    .download-container {
+        margin: 2rem 0;
+        padding: 1.5rem;
+        background: #f9fafb;
+        border-radius: 12px;
+        border: 1px solid #e5e7eb;
+    }
+
+    .download-section {
+        margin-bottom: 1.5rem;
+    }
+
+    .download-section:last-child {
+        margin-bottom: 0;
+    }
+
+    .download-section h3 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 1rem;
+    }
+
+    .download-buttons {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+    }
+
+    .download-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.6rem 1.2rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: all 0.2s ease;
+        border: none;
+        cursor: pointer;
+    }
+
+    .download-btn-excel {
+        background-color: #16a34a;
+        color: white;
+    }
+
+    .download-btn-excel:hover {
+        background-color: #15803d;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+
+    .download-btn-csv {
+        background-color: #2563eb;
+        color: white;
+    }
+
+    .download-btn-csv:hover {
+        background-color: #1e40af;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+
+    .download-btn-image {
+        background-color: #dc2626;
+        color: white;
+    }
+
+    .download-btn-image:hover {
+        background-color: #b91c1c;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+
+    .download-btn-pdf {
+        background-color: #ea580c;
+        color: white;
+    }
+
+    .download-btn-pdf:hover {
+        background-color: #c2410c;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+
+    /* Chart container */
+    .chart-container {
+        margin: 2rem 0;
+        padding: 1.5rem;
+        background: white;
+        border-radius: 12px;
+        border: 1px solid #e5e7eb;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+
+    .chart-wrapper {
+        position: relative;
+        height: 400px;
+        margin-bottom: 1rem;
+    }
+
+    /* Message styles */
+    .message {
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+        display: none;
+    }
+
+    .message.success {
+        background-color: #d1fae5;
+        color: #065f46;
+        border: 1px solid #6ee7b7;
+    }
+
+    .message.error {
+        background-color: #fee2e2;
+        color: #991b1b;
+        border: 1px solid #fca5a5;
+    }
+
+    .message.show {
+        display: block;
+    }
+</style>
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<!-- html2canvas for image export -->
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<!-- jsPDF for PDF export -->
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+
+{% block content %}
+<div class="main-content"> 
+   <nav class="breadcrumbs" aria-label="breadcrumb">
+            <a href="{% url 'homepageCADI:homepageCADI' %}">Inicio</a>
+            <span class="separator">/</span>
+            <span class="current">Segmentación de Participación</span>
+        </nav>
+
+    <h2>📊 Segmentación de Participación de Estudiantes</h2>
+
+    <!-- Messages -->
+    <div id="message" class="message"></div>
+
+<form method="get" class="filters-form">
+  <label>Tipo de actividad:</label>
+  <select name="activity_type">
+    <option value="">-- Todas --</option>
+    {% for choice in activity_choices %}
+      <option value="{{ choice.0 }}" {% if selected_type == choice.0 %}selected{% endif %}>{{ choice.1 }}</option>
+    {% endfor %}
+  </select>
+  
+  <label>Período:</label>
+  <select name="period_filter">
+    <option value="">-- Todos --</option>
+    {% for choice in period_choices %}
+      <option value="{{ choice.0 }}" {% if selected_period == choice.0 %}selected{% endif %}>{{ choice.1 }}</option>
+    {% endfor %}
+  </select>
+  
+  <label>Tipo de usuario:</label>
+  <select name="user_type">
+    <option value="">-- Todos --</option>
+    {% for choice in user_type_choices %}
+      <option value="{{ choice.0 }}" {% if selected_user_type == choice.0 %}selected{% endif %}>{{ choice.1 }}</option>
+    {% endfor %}
+  </select>
+  
+  <label>Horario:</label>
+  <select name="schedule">
+    <option value="">-- Todos --</option>
+    {% for choice in schedule_choices %}
+      <option value="{{ choice.0 }}" {% if selected_schedule == choice.0 %}selected{% endif %}>{{ choice.1 }}</option>
+    {% endfor %}
+  </select>
+  
+  <button type="submit">Filtrar</button>
+</form>
+
+
+    <hr>
+
+{% if grouped_data %}
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Fecha Asistencia</th>
+      <th>Actividad</th>
+      <th>Tipo</th>
+      <th>Horario</th>
+      <th>Inscritos</th>
+      <th>Asistentes</th>
+      <th>Estudiantes</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in grouped_data %}
+      <tr>
+        <td>
+          {% if row.period %}
+            {{ row.period|date:"d M Y" }}
+          {% else %}
+            <span style="color: #9ca3af;">Solo inscripciones</span>
+          {% endif %}
+        </td>
+        <td>{{ row.activity_name }}</td>
+        <td>
+          {% if row.is_social_event %}
+            <span>{{ row.activity_type }}</span>
+          {% else %}
+            {{ row.activity_type }}
+          {% endif %}
+        </td>
+        <td>{{ row.schedule }}</td>
+        <td>{{ row.total_enrolled }}</td>
+        <td>
+          {% if row.has_participations %}
+            <strong style="color: #22c55e;">{{ row.total_participated }}</strong>
+          {% else %}
+            <span style="color: #9ca3af;">0</span>
+          {% endif %}
+        </td>
+        <td>
+          <details>
+            <summary style="cursor: pointer; color: #2563eb; font-weight: 600;">
+              {% if row.is_social_event %}
+                Ver estudiantes ({{ row.total_participated }} participante{{ row.total_participated|pluralize }})
+              {% else %}
+                Ver estudiantes ({{ row.total_enrolled }} inscrito{{ row.total_enrolled|pluralize }}, {{ row.total_participated }} asistieron)
+              {% endif %}
+            </summary>
+            <div style="margin-top: 10px;">
+              <!-- Enrolled Students Section - Solo para actividades normales -->
+              {% if not row.is_social_event %}
+              <div style="margin-bottom: 15px;">
+                <h4 style="color: #1e40af; margin-bottom: 8px; font-size: 0.95rem;">
+                  📋 Inscritos ({{ row.total_enrolled }})
+                </h4>
+                <ul style="margin: 0; padding-left: 20px; list-style-type: none;">
+                  {% for student in row.enrolled_students %}
+                    <li style="padding: 6px 0; border-bottom: 1px solid #e5e7eb;">
+                      <strong style="color: #1e40af;">ID:</strong> 
+                      <span style="font-family: monospace; background-color: #f3f4f6; padding: 2px 6px; border-radius: 4px;">{{ student.id }}</span> | 
+                      <strong style="color: #1e40af;">Nombre:</strong> {{ student.name }}
+                    </li>
+                  {% empty %}
+                    <li style="color: #9ca3af; padding: 6px 0;">No hay estudiantes inscritos</li>
+                  {% endfor %}
+                </ul>
+              </div>
+              {% endif %}
+              
+              <!-- Participated Students Section -->
+              {% if row.has_participations and row.participated_students %}
+              <div style="margin-top: 15px; padding-top: 15px; border-top: 2px solid #22c55e;">
+                <h4 style="color: #16a34a; margin-bottom: 8px; font-size: 0.95rem;">
+                  ✅ {% if row.is_social_event %}Participantes{% else %}Asistieron{% endif %} ({{ row.total_participated }})
+                </h4>
+                <ul style="margin: 0; padding-left: 20px; list-style-type: none;">
+                  {% for student in row.participated_students %}
+                    <li style="padding: 6px 0; border-bottom: 1px solid #d1fae5; background-color: #f0fdf4;">
+                      <strong style="color: #16a34a;">ID:</strong> 
+                      <span style="font-family: monospace; background-color: #dcfce7; padding: 2px 6px; border-radius: 4px; font-weight: 600;">{{ student.id }}</span> | 
+                      <strong style="color: #16a34a;">Nombre:</strong> {{ student.name }}
+                      {% if student.attendance_time %}
+                        | <strong style="color: #16a34a;">Hora:</strong> {{ student.attendance_time }}
+                      {% endif %}
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+              {% else %}
+              <div style="margin-top: 15px; padding-top: 15px; border-top: 2px solid #e5e7eb;">
+                <p style="color: #9ca3af; margin: 0; font-size: 0.9rem;">
+                  ℹ️ Ningún estudiante ha registrado asistencia aún
+                </p>
+              </div>
+              {% endif %}
+            </div>
+          </details>
+        </td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="7" class="text-center">No hay registros</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
+{% else %}
+<div class="empty-message">
+  <p>No se encontraron registros de participación con los filtros seleccionados.</p>
+</div>
+{% endif %}
+</div>
+{% endblock %}

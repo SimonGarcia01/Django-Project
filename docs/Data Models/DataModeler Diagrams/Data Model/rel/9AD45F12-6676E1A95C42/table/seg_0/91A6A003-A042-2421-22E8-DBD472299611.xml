@@ -1,0 +1,192 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="91A6A003-A042-2421-22E8-DBD472299611" name="activities_participation">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id" id="4522A684-CFCC-9852-B872-15BBB15CE53B">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<use>0</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<domain>8255836D-63A4-B7EE-E3E1-7CFA5C5901AF</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<identityColumn>true</identityColumn>
+<defaultOntNull>true</defaultOntNull>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementOrder>false</autoIncrementOrder>
+</Column>
+<Column name="date_registered" id="A957C536-D9F0-460E-E3A5-61D01AF44C6F">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<use>0</use>
+<logicalDatatype>LOGDT046</logicalDatatype>
+<domain>FB0BAB10-FDE7-F62B-7A58-F16C32B3B23E</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="attendance_date" id="E6AEF990-5AA8-6D37-16C0-DECA7FBEA537">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<domain>C2D25F41-1912-A38B-5E35-8553073ACEE4</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="attendance_time" id="2726B2CF-E7A3-426A-26DE-3E4DC55ADC0C">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<domain>F7DC5DFF-B2B6-DABC-9680-208B49706696</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="activity_id" id="9011EF34-6465-7016-0968-A4B337F235B1">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<use>0</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<domain>6C79D9B6-1A68-C99E-2E43-579CB84F1393</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="05DE704D-7B29-63BD-ABFA-5818E1572B07" referredColumn="93ED23E7-A727-7915-CB09-E37E8814948B"/>
+</associations>
+</Column>
+<Column name="user_id" id="F7222B12-B366-07D3-D05A-04F8DEFDF2A9">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<use>0</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<domain>8255836D-63A4-B7EE-E3E1-7CFA5C5901AF</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="045EDD58-9563-0804-2DA2-6A1FEB332DB4" referredColumn="6BC5FBA5-4042-4A67-7292-8E8AA236625B"/>
+</associations>
+</Column>
+<Column name="schedule_id" id="3C1AE18F-EAE9-34D2-07F7-5D487B9F72B4">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<domain>8255836D-63A4-B7EE-E3E1-7CFA5C5901AF</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="999BB202-4255-E12B-00E4-D14170AE8C13" referredColumn="BE2CB7A6-37D6-2F6D-1D2F-AE20A605D444"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="EC788874-61BC-B45C-E60C-9BBD35AA2F60" name="activities_participation_pkey">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="4522A684-CFCC-9852-B872-15BBB15CE53B"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="F0495424-546C-B3A4-62D9-33691739C3D1" name="activities_participation_user_id_activity_id_atte_d984d0cb_uniq">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<indexState>Unique Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="F7222B12-B366-07D3-D05A-04F8DEFDF2A9"/>
+<colUsage columnID="9011EF34-6465-7016-0968-A4B337F235B1"/>
+<colUsage columnID="E6AEF990-5AA8-6D37-16C0-DECA7FBEA537"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="D443073F-D99A-E8F5-85A5-953B2C0864C1" name="activities_participation_activity_id_398b3752">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="9011EF34-6465-7016-0968-A4B337F235B1"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="0792056E-136E-3E10-3B8D-354E1B9731DD" name="activities_participation_schedule_id_b55d81e2">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="3C1AE18F-EAE9-34D2-07F7-5D487B9F72B4"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="F2E94173-B141-9C9C-8344-DBD8913FBBE8" name="activities_participation_user_id_4f51bded">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="F7222B12-B366-07D3-D05A-04F8DEFDF2A9"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="20687638-3856-B513-A46A-EF8D9BC734F1" name="activities_participa_activity_id_398b3752_fk_activitie">
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="9011EF34-6465-7016-0968-A4B337F235B1"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="9E6BF2E0-570F-E860-5E37-C184F0526C6B" name="activities_participa_schedule_id_b55d81e2_fk_activitie">
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="3C1AE18F-EAE9-34D2-07F7-5D487B9F72B4"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="58D80B36-3A55-FE59-A0A8-61F5E5C8FEA3" name="activities_participa_user_id_4f51bded_fk_login_cus">
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="F7222B12-B366-07D3-D05A-04F8DEFDF2A9"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

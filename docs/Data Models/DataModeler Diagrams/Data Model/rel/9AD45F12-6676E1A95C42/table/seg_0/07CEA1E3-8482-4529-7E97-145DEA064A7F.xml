@@ -1,0 +1,190 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="07CEA1E3-8482-4529-7E97-145DEA064A7F" name="activities_enrollment">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id" id="FC803092-51EA-A8DB-DE6E-6CF2BA2456D7">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<use>0</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<domain>8255836D-63A4-B7EE-E3E1-7CFA5C5901AF</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<identityColumn>true</identityColumn>
+<defaultOntNull>true</defaultOntNull>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementOrder>false</autoIncrementOrder>
+</Column>
+<Column name="registered_at" id="2056B10F-6A4F-B932-7F51-F39845693116">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<use>0</use>
+<logicalDatatype>LOGDT046</logicalDatatype>
+<domain>FB0BAB10-FDE7-F62B-7A58-F16C32B3B23E</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="activity_id" id="1488B71C-DEE8-5B87-05F5-8B033017DA8C">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<use>0</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<domain>6C79D9B6-1A68-C99E-2E43-579CB84F1393</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="3AC021E7-61D3-5BE5-01EE-295B93F6B67F" referredColumn="93ED23E7-A727-7915-CB09-E37E8814948B"/>
+</associations>
+</Column>
+<Column name="user_id" id="0EAB0C91-175A-52B5-715F-CFC99EF5A55A">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<use>0</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<domain>8255836D-63A4-B7EE-E3E1-7CFA5C5901AF</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="246BAFFF-B8AC-9E7A-70C5-90AF2521DC46" referredColumn="6BC5FBA5-4042-4A67-7292-8E8AA236625B"/>
+</associations>
+</Column>
+<Column name="schedule_id" id="7D62FB69-6D79-D2A8-3102-4AF5206D720D">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<domain>8255836D-63A4-B7EE-E3E1-7CFA5C5901AF</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="B9A15A91-B085-A9FD-EA34-AF2954D49297" referredColumn="BE2CB7A6-37D6-2F6D-1D2F-AE20A605D444"/>
+</associations>
+</Column>
+<Column name="confirmed" id="DF8A131B-384F-5EB4-7B63-E12594C409C2">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<use>0</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<domain>74AF39C0-1C84-68A8-84BB-58728525E990</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="confirmed_at" id="D806DB77-3D13-C84A-971F-9226B82754FD">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT046</logicalDatatype>
+<domain>FB0BAB10-FDE7-F62B-7A58-F16C32B3B23E</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="DECE4A97-8DCA-185E-AEF0-58CAC30509A7" name="activities_enrollment_pkey">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="FC803092-51EA-A8DB-DE6E-6CF2BA2456D7"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="D7DE697E-1D82-257D-4E09-F221822F69F0" name="activities_enrollment_user_id_activity_id_ecfe66e5_uniq">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<indexState>Unique Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="0EAB0C91-175A-52B5-715F-CFC99EF5A55A"/>
+<colUsage columnID="1488B71C-DEE8-5B87-05F5-8B033017DA8C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="58F44841-D411-E6F5-BD75-C0794FDA2CA0" name="activities_enrollment_activity_id_2d054d48">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="1488B71C-DEE8-5B87-05F5-8B033017DA8C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="4A22A85F-DE23-7FE1-0DE8-D4887AE65F3D" name="activities_enrollment_schedule_id_8a64bf23">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="7D62FB69-6D79-D2A8-3102-4AF5206D720D"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="17E3BDCF-F88D-9937-38F0-6991EA0CD64A" name="activities_enrollment_user_id_714b6695">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="0EAB0C91-175A-52B5-715F-CFC99EF5A55A"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="FF395734-2360-8F85-60F8-190E6E005719" name="activities_enrollmen_activity_id_2d054d48_fk_activitie">
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="1488B71C-DEE8-5B87-05F5-8B033017DA8C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="99891C14-3EF8-E17F-6111-D480FB0ACE41" name="activities_enrollmen_schedule_id_8a64bf23_fk_activitie">
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="7D62FB69-6D79-D2A8-3102-4AF5206D720D"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="0B9972E6-8752-8E54-3130-C20A0C1EFA99" name="activities_enrollment_user_id_714b6695_fk_login_customuser_id">
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="0EAB0C91-175A-52B5-715F-CFC99EF5A55A"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

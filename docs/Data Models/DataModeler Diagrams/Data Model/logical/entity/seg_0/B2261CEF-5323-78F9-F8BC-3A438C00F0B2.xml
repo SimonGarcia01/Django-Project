@@ -1,0 +1,107 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="B2261CEF-5323-78F9-F8BC-3A438C00F0B2" name="TEAMMEMBER">
+<createdBy>kracr</createdBy>
+<createdTime>2025-08-30 20:48:28 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<engineerTo>
+<item key="648A4291-7871-969E-25F9-D1A8E91FC7CC" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="memberId" id="597A863B-32EB-62F7-C960-7B565B4E2B14">
+<createdBy>kracr</createdBy>
+<createdTime>2025-08-30 20:48:33 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<engineerTo>
+<item key="648A4291-7871-969E-25F9-D1A8E91FC7CC" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>10</dataTypeSize>
+<ownDataTypeParameters>10,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Attribute_1" id="D00AEF3E-E509-2305-AB70-4247DC231006">
+<createdBy>kracr</createdBy>
+<createdTime>2025-08-30 20:49:55 UTC</createdTime>
+<generatorID>9F8B8BA8-3B77-47D3-62B2-D4971DC22A75</generatorID>
+<ownerDesignName>Data Model</ownerDesignName>
+<engineerTo>
+<item key="648A4291-7871-969E-25F9-D1A8E91FC7CC" value="true"/>
+</engineerTo>
+<referedAttribute>5EDA32B6-85B2-75FC-E522-644917DBEC97</referedAttribute>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="teamId" id="E06FF5C4-F530-BD3A-B6E8-C9C0B2AB30F8">
+<createdBy>kracr</createdBy>
+<createdTime>2025-08-30 20:49:55 UTC</createdTime>
+<generatorID>9F8B8BA8-3B77-47D3-62B2-D4971DC22A75</generatorID>
+<ownerDesignName>Data Model</ownerDesignName>
+<engineerTo>
+<item key="648A4291-7871-969E-25F9-D1A8E91FC7CC" value="true"/>
+</engineerTo>
+<referedAttribute>5A085439-507F-BBC8-95E6-0F42CE5DD738</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>5</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="universityId" id="6D94A889-5E85-478C-553D-A8E672183E15">
+<createdBy>kracr</createdBy>
+<createdTime>2025-08-30 20:49:55 UTC</createdTime>
+<generatorID>9F8B8BA8-3B77-47D3-62B2-D4971DC22A75</generatorID>
+<ownerDesignName>Data Model</ownerDesignName>
+<engineerTo>
+<item key="648A4291-7871-969E-25F9-D1A8E91FC7CC" value="true"/>
+</engineerTo>
+<referedAttribute>F6D2C845-65E0-2428-9251-CA4E997292DC</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>3</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="username" id="585859CC-EDCA-F1FB-D1CD-AC33CF6D734C">
+<createdBy>kracr</createdBy>
+<createdTime>2025-08-30 20:50:31 UTC</createdTime>
+<generatorID>3A48779B-AFE5-BFD7-3EA4-2A883F73CC62</generatorID>
+<ownerDesignName>Data Model</ownerDesignName>
+<engineerTo>
+<item key="648A4291-7871-969E-25F9-D1A8E91FC7CC" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<referedAttribute>A94BCDAB-8C8F-6465-FBDC-044DD792FBE9</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30</dataTypeSize>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="4FB00BA6-9AF0-F954-B439-1DFEBED7A85D" name="TEAMMEMBER PK">
+<createdBy>kracr</createdBy>
+<createdTime>2025-08-30 20:49:02 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<engineerTo>
+<item key="648A4291-7871-969E-25F9-D1A8E91FC7CC" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>597A863B-32EB-62F7-C960-7B565B4E2B14</attributeRef>
+<attributeRef>D00AEF3E-E509-2305-AB70-4247DC231006</attributeRef>
+<attributeRef>E06FF5C4-F530-BD3A-B6E8-C9C0B2AB30F8</attributeRef>
+<attributeRef>6D94A889-5E85-478C-553D-A8E672183E15</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

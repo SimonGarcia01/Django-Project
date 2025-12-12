@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="D4A0CF1F-79F3-4E12-5D24-349E34507E36" containerWithKeyObject="D3542F2B-6FBF-A2E8-4FD9-420553E494D9" localFKIndex="660BBC79-0D78-23BF-FA7B-734212271575" name="social_projects_soci_project_id_607ef32c_fk_social_pr">
+<sourceDDLFile>oracle-DDL.sql</sourceDDLFile>
+<createdBy>kracr</createdBy>
+<createdTime>2025-11-07 22:32:54 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<referredTableLongName>social_projects_socialproject</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>AADC566E-FC14-9E75-5F31-84F7ABD85E97</referredTableID>
+<keyObject>393E3510-0618-67C8-E2DE-075EA5B90B2F</keyObject>
+<referredKeyID>393E3510-0618-67C8-E2DE-075EA5B90B2F</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>id</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

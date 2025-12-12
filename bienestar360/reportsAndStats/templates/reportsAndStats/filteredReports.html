@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportes Filtrados - Bienestar Universitario</title>
+
+    {% load static %}
+    <!-- FONT IMPORTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* GLOBAL VARIABLES */
+        :root {
+            --primary-color: #2563eb;
+            --primary-hover: #1e40af;
+            --primary-glow: rgba(37, 99, 235, 0.5);
+            --secondary-color: #f3f4f6;
+            --text-dark: #111827;
+            --text-light: #4b5563;
+            --border-color: #e5e7eb;
+            --card-bg: rgba(255, 255, 255, 0.98);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-dark);
+            min-height: 100vh;
+            padding: 40px 20px;
+            background-color: var(--text-dark);
+            background-image: linear-gradient(160deg, rgba(17, 24, 39, 0.7) 0%, rgba(30, 64, 175, 0.5) 100%), url("{% static 'images/Foto_Icesi10.jpg' %}");
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+        }
+
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            background-color: var(--card-bg);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+        }
+
+        .breadcrumbs {
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            background-color: var(--secondary-color);
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.75rem;
+            border: 1px solid var(--border-color);
+            display: inline-block;
+        }
+        .breadcrumbs a {
+            color: var(--primary-hover);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .breadcrumbs a:hover { text-decoration: underline; }
+        .breadcrumbs .separator { margin: 0 0.5rem; color: var(--text-light); }
+        .breadcrumbs .current { font-weight: 600; color: var(--text-dark); }
+
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.75rem;
+            font-weight: 700;
+        }
+
+        .filter-form {
+            padding: 1.5rem 2rem;
+            background: var(--secondary-color);
+            border: 1px solid var(--border-color);
+            margin: 0 auto 2.5rem;
+            border-radius: 12px;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .filter-form label {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        .filter-input {
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            flex-grow: 1;
+            min-width: 150px;
+        }
+        .filter-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px var(--primary-glow);
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            font-weight: 600;
+            box-shadow: var(--shadow-md);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .button:hover {
+            background-color: var(--primary-hover);
+            box-shadow: 0 0 15px var(--primary-glow);
+            transform: translateY(-2px);
+        }
+        .button-secondary {
+            background-color: #e5e7eb;
+            color: var(--text-dark);
+            box-shadow: none;
+            border: 1px solid var(--border-color);
+        }
+        .button-secondary:hover {
+            background-color: #d1d5db;
+            border-color: #cbd5e1;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .button-icon {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* Stats Cards */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-card h3 {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .stat-item:last-child {
+            border-bottom: none;
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        .stat-value {
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        .breakdown-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .breakdown-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.25rem 0;
+            color: var(--text-dark);
+        }
+
+        .breakdown-list li strong {
+            color: var(--primary-color);
+        }
+
+        .top-activities-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .top-activities-list li {
+            padding: 0.5rem;
+            background: var(--secondary-color);
+            margin-bottom: 0.5rem;
+            border-radius: 6px;
+            border-left: 3px solid var(--primary-color);
+        }
+
+        /* Table styling for main overview */
+        .overview-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-md);
+            border-radius: 0.75rem;
+            overflow: hidden;
+            background: white;
+        }
+
+        .overview-table th, .overview-table td {
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .overview-table th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        .overview-table tbody tr:nth-child(even) {
+            background-color: #f9fafb;
+        }
+
+        .overview-table tbody tr:hover {
+            background-color: #eef2ff;
+            transition: background-color 0.2s ease;
+        }
+
+        .expand-details {
+            cursor: pointer;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .expand-details:hover {
+            text-decoration: underline;
+        }
+
+        .details-section {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid var(--border-color);
+        }
+
+        .empty-message {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 1.1rem;
+            padding: 60px 20px;
+            background: var(--secondary-color);
+            border-radius: 16px;
+            margin-top: 40px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        /* Download buttons container */
+        .download-container {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: var(--secondary-color);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .download-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .download-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .download-section h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .download-buttons {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .download-btn-excel {
+            background-color: #16a34a;
+            color: white;
+        }
+
+        .download-btn-excel:hover {
+            background-color: #15803d;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .download-btn-csv {
+            background-color: #2563eb;
+            color: white;
+        }
+
+        .download-btn-csv:hover {
+            background-color: #1e40af;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .download-btn-image {
+            background-color: #dc2626;
+            color: white;
+        }
+
+        .download-btn-image:hover {
+            background-color: #b91c1c;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .download-btn-pdf {
+            background-color: #ea580c;
+            color: white;
+        }
+
+        .download-btn-pdf:hover {
+            background-color: #c2410c;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        /* Chart container */
+        .chart-container {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 400px;
+            margin-bottom: 1rem;
+        }
+
+        /* Message styles */
+        .message {
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            display: none;
+        }
+
+        .message.success {
+            background-color: #d1fae5;
+            color: #065f46;
+            border: 1px solid #6ee7b7;
+        }
+
+        .message.error {
+            background-color: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+        }
+
+        .message.show {
+            display: block;
+        }
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background-color: #10b981;
+            color: white;
+        }
+
+        .badge-warning {
+            background-color: #f59e0b;
+            color: white;
+        }
+
+        .badge-info {
+            background-color: var(--primary-color);
+            color: white;
+        }
+    </style>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <!-- jsPDF for PDF export -->
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <div class="main-content">
+
+        <!-- Breadcrumb navigation -->
+        <nav class="breadcrumbs" aria-label="breadcrumb">
+            <a href="{% url 'homepageCADI:homepageCADI' %}">Inicio</a>
+            <span class="separator">/</span>
+            <a href="{% url 'reportsAndStats:general_reports' %}">Reportes y Estadísticas</a>
+            <span class="separator">/</span>
+            <span class="current">Reportes Filtrados</span>
+        </nav>
+
+        <h1>Reportes Filtrados por {{ selected_filter|title }}</h1>
+
+        <!-- Messages -->
+        <div id="message" class="message"></div>
+
+        <div class="filter-form">
+            <form method="get" style="display:contents;">
+                <label for="filter">Seleccionar filtro:</label>
+                <select name="filter" id="filter" class="filter-input" onchange="this.form.submit()">
+                    <option value="actividad" {% if selected_filter == 'actividad' %}selected{% endif %}>Actividad</option>
+                    <option value="facultad" {% if selected_filter == 'facultad' %}selected{% endif %}>Facultad</option>
+                    <option value="genero" {% if selected_filter == 'genero' %}selected{% endif %}>Género</option>
+                    <option value="semestre" {% if selected_filter == 'semestre' %}selected{% endif %}>Semestre</option>
+                    <option value="año" {% if selected_filter == 'año' %}selected{% endif %}>Año</option>
+                </select>
+                <button type="submit" class="button">
+                    <svg class="button-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path></svg>
+                    Aplicar
+                </button>
+            </form>
+        </div>
+
+    {% if data %}
+    <!-- Download buttons for table -->
+    <div class="download-container">
+        <div class="download-section">
+            <h3>📊 Descargar Tabla</h3>
+            <div class="download-buttons">
+                <button class="download-btn download-btn-excel" 
+                        id="download-excel-btn"
+                        onclick="downloadTable('excel')">
+                    <svg class="button-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px;">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    Excel (.xlsx)
+                </button>
+                <button class="download-btn download-btn-csv" 
+                        id="download-csv-btn"
+                        onclick="downloadTable('csv')">
+                    <svg class="button-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px;">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    CSV (.csv)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart -->
+    <div class="chart-container">
+        <h3 style="margin-bottom: 1rem; color: var(--primary-color);">Gráfico de Participación</h3>
+        <div class="chart-wrapper">
+            <canvas id="participationChart"></canvas>
+        </div>
+        <div class="download-section">
+            <h3>📈 Descargar Gráfico</h3>
+            <div class="download-buttons">
+                <button class="download-btn download-btn-image" onclick="downloadChart('png')">
+                    <svg class="button-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px;">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                    PNG
+                </button>
+                <button class="download-btn download-btn-image" onclick="downloadChart('jpeg')">
+                    <svg class="button-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px;">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                    JPEG
+                </button>
+                <button class="download-btn download-btn-pdf" onclick="downloadChart('pdf')">
+                    <svg class="button-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px;">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                    </svg>
+                    PDF
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <table class="data-table" id="data-table">
+        <thead>
+            <tr>
+                <th>{{ selected_filter|title }}</th>
+                <th>Participación</th>
+                <th>Actividades</th>
+            </tr>
+        </thead>
+        <tbody>
+        <!-- Overview Table -->
+        <table class="overview-table">
+            <thead>
+                <tr>
+                    <th>{{ selected_filter|title }}</th>
+                    {% if selected_filter == 'actividad' %}
+                        <th>Participantes</th>
+                        <th>Inscripciones</th>
+                        <th>Participaciones</th>
+                        <th>Tipo</th>
+                        <th>Rating</th>
+                        <th>Estado</th>
+                    {% elif selected_filter == 'facultad' %}
+                        <th>Usuarios</th>
+                        <th>Inscripciones</th>
+                        <th>Participaciones</th>
+                        <th>Actividades Únicas</th>
+                        <th>Rating Promedio</th>
+                    {% elif selected_filter == 'genero' %}
+                        <th>Usuarios</th>
+                        <th>Inscripciones</th>
+                        <th>Participaciones</th>
+                        <th>Actividades Únicas</th>
+                        <th>Promedio por Usuario</th>
+                    {% elif selected_filter == 'semestre' %}
+                        <th>Periodo</th>
+                        <th>Usuarios Inscritos</th>
+                        <th>Inscripciones</th>
+                        <th>Participaciones</th>
+                        <th>Usuarios Participaron</th>
+                        <th>Tasa Participación</th>
+                    {% elif selected_filter == 'año' %}
+                        <th>Periodo</th>
+                        <th>Usuarios Inscritos</th>
+                        <th>Inscripciones</th>
+                        <th>Participaciones</th>
+                        <th>Usuarios Participaron</th>
+                        <th>Tasa Participación</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for key, info in data.items %}
+                <tr>
+                    <td><strong>{{ key }}</strong></td>
+                    {% if selected_filter == 'actividad' %}
+                        <td>{{ info.participacion }}</td>
+                        <td>{{ info.actividades }}</td>
+                        <td>{{ info.participaciones_reales }}</td>
+                        <td>{{ info.tipo }}</td>
+                        <td>
+                            {% if info.rating_promedio != 'N/A' %}
+                                {{ info.rating_promedio }} ⭐ ({{ info.total_resenas }})
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </td>
+                        <td>
+                            <span class="badge {% if info.publicada == 'Sí' %}badge-success{% else %}badge-warning{% endif %}">
+                                {{ info.publicada }}
+                            </span>
+                        </td>
+                    {% elif selected_filter == 'facultad' %}
+                        <td>{{ info.participacion }}</td>
+                        <td>{{ info.actividades }}</td>
+                        <td>{{ info.participaciones_reales }}</td>
+                        <td>{{ info.actividades_unicas }}</td>
+                        <td>
+                            {% if info.rating_promedio_dado != 'N/A' %}
+                                {{ info.rating_promedio_dado }} ⭐
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </td>
+                    {% elif selected_filter == 'genero' %}
+                        <td>{{ info.participacion }}</td>
+                        <td>{{ info.actividades }}</td>
+                        <td>{{ info.participaciones_reales }}</td>
+                        <td>{{ info.actividades_unicas }}</td>
+                        <td>{{ info.promedio_inscripciones_por_usuario }}</td>
+                    {% elif selected_filter == 'semestre' %}
+                        <td>{{ info.fecha_inicio }} - {{ info.fecha_fin }}</td>
+                        <td>{{ info.participacion }}</td>
+                        <td>{{ info.actividades }}</td>
+                        <td>{{ info.participaciones_reales }}</td>
+                        <td>{{ info.usuarios_participaron }}</td>
+                        <td>{{ info.tasa_participacion }}%</td>
+                    {% elif selected_filter == 'año' %}
+                        <td>{{ info.fecha_inicio }} - {{ info.fecha_fin }}</td>
+                        <td>{{ info.participacion }}</td>
+                        <td>{{ info.actividades }}</td>
+                        <td>{{ info.participaciones_reales }}</td>
+                        <td>{{ info.usuarios_participaron }}</td>
+                        <td>{{ info.tasa_participacion }}%</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Detailed Stats Cards -->
+        <div class="stats-container">
+            {% for key, info in data.items %}
+            <div class="stat-card">
+                <h3>{{ key }}</h3>
+                
+                {% if selected_filter == 'actividad' %}
+                    <div class="stat-item">
+                        <span class="stat-label">Tipo:</span>
+                        <span class="stat-value">{{ info.tipo }}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Categoría:</span>
+                        <span class="stat-value">{{ info.categoria }}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Ubicación:</span>
+                        <span class="stat-value">{{ info.ubicacion }}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Capacidad:</span>
+                        <span class="stat-value">{{ info.capacidad_actual }} / {{ info.capacidad_maxima }}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Tasa de Participación:</span>
+                        <span class="stat-value">{{ info.tasa_participacion }}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Requiere Inscripción:</span>
+                        <span class="stat-value">{{ info.requiere_inscripcion }}</span>
+                    </div>
+                    
+                    {% if info.distribucion_genero %}
+                    <div class="details-section">
+                        <h4 style="color: var(--primary-color); margin-bottom: 0.5rem; font-size: 0.95rem;">Distribución por Género:</h4>
+                        <ul class="breakdown-list">
+                            {% for gender, count in info.distribucion_genero.items %}
+                            <li><span>{{ gender }}</span> <strong>{{ count }}</strong></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                    
+                    {% if info.distribucion_facultad %}
+                    <div class="details-section">
+                        <h4 style="color: var(--primary-color); margin-bottom: 0.5rem; font-size: 0.95rem;">Distribución por Facultad:</h4>
+                        <ul class="breakdown-list">
+                            {% for faculty, count in info.distribucion_facultad.items %}
+                            <li><span>{{ faculty }}</span> <strong>{{ count }}</strong></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+
+                {% elif selected_filter == 'facultad' %}
+                    <div class="stat-item">
+                        <span class="stat-label">Total Usuarios:</span>
+                        <span class="stat-value">{{ info.participacion }}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Total Inscripciones:</span>
+                        <span class="stat-value">{{ info.actividades }}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Participaciones Reales:</span>
+                        <span class="stat-value">{{ info.participaciones_reales }}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Tasa de Participación:</span>
+                        <span class="stat-value">{{ info.tasa_participacion }}%</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Actividades Únicas:</span>
+                        <span class="stat-value">{{ info.actividades_unicas }}</span>
+                    </div>
+                    
+                    {% if info.distribucion_genero %}
+                    <div class="details-section">
+                        <h4 style="color: var(--primary-color); margin-bottom: 0.5rem; font-size: 0.95rem;">Distribución por Género:</h4>
+                        <ul class="breakdown-list">
+                            {% for gender, count in info.distribucion_genero.items %}
+                            <li><span>{{ gender }}</span> <strong>{{ count }}</strong></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                    
+                    {% if info.distribucion_tipo_actividad %}
+                    <div class="details-section">
+                        <h4 style="color: var(--primary-color); margin-bottom: 0.5rem; font-size: 0.95rem;">Por Tipo de Actividad:</h4>
+                        <ul class="breakdown-list">
+                            {% for tipo, count in info.distribucion_tipo_actividad.items %}
+                            <li><span>{{ tipo }}</span> <strong>{{ count }}</strong></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                    
+                    {% if info.top_actividades %}
+                    <div class="details-section">
+                        <h4 style="color: var(--primary-color); margin-bottom: 0.5rem; font-size: 0.95rem;">Top Actividades:</h4>
+                        <ol class="top-activities-list">
+                            {% for activity in info.top_actividades %}
+                            <li>{{ activity }}</li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                    {% endif %}
+
+                {% elif selected_filter == 'genero' %}
+                    <div class="stat-item">
+                        <span class="stat-label">Total Usuarios:</span>
+                        <span class="stat-value">{{ info.participacion }}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Total Inscripciones:</span>
+                        <span class="stat-value">{{ info.actividades }}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Participaciones Reales:</span>
+                        <span class="stat-value">{{ info.participaciones_reales }}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Promedio por Usuario:</span>
+                        <span class="stat-value">{{ info.promedio_inscripciones_por_usuario }}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Tasa de Participación:</span>
+                        <span class="stat-value">{{ info.tasa_participacion }}%</span>
+                    </div>
+                    
+                    {% if info.distribucion_facultad %}
+                    <div class="details-section">
+                        <h4 style="color: var(--primary-color); margin-bottom: 0.5rem; font-size: 0.95rem;">Distribución por Facultad:</h4>
+                        <ul class="breakdown-list">
+                            {% for faculty, count in info.distribucion_facultad.items %}
+                            <li><span>{{ faculty }}</span> <strong>{{ count }}</strong></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                    
+                    {% if info.distribucion_tipo_actividad %}
+                    <div class="details-section">
+                        <h4 style="color: var(--primary-color); margin-bottom: 0.5rem; font-size: 0.95rem;">Por Tipo de Actividad:</h4>
+                        <ul class="breakdown-list">
+                            {% for tipo, count in info.distribucion_tipo_actividad.items %}
+                            <li><span>{{ tipo }}</span> <strong>{{ count }}</strong></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                    
+                    {% if info.top_actividades %}
+                    <div class="details-section">
+                        <h4 style="color: var(--primary-color); margin-bottom: 0.5rem; font-size: 0.95rem;">Top Actividades:</h4>
+                        <ol class="top-activities-list">
+                            {% for activity in info.top_actividades %}
+                            <li>{{ activity }}</li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                    {% endif %}
+                    
+                    {% if info.rating_promedio_dado != 'N/A' %}
+                    <div class="stat-item">
+                        <span class="stat-label">Rating Promedio Dado:</span>
+                        <span class="stat-value">{{ info.rating_promedio_dado }} ⭐ ({{ info.total_resenas }})</span>
+                    </div>
+                    {% endif %}
+
+                {% elif selected_filter == 'semestre' %}
+                    <div class="stat-item">
+                        <span class="stat-label">Periodo:</span>
+                        <span class="stat-value">{{ info.fecha_inicio }} - {{ info.fecha_fin }}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Usuarios Inscritos:</span>
+                        <span class="stat-value">{{ info.participacion }}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Total Inscripciones:</span>
+                        <span class="stat-value">{{ info.actividades }}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Participaciones Reales:</span>
+                        <span class="stat-value">{{ info.participaciones_reales }}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Usuarios que Participaron:</span>
+                        <span class="stat-value">{{ info.usuarios_participaron }}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Tasa de Participación:</span>
+                        <span class="stat-value">{{ info.tasa_participacion }}%</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Actividades Únicas:</span>
+                        <span class="stat-value">{{ info.actividades_unicas }}</span>
+                    </div>
+                    
+                    {% if info.distribucion_genero %}
+                    <div class="details-section">
+                        <h4 style="color: var(--primary-color); margin-bottom: 0.5rem; font-size: 0.95rem;">Distribución por Género:</h4>
+                        <ul class="breakdown-list">
+                            {% for gender, count in info.distribucion_genero.items %}
+                            <li><span>{{ gender }}</span> <strong>{{ count }}</strong></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                    
+                    {% if info.distribucion_facultad %}
+                    <div class="details-section">
+                        <h4 style="color: var(--primary-color); margin-bottom: 0.5rem; font-size: 0.95rem;">Distribución por Facultad:</h4>
+                        <ul class="breakdown-list">
+                            {% for faculty, count in info.distribucion_facultad.items %}
+                            <li><span>{{ faculty }}</span> <strong>{{ count }}</strong></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                    
+                    {% if info.distribucion_tipo_actividad %}
+                    <div class="details-section">
+                        <h4 style="color: var(--primary-color); margin-bottom: 0.5rem; font-size: 0.95rem;">Por Tipo de Actividad:</h4>
+                        <ul class="breakdown-list">
+                            {% for tipo, count in info.distribucion_tipo_actividad.items %}
+                            <li><span>{{ tipo }}</span> <strong>{{ count }}</strong></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                    
+                    {% if info.top_actividades %}
+                    <div class="details-section">
+                        <h4 style="color: var(--primary-color); margin-bottom: 0.5rem; font-size: 0.95rem;">Top Actividades:</h4>
+                        <ol class="top-activities-list">
+                            {% for activity in info.top_actividades %}
+                            <li>{{ activity }}</li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                    {% endif %}
+
+                {% elif selected_filter == 'año' %}
+                    <div class="stat-item">
+                        <span class="stat-label">Periodo:</span>
+                        <span class="stat-value">{{ info.fecha_inicio }} - {{ info.fecha_fin }}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Usuarios Inscritos:</span>
+                        <span class="stat-value">{{ info.participacion }}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Total Inscripciones:</span>
+                        <span class="stat-value">{{ info.actividades }}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Participaciones Reales:</span>
+                        <span class="stat-value">{{ info.participaciones_reales }}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Usuarios que Participaron:</span>
+                        <span class="stat-value">{{ info.usuarios_participaron }}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Tasa de Participación:</span>
+                        <span class="stat-value">{{ info.tasa_participacion }}%</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Actividades Únicas:</span>
+                        <span class="stat-value">{{ info.actividades_unicas }}</span>
+                    </div>
+                    
+                    {% if info.distribucion_semestre %}
+                    <div class="details-section">
+                        <h4 style="color: var(--primary-color); margin-bottom: 0.5rem; font-size: 0.95rem;">Distribución por Semestre:</h4>
+                        <ul class="breakdown-list">
+                            {% for sem, stats in info.distribucion_semestre.items %}
+                            <li>
+                                <span><strong>{{ sem }}:</strong> {{ stats.inscripciones }} inscripciones, {{ stats.participaciones }} participaciones</span>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                    
+                    {% if info.distribucion_genero %}
+                    <div class="details-section">
+                        <h4 style="color: var(--primary-color); margin-bottom: 0.5rem; font-size: 0.95rem;">Distribución por Género:</h4>
+                        <ul class="breakdown-list">
+                            {% for gender, count in info.distribucion_genero.items %}
+                            <li><span>{{ gender }}</span> <strong>{{ count }}</strong></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                    
+                    {% if info.distribucion_facultad %}
+                    <div class="details-section">
+                        <h4 style="color: var(--primary-color); margin-bottom: 0.5rem; font-size: 0.95rem;">Distribución por Facultad:</h4>
+                        <ul class="breakdown-list">
+                            {% for faculty, count in info.distribucion_facultad.items %}
+                            <li><span>{{ faculty }}</span> <strong>{{ count }}</strong></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                    
+                    {% if info.distribucion_tipo_actividad %}
+                    <div class="details-section">
+                        <h4 style="color: var(--primary-color); margin-bottom: 0.5rem; font-size: 0.95rem;">Por Tipo de Actividad:</h4>
+                        <ul class="breakdown-list">
+                            {% for tipo, count in info.distribucion_tipo_actividad.items %}
+                            <li><span>{{ tipo }}</span> <strong>{{ count }}</strong></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                    
+                    {% if info.top_actividades %}
+                    <div class="details-section">
+                        <h4 style="color: var(--primary-color); margin-bottom: 0.5rem; font-size: 0.95rem;">Top Actividades:</h4>
+                        <ol class="top-activities-list">
+                            {% for activity in info.top_actividades %}
+                            <li>{{ activity }}</li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-message">
+            <p>No hay datos para mostrar con este filtro.</p>
+        </div>
+    {% endif %}
+
+    <div class="button-container">
+        <a href="{% url 'reportsAndStats:general_reports' %}" class="button button-secondary">
+            <svg class="button-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            Volver al panel general
+        </a>
+    </div>
+    </div>
+
+    {% if data %}
+    <script>
+        // Chart data
+        const chartData = {
+            labels: [{% for key, info in data.items %}'{{ key }}'{% if not forloop.last %},{% endif %}{% endfor %}],
+            datasets: [{
+                label: 'Participación',
+                data: [{% for key, info in data.items %}{{ info.participacion }}{% if not forloop.last %},{% endif %}{% endfor %}],
+                backgroundColor: 'rgba(37, 99, 235, 0.6)',
+                borderColor: 'rgba(37, 99, 235, 1)',
+                borderWidth: 2
+            }, {
+                label: 'Actividades',
+                data: [{% for key, info in data.items %}{{ info.actividades }}{% if not forloop.last %},{% endif %}{% endfor %}],
+                backgroundColor: 'rgba(16, 185, 129, 0.6)',
+                borderColor: 'rgba(16, 185, 129, 1)',
+                borderWidth: 2
+            }]
+        };
+
+        // Create chart
+        const ctx = document.getElementById('participationChart').getContext('2d');
+        const participationChart = new Chart(ctx, {
+            type: 'bar',
+            data: chartData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Participación por {{ selected_filter|title }}'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Download chart functions
+        function downloadChart(format) {
+            try {
+                // Validar que el formato sea válido
+                const validFormats = ['png', 'jpeg', 'pdf'];
+                if (!validFormats.includes(format)) {
+                    showMessage('No fue posible generar el archivo, por favor intente nuevamente', 'error');
+                    return;
+                }
+
+                if (!participationChart) {
+                    showMessage('No fue posible generar el archivo, por favor intente nuevamente', 'error');
+                    return;
+                }
+
+                // Verificar que el gráfico tenga datos
+                const chartData = participationChart.data;
+                if (!chartData || !chartData.labels || chartData.labels.length === 0) {
+                    showMessage('No hay datos para generar el gráfico', 'error');
+                    return;
+                }
+
+                if (format === 'png' || format === 'jpeg') {
+                    // Use Chart.js built-in method for better quality
+                    const imageUrl = participationChart.toBase64Image(format === 'jpeg' ? 'image/jpeg' : 'image/png', 1.0);
+                    
+                    if (!imageUrl || imageUrl.length === 0) {
+                        showMessage('No fue posible generar el archivo, por favor intente nuevamente', 'error');
+                        return;
+                    }
+                    
+                    const link = document.createElement('a');
+                    link.download = `grafico_participacion_${new Date().getTime()}.${format}`;
+                    link.href = imageUrl;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    showMessage('Descarga completada exitosamente', 'success');
+                } else if (format === 'pdf') {
+                    // Verificar que jsPDF esté disponible
+                    if (typeof window.jspdf === 'undefined') {
+                        showMessage('No fue posible generar el archivo, por favor intente nuevamente', 'error');
+                        return;
+                    }
+                    
+                    // Use Chart.js to get the image, then convert to PDF
+                    const imageUrl = participationChart.toBase64Image('image/png', 1.0);
+                    
+                    if (!imageUrl || imageUrl.length === 0) {
+                        showMessage('No fue posible generar el archivo, por favor intente nuevamente', 'error');
+                        return;
+                    }
+                    
+                    const { jsPDF } = window.jspdf;
+                    const pdf = new jsPDF('landscape', 'mm', 'a4');
+                    
+                    // Create an image element to get dimensions
+                    const img = new Image();
+                    img.onload = function() {
+                        try {
+                            const imgWidth = 297; // A4 width in landscape
+                            const imgHeight = (img.height * imgWidth) / img.width;
+                            pdf.addImage(imageUrl, 'PNG', 0, 0, imgWidth, imgHeight);
+                            pdf.save(`grafico_participacion_${new Date().getTime()}.pdf`);
+                            showMessage('Descarga completada exitosamente', 'success');
+                        } catch (pdfError) {
+                            console.error('Error generating PDF:', pdfError);
+                            showMessage('No fue posible generar el archivo, por favor intente nuevamente', 'error');
+                        }
+                    };
+                    img.onerror = function() {
+                        showMessage('No fue posible generar el archivo, por favor intente nuevamente', 'error');
+                    };
+                    img.src = imageUrl;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showMessage('No fue posible generar el archivo, por favor intente nuevamente', 'error');
+            }
+        }
+
+        // Download table function
+        function downloadTable(format) {
+            try {
+                const filter = '{{ selected_filter }}';
+                const url = format === 'excel' 
+                    ? '{% url "reportsAndStats:download_table_excel" %}?filter=' + filter
+                    : '{% url "reportsAndStats:download_table_csv" %}?filter=' + filter;
+                
+                // Use fetch to download and handle errors
+                fetch(url)
+                    .then(response => {
+                        // Check content type to determine if it's an error JSON or a file
+                        const contentType = response.headers.get('content-type');
+                        
+                        if (contentType && contentType.includes('application/json')) {
+                            // It's an error response
+                            return response.json().then(data => {
+                                throw new Error(data.error || 'Error desconocido');
+                            });
+                        } else if (response.ok) {
+                            // It's a file download
+                            return response.blob().then(blob => {
+                                const link = document.createElement('a');
+                                const blobUrl = window.URL.createObjectURL(blob);
+                                link.href = blobUrl;
+                                
+                                // Determine filename from response or use default
+                                const contentDisposition = response.headers.get('content-disposition');
+                                let filename = format === 'excel' 
+                                    ? `reporte_participacion_${filter}_${new Date().getTime()}.xlsx`
+                                    : `reporte_participacion_${filter}_${new Date().getTime()}.csv`;
+                                
+                                if (contentDisposition) {
+                                    const filenameMatch = contentDisposition.match(/filename="?(.+)"?/i);
+                                    if (filenameMatch) {
+                                        filename = filenameMatch[1];
+                                    }
+                                }
+                                
+                                link.download = filename;
+                                document.body.appendChild(link);
+                                link.click();
+                                document.body.removeChild(link);
+                                window.URL.revokeObjectURL(blobUrl);
+                                showMessage('Descarga completada exitosamente', 'success');
+                            });
+                        } else {
+                            throw new Error('Error en la respuesta del servidor');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error downloading table:', error);
+                        showMessage('No fue posible generar el archivo, por favor intente nuevamente', 'error');
+                    });
+            } catch (error) {
+                console.error('Error:', error);
+                showMessage('No fue posible generar el archivo, por favor intente nuevamente', 'error');
+            }
+        }
+
+        // Show message function
+        function showMessage(text, type) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = text;
+            messageDiv.className = `message ${type} show`;
+            setTimeout(() => {
+                messageDiv.classList.remove('show');
+            }, 5000);
+        }
+    </script>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,313 @@
+{% load static %}
+{% load dict_tags %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario General de Partidos</title>
+    <style>
+        /* FONT IMPORT */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        /* GLOBAL STYLES */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: #374151;
+            min-height: 100vh;
+            padding: 40px 20px;
+
+            background-image: url("{% static 'images/Foto_Icesi10.jpg' %}");
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+        }
+
+        /* MAIN CONTENT CONTAINER */
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        /* MODERN BREADCRUMBS BAR */
+        .breadcrumbs {
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+            color: #374151;
+            background-color: #f3f4f6;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.75rem;
+            border: 1px solid #e5e7eb;
+            display: inline-block;
+        }
+        
+        .breadcrumbs a {
+            color: #1e3a8a;
+            text-decoration: none;
+            font-weight: 500;
+            transition: text-decoration 0.2s ease;
+        }
+        .breadcrumbs a:hover { text-decoration: underline; }
+        .breadcrumbs .separator { margin: 0 0.5rem; color: #9ca3af; }
+        .breadcrumbs .current { font-weight: 600; color: #111827; }
+
+        /* HEADER & MONTH NAVIGATION */
+        .month-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .month-navigation h2 {
+            color: #1e3a8a;
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+            text-align: center;
+        }
+
+        .nav-btn {
+            background-color: #eef2ff;
+            color: #4338ca;
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            line-height: 44px;
+            text-align: center;
+            font-size: 1.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+        .nav-btn:hover { background-color: #4338ca; color: #ffffff; }
+
+        /* CALENDAR GRID STYLES */
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+        }
+
+        .calendar-header {
+            text-align: center;
+            font-weight: 600;
+            color: #111827;
+            padding: 12px 0;
+            font-size: 0.9rem;
+        }
+
+        .calendar-day {
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            min-height: 140px;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            /* ✅ ADDED: Smooth transition for the hover effect */
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        /* ✅ UPDATED: Added a blue rim/glow on hover */
+        .calendar-day:hover {
+            border-color: #a5b4fc; /* Lighter blue border on hover */
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2); /* Blue outer glow */
+        }
+
+        .date-label {
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 8px;
+            align-self: flex-start;
+        }
+        
+        .other-month {
+            background-color: #f9fafb;
+        }
+        .other-month .date-label {
+            color: #9ca3af;
+        }
+
+        /* Day items container */
+        .day-items {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            flex: 1;
+            width: 100%;
+            max-width: 100%;
+            min-height: 0;
+        }
+
+        /* TOURNAMENT START CARD STYLES */
+        .tournament-start-card {
+            background: #fef3c7;
+            border: 1px solid #fcd34d;
+            border-left-width: 4px;
+            border-left-color: #f59e0b;
+            padding: 4px 5px;
+            border-radius: 5px;
+            color: #92400e;
+            width: 100%;
+            box-sizing: border-box;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            line-height: 1.35;
+            flex-shrink: 0;
+            font-size: 0.7rem;
+        }
+        
+        .tournament-start-label {
+            font-weight: 600;
+            font-size: 0.66rem;
+            margin-right: 3px;
+        }
+        
+        .tournament-start-name {
+            font-size: 0.7rem;
+            line-height: 1.35;
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* GAME CARD STYLES */
+        .game-card {
+            background: #eef2ff;
+            border: 1px solid #c7d2fe;
+            border-left-width: 4px;
+            border-left-color: #4f46e5;
+            padding: 4px 5px;
+            border-radius: 5px;
+            color: #3730a3;
+            width: 100%;
+            box-sizing: border-box;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            line-height: 1.35;
+            flex-shrink: 0;
+            font-size: 0.7rem;
+        }
+        
+        .game-time {
+            font-weight: 600;
+            font-size: 0.66rem;
+            margin-right: 4px;
+        }
+        
+        .game-teams {
+            font-size: 0.7rem;
+            line-height: 1.35;
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
+        
+        /* ACTION BUTTONS */
+        .actions {
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .btn-secondary {
+            background-color: #e5e7eb;
+            color: #1f2937;
+            border: 1px solid #d1d5db;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #d1d5db;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="main-content">
+        <!-- BREADCRUMBS SECTION -->
+        <nav class="breadcrumbs" aria-label="breadcrumb">
+            <a href="{% url 'homepageCADI:homepageCADI' %}">Inicio</a>
+            <span class="separator">/</span>
+            <a href="{% url 'tournaments:tournaments_menu' %}">Gestión Deportiva</a>
+            <span class="separator">/</span>
+            <span class="current">Calendario general</span>
+        </nav>
+
+        <!-- MONTH NAVIGATION -->
+        <div class="month-navigation">
+            <a href="?year={{ prev_year }}&month={{ prev_month }}" class="nav-btn">←</a>
+            <!-- ✅ REMOVED: Emoji from the title -->
+            <h2>Calendario de {{ month_name }} {{ year }}</h2>
+            <a href="?year={{ next_year }}&month={{ next_month }}" class="nav-btn">→</a>
+        </div>
+
+        <!-- CALENDAR GRID -->
+        <div class="calendar-grid">
+            <div class="calendar-header">Lun</div>
+            <div class="calendar-header">Mar</div>
+            <div class="calendar-header">Mié</div>
+            <div class="calendar-header">Jue</div>
+            <div class="calendar-header">Vie</div>
+            <div class="calendar-header">Sáb</div>
+            <div class="calendar-header">Dom</div>
+
+            {% for day in calendar_days %}
+            <div class="calendar-day {% if not day.current_month %}other-month{% endif %}">
+                <span class="date-label">{{ day.day }}</span>
+
+                <div class="day-items">
+                    {% if day.tournaments %}
+                    {% for t in day.tournaments %}
+                    <div class="tournament-start-card">
+                        <span class="tournament-start-label">Inicio:</span>
+                        <span class="tournament-start-name">{{ t.name }}</span>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+
+                {% if day.games %}
+                {% for g in day.games %}
+                <div class="game-card">
+                    <span class="game-time">{{ g.schedule.start_time|time:"H:i" }}</span>
+                        <span class="game-teams">
+                    {% if g.tournament.modality == 'I' %}
+                        {{ g.home_player.name }} vs {{ g.guest_player.name }}
+                    {% else %}
+                        {{ g.home_team.name }} vs {{ g.guest_team.name }}
+                    {% endif %}
+                    </span>
+                </div>
+                {% endfor %}
+                {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="actions">
+            <a href="{% url 'tournaments:tournaments_menu' %}" class="btn btn-secondary">⬅ Volver</a>
+        </div>
+    </div>
+</body>
+
+</html>

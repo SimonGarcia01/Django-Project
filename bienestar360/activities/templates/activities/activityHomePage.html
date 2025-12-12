@@ -1,0 +1,226 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividades disponibles</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #374151;
+            min-height: 100vh;
+            padding: 40px 20px;
+            background-image: url("{% static 'images/Foto_Icesi10.jpg' %}");
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+        }
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        }
+        .breadcrumbs {
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+            color: #374151;
+            background-color: #f3f4f6;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.75rem;
+            border: 1px solid #e5e7eb;
+            display: inline-block;
+        }
+        .breadcrumbs a {
+            color: #1e3a8a;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .breadcrumbs a:hover { text-decoration: underline; }
+        .breadcrumbs .separator { margin: 0 0.5rem; color: #9ca3af; }
+        .breadcrumbs .current { font-weight: 600; color: #111827; }
+        h1 { color: #1e3a8a; text-align: center; margin-bottom: 40px; font-size: 2.75rem; font-weight: 700; }
+        .filters {
+            padding: 1.5rem 2rem;
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            margin: 0 auto 2.5rem;
+            border-radius: 12px;
+        }
+        .filters form { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+        .filter-input {
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 150px;
+        }
+        .filter-input:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+        }
+        .button {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        .button[type="submit"] { background-color: #2563eb; color: white; }
+        .button[type="submit"]:hover { background-color: #1e40af; }
+        .button-clear { background-color: #e5e7eb; color: #374151; }
+        .button-clear:hover { background-color: #d1d5db; }
+        .grid {
+            display: grid;
+            gap: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        }
+        .card {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #e5e7eb;
+            border-left-width: 6px;
+        }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+        .card-color-1 { border-left-color: #facc15; }
+        .card-color-2 { border-left-color: #f97316; }
+        .card-color-3 { border-left-color: #4f46e5; }
+        .card-color-4 { border-left-color: #10b981; }
+        .card h2 { font-size: 1.4rem; color: #1e3a8a; margin-bottom: 15px; font-weight: 700; }
+        .card p { margin: 8px 0; font-size: 0.95rem; color: #4b5563; }
+        .buttons { margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap; }
+        .buttons a, .buttons button {
+            color: white; border: none; padding: 10px 18px; border-radius: 8px;
+            cursor: pointer; text-decoration: none; font-size: 0.9rem; font-weight: 600;
+            transition: all 0.25s ease; text-align: center;
+        }
+        .buttons a:hover, .buttons button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+        }
+        .buttons a { background-color: #f3f4f6; color: #1f2937; border: 1px solid #d1d5db; }
+        .buttons a:hover { background-color: #e5e7eb; }
+        .buttons button[type="submit"] { background-color: #2563eb; }
+        .buttons button[type="submit"]:hover { background-color: #1e40af; }
+        .btn-disabled {
+            background-color: #d1d5db !important;
+            color: #6b7280 !important;
+            cursor: not-allowed;
+        }
+        .status-available { color: #16a34a; font-weight: 600; }
+        .status-full { color: #dc2626; font-weight: 600; }
+        .empty-message {
+            text-align: center; color: #4b5563; font-size: 1.1rem;
+            padding: 60px 20px; background: #f9fafb;
+            border-radius: 16px; margin-top: 40px; border: 1px solid #e5e7eb;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-content">
+
+        <!-- ✅ Breadcrumb navigation -->
+        <nav class="breadcrumbs" aria-label="breadcrumb">
+            <a href="{% url 'homepageUser:homepageUser' %}">Inicio</a>
+            <span class="separator">/</span>
+            <a href="{% url 'activityView' %}">Actividades</a>
+            <span class="separator">/</span>
+            <span class="current">Disponibles</span>
+        </nav>
+
+        <h1>Actividades disponibles</h1>
+
+        <div class="filters">
+            <form method="get">
+                <select name="type" class="filter-input">
+                    <option value="">Todos los tipos</option>
+                    <option value="Deportiva" {% if selected_type == "Deportiva" %}selected{% endif %}>Deportiva</option>
+                    <option value="Artística" {% if selected_type == "Artística" %}selected{% endif %}>Artística</option>
+                    <option value="Eventos" {% if selected_type == "Eventos" %}selected{% endif %}>Eventos</option>
+                </select>
+
+                <input type="text" name="location" placeholder="Lugar" value="{{ selected_location|default:'' }}" class="filter-input">
+                <input type="time" name="time" value="{{ selected_time|default:'' }}" class="filter-input">
+
+                <button type="submit" class="button">Filtrar</button>
+                <a href="{% url 'activityView' %}" class="button button-clear">Limpiar</a>
+            </form>
+        </div>
+
+        {% if activities %}
+        <div class="grid">
+            {% for activity in activities %}
+                {% cycle '1' '2' '3' '4' as color_index silent %}
+                <div class="card card-color-{{ color_index }}">
+                    <h2>{{ activity.name }}</h2>
+                    <p><strong>Fecha:</strong> {{ activity.date }}</p>
+
+                    <p><strong>Días:</strong>
+                        {% for sched in activity.schedules.all %}
+                            {{ sched.day }}{% if not forloop.last %}, {% endif %}
+                        {% empty %}
+                            -
+                        {% endfor %}
+                    </p>
+
+                    <p><strong>Horario:</strong>
+                        {% for sched in activity.schedules.all %}
+                            {{ sched.start_time }} - {{ sched.end_time }}{% if not forloop.last %}; {% endif %}
+                        {% empty %}
+                            -
+                        {% endfor %}
+                    </p>
+
+                    <p><strong>Ubicación:</strong> {{ activity.location }}</p>
+                    <p><strong>Categoría:</strong> {{ activity.category }}</p>
+                    <p><strong>Tipo:</strong> {{ activity.type }}</p>
+
+                    {% if activity.requires_registration %}
+                        <p><strong>Cupo:</strong>
+                            <span class="{% if activity.is_full_status %}status-full{% else %}status-available{% endif %}">
+                                {{ activity.current_registrations_count }} / {{ activity.max_capacity }}
+                            </span>
+                        </p>
+                    {% endif %}
+
+                    <div class="buttons">
+                        <a href="{% url 'activity_detail' activity.pk %}">Ver detalles</a>
+                        <a href="{% url 'review_activity' activity.pk %}">Enviar Reseña</a>
+                        <a href="{% url 'activity_reviews' activity.pk %}">Ver Historial</a>
+
+                        {% if activity.requires_registration %}
+                            {% if activity.is_full_status %}
+                                <button class="btn-disabled" disabled>Cupos llenos</button>
+                            {% else %}
+                                <form action="{% url 'enroll_in_activity' activity.pk %}" method="post" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit">Inscribirme</button>
+                                </form>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        {% else %}
+            <div class="empty-message">
+                <p>No hay actividades disponibles en este momento.</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

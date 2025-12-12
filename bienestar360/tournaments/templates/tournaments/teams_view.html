@@ -1,0 +1,216 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de equipos</title>
+
+  <style>
+    /* === Fuente base === */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: #374151;
+      background-image: url("{% static 'images/Foto_Icesi10.jpg' %}");
+      background-size: cover;
+      background-position: center center;
+      background-attachment: fixed;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    .main-content {
+      max-width: 1000px;
+      margin: 0 auto;
+      background-color: rgba(255, 255, 255, 0.98);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(8px);
+    }
+
+    /* === Breadcrumbs === */
+    .breadcrumbs {
+      margin-bottom: 30px;
+      font-size: 0.9rem;
+      color: #374151;
+      background-color: #f3f4f6;
+      padding: 0.75rem 1.25rem;
+      border-radius: 0.75rem;
+      border: 1px solid #e5e7eb;
+      display: inline-block;
+    }
+
+    .breadcrumbs a {
+      color: #1e3a8a;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .breadcrumbs a:hover { text-decoration: underline; }
+    .breadcrumbs .separator { margin: 0 0.5rem; color: #9ca3af; }
+    .breadcrumbs .current { font-weight: 600; color: #111827; }
+
+    /* === Títulos === */
+    h2 {
+      text-align: center;
+      font-size: 2rem;
+      color: #1e3a8a;
+      font-weight: 700;
+      margin-bottom: 30px;
+    }
+
+    /* === Tarjetas de equipo === */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .team-card {
+      background-color: #ffffff;
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .team-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    .team-card h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #111827;
+      margin-bottom: 5px;
+    }
+
+    .team-card p {
+      color: #6b7280;
+      font-size: 0.95rem;
+      margin-bottom: 8px;
+    }
+
+    ul {
+      list-style: disc;
+      margin-left: 1.25rem;
+      margin-top: 10px;
+      margin-bottom: 15px;
+      color: #374151;
+    }
+
+    ul li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.95rem;
+      margin-bottom: 5px;
+    }
+
+    /* === Botones === */
+    .btn {
+      display: inline-block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border-radius: 6px;
+      padding: 6px 12px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-edit {
+      background-color: #2563eb;
+      color: #fff;
+    }
+    .btn-edit:hover {
+      background-color: #1d4ed8;
+    }
+
+    .btn-delete {
+      background-color: #dc2626;
+      color: #fff;
+    }
+    .btn-delete:hover {
+      background-color: #b91c1c;
+    }
+
+    .btn-add {
+      background-color: #16a34a;
+      color: #fff;
+    }
+    .btn-add:hover {
+      background-color: #15803d;
+    }
+
+    .team-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .no-teams {
+      text-align: center;
+      color: #6b7280;
+      font-size: 1rem;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="main-content">
+    <!-- Breadcrumb -->
+    <nav class="breadcrumbs">
+      <a href="{% url 'homepageCADI:homepageCADI' %}">Inicio</a>
+      <span class="separator">&gt;</span>
+      <a href="{% url 'tournaments:tournaments_menu' %}">Gestión Deportiva</a>
+      <span class="separator">&gt;</span>
+      <span class="current">Gestión de equipos</span>
+    </nav>
+
+    <!-- Título -->
+    <h2>Gestión de equipos</h2>
+
+    <!-- Equipos -->
+    <div class="team-grid">
+      {% for team in teams %}
+      <div class="team-card">
+        <h3>{{ team.name }}</h3>
+        <p>Jugadores: {{ team.participants.all|length }}</p>
+
+        <ul>
+          {% for p in team.participants.all %}
+          <li>
+            {{ p.name }}
+            <span>
+              <a href="{% url 'tournaments:edit_participant' p.participantId %}" class="btn btn-edit">Editar</a>
+              <a href="{% url 'tournaments:delete_participant' p.participantId %}" class="btn btn-delete">Eliminar</a>
+            </span>
+          </li>
+          {% empty %}
+          <li class="text-gray-500">No hay participantes en este equipo.</li>
+          {% endfor %}
+        </ul>
+
+        <div class="team-actions">
+          <a href="{% url 'tournaments:add_participant_to_team' team.teamId %}" class="btn btn-add">+ Agregar participante</a>
+          <a href="{% url 'tournaments:delete_team' team.teamId %}" class="btn btn-delete" onclick="return confirm('¿Seguro que deseas eliminar este equipo?');">Eliminar equipo</a>
+        </div>
+      </div>
+      {% empty %}
+      <p class="no-teams">No hay equipos creados.</p>
+      {% endfor %}
+    </div>
+  </div>
+</body>
+</html>

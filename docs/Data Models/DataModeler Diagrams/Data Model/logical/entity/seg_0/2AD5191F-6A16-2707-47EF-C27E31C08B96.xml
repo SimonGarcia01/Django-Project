@@ -1,0 +1,76 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="2AD5191F-6A16-2707-47EF-C27E31C08B96" name="ASSISTANCE">
+<createdBy>kracr</createdBy>
+<createdTime>2025-08-30 20:33:03 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<engineerTo>
+<item key="648A4291-7871-969E-25F9-D1A8E91FC7CC" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="username" id="FAB5551A-2E4B-6D21-63A6-F665A29F9025">
+<createdBy>kracr</createdBy>
+<createdTime>2025-08-30 20:34:18 UTC</createdTime>
+<generatorID>B339047B-3BDA-ECF8-F249-BDAED327B188</generatorID>
+<ownerDesignName>Data Model</ownerDesignName>
+<engineerTo>
+<item key="648A4291-7871-969E-25F9-D1A8E91FC7CC" value="true"/>
+</engineerTo>
+<referedAttribute>A94BCDAB-8C8F-6465-FBDC-044DD792FBE9</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30</dataTypeSize>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="activityId" id="041E5CAE-20A5-2126-BFA3-E35FD8B8C92C">
+<createdBy>kracr</createdBy>
+<createdTime>2025-08-30 20:35:02 UTC</createdTime>
+<generatorID>5B65DEFC-BFE0-955A-F45F-BBB32D00E9A5</generatorID>
+<ownerDesignName>Data Model</ownerDesignName>
+<engineerTo>
+<item key="648A4291-7871-969E-25F9-D1A8E91FC7CC" value="true"/>
+</engineerTo>
+<referedAttribute>E3E0EFD6-AE68-BF77-5AD6-0D033A24ABE1</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>5</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="date" id="A98DC225-FEB1-2794-5417-CB7E32DE008C">
+<createdBy>kracr</createdBy>
+<createdTime>2025-08-30 20:35:58 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<engineerTo>
+<item key="648A4291-7871-969E-25F9-D1A8E91FC7CC" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="3793E73F-66A3-0D4B-FA13-F77CB0F86E5D" name="ASSISTANCE PK">
+<createdBy>kracr</createdBy>
+<createdTime>2025-08-30 20:34:18 UTC</createdTime>
+<ownerDesignName>Data Model</ownerDesignName>
+<engineerTo>
+<item key="648A4291-7871-969E-25F9-D1A8E91FC7CC" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>FAB5551A-2E4B-6D21-63A6-F665A29F9025</attributeRef>
+<attributeRef>041E5CAE-20A5-2126-BFA3-E35FD8B8C92C</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

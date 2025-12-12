@@ -1,0 +1,254 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% if single_activity and activity %}Retroalimentaciones de {{ activity.name }}
+        {% else %}Retroalimentaciones - CADI{% endif %}
+    </title>
+    <style>
+        /* ====== FONT IMPORT & BASE STYLES ====== */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #374151;
+            min-height: 100vh;
+            padding: 40px 20px;
+            background-image: url("{% static 'images/Foto_Icesi10.jpg' %}");
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+        }
+
+        /* ====== LAYOUT & CONTAINERS ====== */
+        .main-content {
+            max-width: 900px; /* Wider for review content */
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        }
+
+        /* ====== TYPOGRAPHY & HEADER ====== */
+        h1 {
+            color: #1e3a8a;
+            font-size: 2.75rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 30px;
+        }
+        .page-subheader {
+            font-size: 1rem;
+            color: #4b5563;
+        }
+
+        /* ====== BREADCRUMBS ====== */
+        .breadcrumbs {
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+            color: #374151;
+        }
+        .breadcrumbs a {
+            color: #1e3a8a;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .breadcrumbs a:hover { text-decoration: underline; }
+        .breadcrumbs .separator { margin: 0 0.5rem; color: #9ca3af; }
+        .breadcrumbs .current { font-weight: 600; color: #111827; }
+
+        /* ====== REVIEW CARD STYLES ====== */
+        .review-card {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border: 1px solid #e5e7eb;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .review-card.is-read {
+            background-color: #f9fafb; /* Slightly grey out read reviews */
+        }
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+        .review-user { font-weight: 600; color: #111827; font-size: 1.1rem; }
+        .review-rating { font-size: 1.2rem; color: #facc15; }
+        .review-comment { margin-bottom: 15px; color: #4b5563; line-height: 1.6; }
+        .review-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: #6b7280;
+        }
+        .read-status {
+            font-weight: 600;
+            color: #16a34a;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* ====== ACTIVITY BLOCK (FOR MULTI-VIEW) ====== */
+        .activity-block {
+            background: #f9fafb;
+            padding: 25px;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .activity-header h2 { font-size: 1.5rem; color: #1e3a8a; font-weight: 700; margin: 0; }
+        .activity-meta { font-size: 0.9rem; color: #4b5563; margin-top: 2px; }
+
+        /* ====== BUTTONS & LINKS ====== */
+        .button, .link-button {
+            display: inline-block;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            text-decoration: none;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        .button:hover, .link-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .button-primary { background-color: #2563eb; color: white; }
+        .button-primary:hover { background-color: #1e40af; }
+        .link-secondary { background-color: #f3f4f6; color: #1f2937; border: 1px solid #d1d5db; }
+        .link-secondary:hover { background-color: #e5e7eb; }
+
+        /* ====== MISC ====== */
+        .avg-rating-box {
+            background-color: #fefce8; /* Soft yellow */
+            border: 1px solid #fde047;
+            color: #ca8a04;
+            padding: 10px 15px;
+            border-radius: 10px;
+            display: inline-block;
+            font-weight: 600;
+            margin-top: 15px;
+        }
+        .avg-rating-box span { font-size: 1.2rem; vertical-align: middle; }
+        .empty-message { text-align: center; color: #4b5563; font-size: 1.1rem; padding: 40px 20px; }
+    </style>
+</head>
+<body>
+    <div class="main-content">
+
+        <!-- Breadcrumb Navigation -->
+        <nav class="breadcrumbs" aria-label="breadcrumb">
+            <a href="{% url 'public_activities' %}">Actividades</a>
+            <span class="separator">/</span>
+            <span class="current">Retroalimentaciones</span>
+        </nav>
+
+        <div class="page-header">
+            <h1>
+                {% if single_activity and activity %}
+                    Reseñas de "{{ activity.name }}"
+                {% else %}
+                    Retroalimentaciones de Actividades
+                {% endif %}
+            </h1>
+            {% if single_activity and activity %}
+                <div class="page-subheader">
+                    {{ activity.location }} • {{ activity.category }}
+                </div>
+                <div class="avg-rating-box" title="Promedio de calificaciones">
+                    <span>⭐</span> Promedio: <strong>{{ average_rating|default:"N/A" }}</strong>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="reviews-container">
+            {% if single_activity %}
+                {# VIEW 1: A single activity with all its reviews #}
+                {% for review in reviews %}
+                    <div class="review-card {% if review.is_read %}is-read{% endif %}">
+                        <div class="review-header">
+                            <span class="review-user">{{ review.user.get_full_name|default:review.user.username }}</span>
+                            <span class="review-rating">
+                                {% for i in "12345"|make_list %}{% if forloop.counter <= review.rating %}★{% else %}☆{% endif %}{% endfor %}
+                            </span>
+                        </div>
+                        <p class="review-comment">{{ review.comment|default:"(Sin comentario)" }}</p>
+                        <div class="review-footer">
+                            <span>Enviado: {{ review.created_at|date:"d M, Y" }}</span>
+                            {% if not review.is_read %}
+                                <form method="post" action="{% url 'mark_review_read' review.id %}">
+                                    {% csrf_token %}
+                                    <button class="button button-primary" type="submit">Marcar como leída</button>
+                                </form>
+                            {% else %}
+                                <span class="read-status">✔ Leída</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% empty %}
+                    <p class="empty-message">No hay retroalimentaciones para esta actividad todavía.</p>
+                {% endfor %}
+                <a href="{% url 'public_activities' %}" class="link-button link-secondary" style="margin-top: 20px;">← Volver a todas las actividades</a>
+
+            {% else %}
+                {# VIEW 2: List of all activities with review summaries #}
+                {% for item in data %}
+                    <div class="activity-block">
+                        <div class="activity-header">
+                            <div>
+                                <h2>{{ item.activity.name }}</h2>
+                                <div class="activity-meta">{{ item.activity.location }} • {{ item.activity.category }}</div>
+                            </div>
+                            <div style="text-align:right;">
+                                <div class="avg-rating-box" style="margin: 0 0 10px 0;"><span>⭐</span> {{ item.average_rating|default:"N/A" }}</div>
+                                <a class="link-button link-secondary" href="{% url 'cadi_activity_review_detail' item.activity.pk %}">Ver Reseñas ({{ item.reviews|length }})</a>
+                            </div>
+                        </div>
+
+                        {% for review in item.reviews|slice:":1" %} {# Show only the most recent review snippet #}
+                            <div class="review-card {% if review.is_read %}is-read{% endif %}">
+                                <p class="review-comment">"{{ review.comment|truncatechars:150|default:"(Sin comentario)" }}"</p>
+                                <div class="review-footer">
+                                    <span>- {{ review.user.get_full_name|default:review.user.username }}</span>
+                                    <span class="review-rating">
+                                        {% for i in "12345"|make_list %}{% if forloop.counter <= review.rating %}★{% else %}☆{% endif %}{% endfor %}
+                                    </span>
+                                </div>
+                            </div>
+                        {% empty %}
+                            <p style="text-align: center; padding: 10px; color: #6b7280;">Sin reseñas aún.</p>
+                        {% endfor %}
+                    </div>
+                {% empty %}
+                    <p class="empty-message">No hay actividades con retroalimentaciones disponibles.</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

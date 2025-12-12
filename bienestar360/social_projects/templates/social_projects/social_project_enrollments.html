@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscripciones a Eventos</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-image: url("{% static 'images/Foto_Icesi10.jpg' %}");
+            background-size: cover;
+            background-attachment: fixed;
+            padding: 40px 20px;
+        }
+        .main-content {
+            max-width: 1000px;
+            margin: auto;
+            background-color: rgba(255, 255, 255, 0.96);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        h1 { text-align: center; color: #1e3a8a; font-size: 2.5rem; margin-bottom: 30px; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e5e7eb;
+            text-align: left;
+        }
+        th { background-color: #f3f4f6; color: #111827; }
+        tr:hover { background-color: #f9fafb; }
+        .count {
+            font-weight: 600;
+            color: #2563eb;
+        }
+    </style>
+</head>
+<body>
+<div class="main-content">
+    <h1>Inscripciones a Eventos</h1>
+
+    {% if events %}
+    <table>
+        <thead>
+            <tr>
+                <th>Evento</th>
+                <th>Proyecto</th>
+                <th>Ubicación</th>
+                <th>Fecha</th>
+                <th>Inscritos</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for event in events %}
+            <tr>
+                <td>{{ event.name }}</td>
+                <td>{{ event.project.name }}</td>
+                <td>{{ event.location }}</td>
+                <td>{{ event.event_date }}</td>
+                <td class="count">{{ event.attendance_count }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No hay eventos registrados.</p>
+    {% endif %}
+</div>
+</body>
+</html>
